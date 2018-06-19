@@ -1,4 +1,4 @@
 module.exports = {
-    mongoURL: 'mongodb://test:testdb1@ds259250.mlab.com:59250/crmeantutorial',
+    mongoURL: 'mongodb://andonAdmin:1q2w3e4r@ds263500.mlab.com:63500/andonproject',
     secretOrKey: 'secret'
 };

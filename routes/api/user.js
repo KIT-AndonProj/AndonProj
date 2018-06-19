@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router(); 
-const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
@@ -11,8 +10,7 @@ const validateLoginInput = require('../../validation/login');
 
 const User = require('../../models/User');
 
-router.get('/test', (req, res) => res.json({msg: 'Users works'}));
-
+//register new user
 router.post('/register', (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
   
@@ -20,24 +18,17 @@ router.post('/register', (req, res) => {
         return res.status(400).json(errors);
     }
 
-
-    User.findOne({ email: req.body.email })
+    User.findOne({ username: req.body.username })
     .then(user => {
         if(user){
-            errors.email = 'email already exists';
+            errors.username = 'This Username already exists';
             return res.status(400).json(errors);
         } else {
-            const avatar = gravatar.url(req.body.email, {
-                s: '200', //size
-                r: 'pg', //rating
-                d: 'mm' //default
-            });
-
             const newUser = new User({
-                name: req.body.name,
-                email: req.body.email,
-                avatar,
-                password: req.body.password
+                username: req.body.username,
+                password: req.body.password,
+                gitURL: req.body.gitURL,
+                imgURL: req.body.imgURL
             });
 
             bcrypt.genSalt(10, (err, salt) => {
@@ -53,27 +44,27 @@ router.post('/register', (req, res) => {
     })
 });
 
+//Login
 router.post('/login', (req, res) => {
-
     const { errors, isValid } = validateLoginInput(req.body);
 
     if(!isValid){
         return res.status(400).json(errors);
     }
 
-    const email = req.body.email;
+    const username = req.body.username;
     const password = req.body.password;
 
-    User.findOne({ email })
+    User.findOne({ username })
         .then(user => {
             if(!user) {
-                errors.email = 'User not found'
+                errors.username = 'Username not found'
                 return res.status(404).json(errors);
             }
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
                     if(isMatch){
-                        const payload = {id: user.id, name: user.name, avatar: user.avatar }
+                        const payload = {id: user.id, username: user.username, gitURL: user.gitURL, imgURL: user.imgURL }
                         jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600 }, (err, token) => {
                             res.json({
                                 success: true,
@@ -88,12 +79,14 @@ router.post('/login', (req, res) => {
         });
 });
 
+
+//Check current user
 router.get('/current', passport.authenticate('jwt', {session: false}), 
 (req, res) => {
     res.json({
         id: req.user.id,
-        name: req.user.name,
-        email: req.user.email
+        username: req.user.username,
+        gitURL: req.user.gitURL
     });
 });
 
