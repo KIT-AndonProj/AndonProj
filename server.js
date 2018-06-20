@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 
 const user = require('./routes/api/user');
+const gitInfo = require('./routes/api/gitInfo');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 
 app.use('/api/user', user);
+app.use('/api/git', gitInfo);
 
 const port = process.env.PORT || 5000;
 
