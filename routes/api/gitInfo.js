@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router(); 
 const Request = require('request')
-
 const User = require('../../models/User');
 
 const options = {

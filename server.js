@@ -5,6 +5,7 @@ const passport = require('passport');
 
 const user = require('./routes/api/user');
 const gitInfo = require('./routes/api/gitInfo');
+const bugspot = require('./routes/api/bugspot');
 
 const app = express();
 
@@ -25,6 +26,7 @@ require('./config/passport')(passport);
 
 app.use('/api/user', user);
 app.use('/api/git', gitInfo);
+app.use('/api/bugspot', bugspot);
 
 const port = process.env.PORT || 5000;
 

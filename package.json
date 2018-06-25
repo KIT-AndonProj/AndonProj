@@ -1,14 +1,13 @@
 {
-  "name": "tutorialmern",
+  "name": "AndonProject",
   "version": "1.0.0",
-  "description": "Tutorial of MERN",
+  "description": "Andon Project",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
-    "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run start\" \"npm run client\""
   },
   "author": "Warisara",
   "license": "MIT",
@@ -17,9 +16,9 @@
     "body-parser": "^1.18.3",
     "concurrently": "^3.5.1",
     "express": "^4.16.3",
-    "gravatar": "^1.6.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.1.5",
+    "nodegit": "^0.22.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "request": "^2.87.0",

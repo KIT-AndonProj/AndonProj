@@ -90,5 +90,9 @@ router.get('/current', passport.authenticate('jwt', {session: false}),
     });
 });
 
+router.get('/test', (req, res) => {
+    return res.json("hi")
+})
+
 
 module.exports = router;
