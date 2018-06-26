@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
-    "start": "node server.js",
+    "server": "node server.js",
     "client": "npm start --prefix client",
-    "app": "concurrently \"npm run start\" \"npm run client\""
+    "app": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Warisara",
   "license": "MIT",
