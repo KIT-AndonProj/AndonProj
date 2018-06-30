@@ -9,6 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 ```
 Node.js
+python
 ```
 
 ### Installing
@@ -19,6 +20,8 @@ You can type this command in your terminal to install this project
 3. npm install
 4. cd cliend
 5. npm install
+6. cd ..
+7. pip install bug-spots
 ```
 ### Running
 Run server and cliend side within one command
