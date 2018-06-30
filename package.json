@@ -19,7 +19,6 @@
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.1.5",
-    "nodegit": "^0.22.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "validator": "^10.3.0"
