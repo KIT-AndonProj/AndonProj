@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router(); 
-const Request = require('request')
 const User = require('../../models/User');
 const axios = require('axios');
 // const header =  {headers: { Authorization: 'crsherbet' }}
