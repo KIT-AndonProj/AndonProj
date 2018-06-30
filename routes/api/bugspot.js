@@ -8,7 +8,8 @@ router.post('/analyze', (req, res) => {
         if (error) { throw error; }
         console.log('Clear');
         exec('cd routes/api && git clone https://github.com/'+ req.body.username +'/'+ req.body.repository+'.git code', (err,stdout,stderr) => { 
-            if (err) { return res.json(stderr) }
+            console.log('Clone')
+            if (err) { return res.json(err) }
             exec('cd routes/api/code && bugspots' ,(err2, stdout2, stderr2) => {
                 if (err2) { return res.json(stdout2.slice(0,stdout2.length-1)) }
                 return res.json(stdout2)
