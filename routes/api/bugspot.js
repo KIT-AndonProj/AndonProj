@@ -10,8 +10,12 @@ router.post('/analyze', (req, res) => {
         exec('cd routes/api && git clone https://github.com/'+ req.body.username +'/'+ req.body.repository+'.git code', (err,stdout,stderr) => { 
             console.log('Clone')
             if (err) { return res.json(err) }
-            var result = execSync('cd routes/api/code && bugspots');
-            return res.json(result.toString('utf8'))
+            try {
+                var result = execSync('cd routes/api/code && bugspots');
+                return res.json(result.toString('utf8'))
+            } catch (error){
+                return res.json('Not found commits matching search criteria')
+            }
         });
         
     })
