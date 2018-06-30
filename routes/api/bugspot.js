@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router(); 
 // const Git = require('nodegit')
 // const scanner = require('@berries/acai');
-const fs = require('fs-extra');
+// const fs = require('fs-extra');
 
 router.post('/analyze', (req, res) => { 
     // const result = '';      
