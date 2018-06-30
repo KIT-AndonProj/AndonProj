@@ -5,6 +5,7 @@ import './App.css';
 import Navbar from './components/layout/Navbar'
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
+import RepoInfo from './components/auth/RepoInfo'
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
           <div className="container">
             <Route exact path = "/register" component = { Register }/>
             <Route exact path = "/login" component = { Login }/>
+            <Route exact path = "/repoinfo" component = { RepoInfo }/>
           </div>
         </div>
       </Router>
