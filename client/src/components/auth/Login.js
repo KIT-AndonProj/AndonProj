@@ -64,9 +64,9 @@ class Login extends Component {
             <div id="login-div">
                 <form onSubmit={this.onSubmit}>
                 {/* <label>Username</label> */}
-                    <input  type="text" name="username"    autoComplete="off" placeholder="Username" onChange={this.onChange}/>
+                    <input  type="text" name="username" required   autoComplete="off" placeholder="Username" onChange={this.onChange}/>
                 {/* <label>Password</label> */}
-                    <input  type="password" placeholder="Password"  autoComplete="off"  name="password" value={this.state.password} onChange={this.onChange}></input>
+                    <input  type="password" placeholder="Password" required autoComplete="off"  name="password" value={this.state.password} onChange={this.onChange}></input>
                     <input id="submitBtn" type="submit"/>
                 </form>
                 </div>

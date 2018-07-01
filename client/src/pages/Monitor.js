@@ -8,10 +8,11 @@ import profile_img from '../res/user.jpg';
 import '../stylesheets/search.css';
 import logo from '../res/andon.png';
 import '../stylesheets/dataCard.css';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis,Tooltip} from 'recharts';
 
 
 // import Profile from '../components/Profile';
-// import NotificationCard from '../components/NotificationCard';
+import NotificationCard from '../components/NotificationCard';
 // import Chart from '../co mponents/Chart';
 
 class Monitor extends Component {
@@ -23,9 +24,16 @@ class Monitor extends Component {
             text: 'Watch',
             repo_url: '',
             username: '',
-            profile: []
+            profile: [],
+            commit_data: [
+                {name: 'Date', commit: 0}
+            ]
         }
     }
+
+    componentDidMount() {
+        window.scrollTo(0, 0)
+      }
 
     watchRepo(e){
         this.setState( {disabled: !this.state.disabled});
@@ -55,6 +63,13 @@ class Monitor extends Component {
                         type: "success"
                     })
                 }
+            })
+            axios.post('http://localhost:5000/api/git/commits',user)
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+                const commit_data = res.data;
+                this.setState({ commit_data });
             })
         }
 
@@ -131,13 +146,20 @@ class Monitor extends Component {
         </div>
             </div>
             <div className="card">
-            {/* <NotificationCard/> */}
+           
+            <NotificationCard/>
             </div>
           </div>
-                    {/* <DataCard/> */}
                 </div>
-                <div className="parallax-2">
-                
+                <div className="parallax-2">  
+                <h2>Frequency of commits</h2>
+                <LineChart width={1500} height={500} data={this.state.commit_data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <Line type="monotone" dataKey="commit" stroke="#8884d8" />
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                </LineChart>             
                 </div>
             </div>
         );

@@ -22,7 +22,8 @@ html, body {
 .parallax-2 {
   background-color: antiquewhite;
   height: 1000px;
-
+  padding-top: 5%;
+  padding-left: 15%;
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
