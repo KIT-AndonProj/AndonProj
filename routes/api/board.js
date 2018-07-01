@@ -5,7 +5,7 @@ const { exec , execSync }  = require('child_process');
 router.post('/welcome', (req, res) => { 
     exec('PYTHONPATH=".:build/lib.linux-armv7l-2.7" python examples/strandtest.py', (err,stdout,stderr) => { 
         console.log('Welcome');
-        if (err) { return res.json(err) }
+        if (err) { return res.json(stderr) }
     });
 })
 
