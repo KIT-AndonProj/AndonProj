@@ -45,18 +45,16 @@ class Monitor extends Component {
         }
         else {
               if(this.state.text === 'Watch'){
-            this.setState( {disabled: !this.state.disabled});
             const user = {
                 username: this.state.username,
                 repository: this.state.repo_url,
             }
-            console.log("HERE");
             console.log(user);
             axios.post('http://localhost:5000/api/git/repoinfo',user)
             .then(res => {
                 console.log(res);
                 console.log(res.data);
-                if (!true){
+                if (res.data === 'Information not found'){
                     swal({
                         title: "Username or Repository name not found",
                         text: "Please enter valid username or organization name and repository name",
@@ -64,6 +62,7 @@ class Monitor extends Component {
                     });
                 }
                 else { 
+                    this.setState( {disabled: !this.state.disabled});
                     const profile = res.data;
                     this.setState({ profile});
                     this.setState({text: 'Unwatch'})
@@ -71,15 +70,16 @@ class Monitor extends Component {
                         title: "Git repository is now watched",
                         type: "success"
                     })
+                    axios.post('http://localhost:5000/api/git/commits',user)
+                    .then(res => {
+                        console.log(res);
+                        console.log(res.data);
+                        const commit_data = res.data;
+                        this.setState({ commit_data });
+                    })
                 }
             })
-            axios.post('http://localhost:5000/api/git/commits',user)
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-                const commit_data = res.data;
-                this.setState({ commit_data });
-            })
+           
         }
 
          if(this.state.text === 'Unwatch'){
