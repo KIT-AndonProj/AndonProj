@@ -1,0 +1,88 @@
+.landing{
+    text-align: center;
+    border: 5px solid #555555;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 7%;
+    background-color: #555555;
+    z-index: 1;
+  }
+  
+  .center-wrapper {
+    height: 100%;
+  }
+
+  .search-input{
+    background-image: url('../res/search-yellow.png');
+    background-size: 30px;
+    background-position: 10px 10px; 
+    background-repeat: no-repeat;
+    background-color: #555555;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    color: #F9DA4A;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 20%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: 'Nunito';
+    padding: 12px 20px 12px 50px;
+  }
+
+
+  
+  .search-input:focus {
+    width: 40%;
+    color: #F9DA4A;
+  }
+  .button {
+    font-family: 'Nunito';
+    background-color:black;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 10px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: 2px solid #555555;
+  }
+  
+  .button:hover {
+    background-color: #F9DA4A;
+    color: black;
+    
+  }
+
+
+  .App-logo {
+    position: relative;
+    top: 10px;
+    margin: 0px 10px 0px 0px;
+    height: 50%;
+  }
+
+  @media (max-width: 575px) { 
+    .search-input{
+  
+      font-size: 16px;
+      width: 40%;
+    }
+    .search-input:focus {
+      width: 50%;
+    }
+    .button {
+      font-size: 16px;
+    }
+    .App-logo{
+      height: 40%;
+    }
+  }
