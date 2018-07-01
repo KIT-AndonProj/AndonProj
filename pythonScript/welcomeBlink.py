@@ -16,9 +16,21 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 # Define functions which animate LEDs in various ways.
 def blink(strip, color, wait_ms=50):
     """Blink with pink eyes after acess face recognition"""
+    for j in range(256):
+        for q in range(3):
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, wheel((i+j) % 255))
+            strip.show()
+            time.sleep(wait_ms/1000.0)
+            for i in range(0, strip.numPixels(), 3):
+                strip.setPixelColor(i+q, 0)
+
+def colorWipe(strip, color, wait_ms=50):
+    """Wipe color across display a pixel at a time."""
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
         strip.show()
+        time.sleep(wait_ms/1000.0)
      
 
 # Main program logic follows:
@@ -41,7 +53,7 @@ if __name__ == '__main__':
 
         while True:
             print ('Blink')
-            colorWipe(strip, Color(250, 128, 114))  # Red wipe
+            blink(strip, Color(250, 128, 114))  # Red wipe
 
     except KeyboardInterrupt:
         if args.clear:
