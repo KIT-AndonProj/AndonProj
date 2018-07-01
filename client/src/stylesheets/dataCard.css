@@ -1,0 +1,36 @@
+.container {
+    padding-left: 10%;
+    padding-right: 5%;
+    display: grid;
+    grid-gap: 20px;
+    font-size: 22px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-rows: repeat(2, 100%);
+  }
+  
+  .card {
+    padding-left: 5%;
+    box-shadow: 0 4px 8px 0  rgba(0,0,0,0.2);
+    transition: 0.3s;
+    background-color: #F9DA4A;
+    /* border-radius: 5px; */
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px 0  rgba(240, 203, 27, 0.69);
+  }
+
+ 
+
+.userImg{
+    padding-top: 5%;
+    width: 30%;
+  }
+  @media (max-width: 575px) { 
+    .card {
+      width: 95%;
+    }
+    .userImg{
+      width: 25%;
+    }
+  }

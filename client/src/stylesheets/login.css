@@ -1,0 +1,56 @@
+input{
+    background-color: #F9DA4A;
+    color:black;
+    margin-top: 10px;
+    margin-left: 0px;
+    width: 50%;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: 'Nunito';
+    padding: 12px 85px 12px 5px;
+  }
+  
+  input[type=submit]{
+      padding-top: 5%;
+        font-family: 'Nunito';
+        background-color:black;
+        border-radius: 5px;
+        color: white;
+        padding: 10px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px;
+        margin: 20px 50px;
+        -webkit-transition-duration: 0.4s; /* Safari */
+        transition-duration: 0.4s;
+        cursor: pointer;
+        border: 2px solid #555555;
+      }
+      
+      input[type=submit]:hover {
+      background-color: #F9DA4A;
+      color: black;
+      }
+  
+  #login-div {
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -9em;
+    margin-left: -15em; 
+}
+
+@media (max-width: 575px) { 
+    #login-div {
+        top: 50%;
+        right: 50%;
+        margin-top: -9em;
+        margin-left: -15em; 
+    }
+}
+
+label{
+    color: white;
+}
