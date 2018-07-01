@@ -11,7 +11,7 @@ class Register extends Component {
             username: '',
             password: '',
             password2: '',
-            git_username: '',
+            gitName: '',
             imgURL: '',
             errors: {},
         }
@@ -38,14 +38,22 @@ class Register extends Component {
         this.setState({[e.target.name]: e.target.value})
     }
 
-    onSubmit(e) {
-        e.preventDefault();
+     validatePassword(){
+        
+      }
 
+    onSubmit(e) {
+        // this.validatePassword()
+        e.preventDefault();
+        // if(this.state.password !== this.state.password2) {
+        //     document.getElementById("passwordForm2").value.setCustomValidity("Passwords Don't Match");
+        // } else {
+         
         const newUser = {
             username: this.state.username,
             password: this.state.password,
             password2: this.state.password2,
-            git_username: this.state.git_username,
+            gitName: this.state.gitName,
             imgURL: this.state.imgURL
         }
 
@@ -69,29 +77,28 @@ class Register extends Component {
                     type: "error"
                 })
             })
-        }
+        // }
+    }
         
     
     render() {
         return (
-                // <div class="parallax">
-                <div>
+                <div className="parallax">
+                    <form className="register-form"onSubmit = {this.onSubmit}>
                     <h1>Create Account</h1>
-                    <form onSubmit = {this.onSubmit}>
                     <h2 className="label">USERNAME</h2>
-                    <input type="text" autocomplete="off" placeholder="Username" name="username" value={this.state.username} required onChange={this.onChange}></input>
-                    <h2 className="label">USER REPOSITORY</h2>
-                    <input type="text" autocomplete="off" placeholder="Git URL" name="gitURL" value={this.state.git_username} required onChange={this.onChange}></input>
-                    <h2 className="label">USER PHOTO <strong> ** MUST SEE FACE CLEARLY **</strong></h2>
-                    <input type="file" className="input-text" required onChange={(e) => this.setState({imgURL: e.target.value.replace("C:\\fakepath\\", "")})}/>                    
+                    <input type="text" minLength="6" autoComplete="off" placeholder="6 characters minimum" name="username" value={this.state.username} required onChange={this.onChange}></input>
+                    <h2 className="label">GITHUB USERNAME  <strong>*ONLY GITHUB USERNAME*</strong></h2>
+                    <input type="text" autoComplete="off" placeholder="Github username" name="gitName" value={this.state.gitName} required onChange={this.onChange}></input>
+                    <h2 className="label">PROFILE PHOTO <strong> ** MUST SEE FACE CLEARLY **</strong></h2>
+                    <input type="file" className="input-" required onChange={(e) => this.setState({imgURL: e.target.value.replace("C:\\fakepath\\", "")})}/>                    
                     <h2 className="label">PASSWORD</h2>
-                    <input type="password" autocomplete="off" placeholder="Password" name="password" value={this.state.password} required onChange={this.onChange}></input>
+                    <input id="passwordForm1" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password" value={this.state.password} required onChange={this.onChange}></input>
                     <h2 className="label">CONFIRM PASSWORD</h2>
-                    <input type="password" autocomplete="off" placeholder="Comfirm Password" name="password2" value={this.state.password2} required onChange={this.onChange}></input>
+                    <input id="passwordForm2" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password2" value={this.state.password2} required onChange={this.onChange}></input>
                     <input type="submit"/>
                 </form>
             </div>
-            // </div>
         )
     }
 }
