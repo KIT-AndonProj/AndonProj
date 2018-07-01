@@ -23,8 +23,10 @@ router.post('/commits', (req, res) => {
             }
         }
         return res.json(result)
-    }).catch(err => console.log(err))
-})
+    }).catch(err => {
+        return res.json('Information not found')
+    })
+});
 
 router.post('/pulls', (req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository + '/pulls' 
@@ -41,8 +43,10 @@ router.post('/pulls', (req, res) => {
             );
         }
         return res.json(result)
-    }).catch(err => console.log(err))
-})
+    }).catch(err => {
+        return res.json('Information not found')
+    })
+});
 
 router.post('/branches', (req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository + '/branches' 
@@ -69,8 +73,10 @@ router.post('/branches', (req, res) => {
                 }
             return res.json(result)
         })
-    ).catch(err => console.log(err))
-})
+    ).catch(err => {
+        return res.json('Information not found')
+    })
+});
 
 router.post('/repoinfo', (req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository  
@@ -86,7 +92,10 @@ router.post('/repoinfo', (req, res) => {
             image_url: response.data.owner.avatar_url
         }
         return res.json(result)
-    }).catch(err => console.log(err))
+    }).catch(err => {
+        console.log(err)
+        return res.json('Information not found')
+    })
 });
 
 router.post('/issues', (req, res) => {
@@ -105,15 +114,38 @@ router.post('/issues', (req, res) => {
             })
         }
         return res.json(result)
-    }).catch(err => console.log(err))
-})
+    }).catch(err => {
+        return res.json('Information not found')
+    })
+});
+
+router.post('/currrepo', (req, res) => {
+    url = 'https://api.github.com/users/' + req.body.username + '/repos'
+
+    axios.get(url).then(response => {
+        var date = response.data[0].updated_at;
+        var result = '';
+        for( i in response.data){
+            if(response.data[i].updated_at < date){
+                date = response.data[i].updated_at
+                result = response.data[i].name
+            }
+        }
+        return res.json(result)
+    }).catch(err => {
+        return res.json('Information not found')
+    })
+});
+
 
 router.post('/info', (req, res) => {
     url = 'https://api.github.com/users/' + req.body.username
 
     axios.get(url).then(response => { 
         return res.json(response.data)
-    }).catch(err => console.log(err))
+    }).catch(err => {
+        return res.json('Information not found')
+    })
 });
 
 router.post('/repolist', (req, res) => {
@@ -121,7 +153,9 @@ router.post('/repolist', (req, res) => {
 
     axios.get(url).then(response => {
         return res.json(response.data)
-    }).catch(err => console.log(err))
+    }).catch(err => {
+        return res.json('Information not found')
+    })
 });
 
 module.exports = router;
