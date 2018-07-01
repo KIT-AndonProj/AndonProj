@@ -28,25 +28,25 @@ class NotificationCard extends Component {
     return (
     <div>
     <h1>Notification Trigger</h1>
-                <label class="container-label">Overall health risk
+                <label className="container-label">Overall health risk
                 <input type="checkbox"/>
-                <span class="checkmark"></span>
+                <span className="checkmark"></span>
                 </label>
-                <label class="container-label">Frequency of commits
+                <label className="container-label">Frequency of commits
                 <input type="checkbox" />
-                <span class="checkmark"></span>
+                <span className="checkmark"></span>
                 </label>
-                <label class="container-label">The score of bugspot
+                <label className="container-label">The score of bugspot
                 <input type="checkbox" />
-                <span class="checkmark"></span>
+                <span className="checkmark"></span>
                 </label>
-                <label class="container-label">Number of issues
+                <label className="container-label">Number of issues
                 <input type="checkbox"/>
-                <span class="checkmark"></span>
+                <span className="checkmark"></span>
                 </label>
-                <label class="container-label">Fault-proness
+                <label className="container-label">Fault-proness
                 <input type="checkbox"/>
-                <span class="checkmark"></span>
+                <span className="checkmark"></span>
                 </label>
                 <button id="submitBtn" onClick={(e)=>this.handleSubmit(e)}>Apply</button>
         </div>

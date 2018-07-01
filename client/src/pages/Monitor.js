@@ -62,6 +62,7 @@ class Monitor extends Component {
                     });
                 }
                 else { 
+                    window.scrollTo(0, 0);
                     this.setState( {disabled: !this.state.disabled});
                     const profile = res.data;
                     this.setState({ profile});
@@ -83,32 +84,20 @@ class Monitor extends Component {
         }
 
          if(this.state.text === 'Unwatch'){
+            this.setState( {disabled: !this.state.disabled});
             document.getElementById("search-bar1").value = "";
-        document.getElementById("search-bar2").value = "";
+            document.getElementById("search-bar2").value = "";
             this.setState({
                 username: '',
-                repo_url: ''
+                repo_url: '',
+                commit_data: [],
+                profile: [],
+                text: 'Watch'
             })
-            this.setState( {disabled: !this.state.disabled});
-
-            this.setState({text: 'Watch'})
-            const user = {
-                username: '',
-                repository: '',
-                commit_data: [{}]
-            }
-         axios.post('http://localhost:5000/api/git/repoinfo',user)
-         .then(res => {
-             res.date = '';
-            const profile = res.data;
-            this.setState({ profile});
-         },
              swal({
                  title: "Git repository has been unwatched",
                  type: "success"
              })
-         );
-         console.log(user);
         }
     }
 }
