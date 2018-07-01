@@ -11,7 +11,7 @@ class Register extends Component {
             username: '',
             password: '',
             password2: '',
-            gitURL: '',
+            git_username: '',
             imgURL: '',
             errors: {},
         }
@@ -45,7 +45,7 @@ class Register extends Component {
             username: this.state.username,
             password: this.state.password,
             password2: this.state.password2,
-            gitURL: this.state.gitURL,
+            git_username: this.state.git_username,
             imgURL: this.state.imgURL
         }
 
@@ -81,7 +81,7 @@ class Register extends Component {
                     <h2 className="label">USERNAME</h2>
                     <input type="text" autocomplete="off" placeholder="Username" name="username" value={this.state.username} required onChange={this.onChange}></input>
                     <h2 className="label">USER REPOSITORY</h2>
-                    <input type="text" autocomplete="off" placeholder="Git URL" name="gitURL" value={this.state.gitURL} required onChange={this.onChange}></input>
+                    <input type="text" autocomplete="off" placeholder="Git URL" name="gitURL" value={this.state.git_username} required onChange={this.onChange}></input>
                     <h2 className="label">USER PHOTO <strong> ** MUST SEE FACE CLEARLY **</strong></h2>
                     <input type="file" className="input-text" required onChange={(e) => this.setState({imgURL: e.target.value.replace("C:\\fakepath\\", "")})}/>                    
                     <h2 className="label">PASSWORD</h2>

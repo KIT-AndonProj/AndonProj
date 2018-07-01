@@ -36,12 +36,21 @@ class Monitor extends Component {
       }
 
     watchRepo(e){
-        this.setState( {disabled: !this.state.disabled});
-        if(this.state.text === 'Watch'){
+        if( this.state.username === '' || this.state.repo_url === '' ){
+            swal({
+                title: "Information Required!",
+                text: "Please fill in both informations",
+                type: 'error'
+            })
+        }
+        else {
+              if(this.state.text === 'Watch'){
+            this.setState( {disabled: !this.state.disabled});
             const user = {
                 username: this.state.username,
                 repository: this.state.repo_url,
             }
+            console.log("HERE");
             console.log(user);
             axios.post('http://localhost:5000/api/git/repoinfo',user)
             .then(res => {
@@ -75,11 +84,18 @@ class Monitor extends Component {
 
          if(this.state.text === 'Unwatch'){
             document.getElementById("search-bar1").value = "";
-            document.getElementById("search-bar2").value = "";
+        document.getElementById("search-bar2").value = "";
+            this.setState({
+                username: '',
+                repo_url: ''
+            })
+            this.setState( {disabled: !this.state.disabled});
+
             this.setState({text: 'Watch'})
             const user = {
                 username: '',
                 repository: '',
+                commit_data: [{}]
             }
          axios.post('http://localhost:5000/api/git/repoinfo',user)
          .then(res => {
@@ -93,9 +109,9 @@ class Monitor extends Component {
              })
          );
          console.log(user);
-
         }
     }
+}
 
     onSubmit(e) {
         swal({
