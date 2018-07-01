@@ -14,7 +14,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    gitURL: {
+    gitName: {
         type: String,
         required: true
     },

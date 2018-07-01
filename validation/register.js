@@ -8,7 +8,7 @@ module.exports = function validateRgisterInput(data){
     data.username = !isEmpty(data.username) ? data.username: '';
     data.password = !isEmpty(data.password) ? data.password: '';
     data.password2 = !isEmpty(data.password2) ? data.password2: '';
-    data.gitURL = !isEmpty(data.gitURL) ? data.gitURL: '';
+    data.gitName = !isEmpty(data.gitName) ? data.gitName: '';
     data.imgURL = !isEmpty(data.imgURL) ? data.imgURL: '';
 
     if(!Validator.isLength(data.username, { min: 6, max: 30 })){
@@ -19,12 +19,8 @@ module.exports = function validateRgisterInput(data){
         errors.username = 'Username field is required';
     }
 
-    if(!Validator.isURL(data.gitURL)) {
-        errors.gitURL= 'Git URL is invalid';
-    }
-
-    if(Validator.isEmpty(data.gitURL)) {
-        errors.gitURL= 'Git URL field is required';
+    if(Validator.isEmpty(data.gitName)) {
+        errors.gitName= 'Git Username field is required';
     }
 
     if(!Validator.isURL(data.imgURL)) {

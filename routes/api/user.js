@@ -21,24 +21,32 @@ router.post('/register', (req, res) => {
     User.findOne({ username: req.body.username })
     .then(user => {
         if(user){
-            errors.username = 'This Username already exists';
+            errors.username = 'This username already exists';
             return res.status(400).json(errors);
         } else {
-            const newUser = new User({
-                username: req.body.username,
-                password: req.body.password,
-                gitURL: req.body.gitURL,
-                imgURL: req.body.imgURL
-            });
-
-            bcrypt.genSalt(10, (err, salt) => {
-                bcrypt.hash(newUser.password, salt, (err,hash) => {
-                    if(err) throw err;
-                    newUser.password = hash;
-                    newUser.save()
-                        .then(user => res.json(user))
-                        .catch(err => console.log(err))
-                })
+            User.findOne({ gitName: req.body.gitName })
+            .then(git => {
+                if(git){
+                    errors.gitName = 'This github username already exists';
+                    return res.status(400).json(errors);
+                } else {
+                    const newUser = new User({
+                        username: req.body.username,
+                        password: req.body.password,
+                        gitName: req.body.gitName,
+                        imgURL: req.body.imgURL
+                    });
+        
+                    bcrypt.genSalt(10, (err, salt) => {
+                        bcrypt.hash(newUser.password, salt, (err,hash) => {
+                            if(err) throw err;
+                            newUser.password = hash;
+                            newUser.save()
+                                .then(user => res.json(user))
+                                .catch(err => console.log(err))
+                        })
+                    })
+                }
             })
         }
     })
@@ -64,9 +72,10 @@ router.post('/login', (req, res) => {
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
                     if(isMatch){
-                        const payload = {id: user.id, username: user.username, gitURL: user.gitURL, imgURL: user.imgURL }
+                        const payload = {id: user.id, username: user.username, gitName: user.gitNameL, imgURL: user.imgURL }
                         jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600 }, (err, token) => {
                             res.json({
+                                payload,
                                 success: true,
                                 token: 'Bearer ' + token 
                             });
@@ -86,7 +95,7 @@ router.get('/current', passport.authenticate('jwt', {session: false}),
     res.json({
         id: req.user.id,
         username: req.user.username,
-        gitURL: req.user.gitURL
+        gitName: req.user.gitName
     });
 });
 
