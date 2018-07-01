@@ -89,10 +89,12 @@ if __name__ == '__main__':
         print('Use "-c" argument to clear LEDs on exit')
 
     try:
-
-        while True:
-            print ('Blink')
-            theaterChase(strip, Color(250, 128, 114))  # White theater chase
+                
+        print ('Blink')
+        theaterChaseRainbow(strip, 30)
+        theaterChase(strip, Color(127,127,127), 120, 60) 
+            #print ('wipe')
+            #colorWipe(strip, Color(199,63,74), 100)
             
 
     except KeyboardInterrupt:
