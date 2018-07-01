@@ -123,11 +123,12 @@ router.post('/currrepo', (req, res) => {
     url = 'https://api.github.com/users/' + req.body.username + '/repos'
 
     axios.get(url).then(response => {
-        var date = response.data[0].updated_at;
+        var date = new Date(response.data[0].updated_at);
         var result = '';
         for( i in response.data){
-            if(response.data[i].updated_at < date){
-                date = response.data[i].updated_at
+            resDate = new Date(response.data[i].updated_at)
+            if(resDate > date){
+                date = resDate
                 result = response.data[i].name
             }
         }
