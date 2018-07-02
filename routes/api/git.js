@@ -96,7 +96,7 @@ router.post('/repoinfo', passport.authenticate('jwt', {session: false}), (req, r
         }
         return res.json(result)
     }).catch(err => {
-        console.log(err)
+        console.log(req)
         return res.json('Information not found')
     })
 });

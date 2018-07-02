@@ -15,8 +15,23 @@ router.post('/analyze',passport.authenticate('jwt', {session: false}), (req, res
             if (err) { return res.json(err) }
             try {
                 var result = execSync('cd routes/api/code && bugspots');
-                return res.json(result.toString('utf8'))
+                var arr = result.toString('utf8').split('\n') 
+                var idxHotspot = arr.length-1;
+                var message = []
+                var score = []
+                var resultObj = { 'numBug': arr[3].slice(6, arr[3].length-35), message, score}
+                for(var i = 0 ; i < arr.length-1; i++){
+                    if (i > idxHotspot + 1 && arr[i] !== ''){
+                        score.push({score: arr[i].slice(6,10), file: arr[i].slice(13,arr[i].length)})
+                    } else if( i > 6 && i < idxHotspot && arr[i] !== 'Hotspots'  && arr[i] !== ''){
+                        message.push(arr[i].slice(7,arr[i].length))
+                    } else if (arr[i] == 'Hotspots'){
+                        idxHotspot = i
+                    }
+                }
+                return res.json(resultObj)
             } catch (error){
+                console.log(error)
                 return res.json('Not found commits matching search criteria')
             }
         });
