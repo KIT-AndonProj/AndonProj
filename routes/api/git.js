@@ -2,9 +2,12 @@ const express = require('express');
 const router = express.Router(); 
 const User = require('../../models/User');
 const axios = require('axios');
+const jwt = require('jsonwebtoken');
+const keys = require('../../config/keys');
+const passport = require('passport');
 // const header =  {headers: { Authorization: 'crsherbet' }}
 
-router.post('/commits', (req, res) => {
+router.post('/commits', passport.authenticate('jwt', {session: false}), (req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository + '/commits' 
     var result = [];
    
@@ -28,7 +31,7 @@ router.post('/commits', (req, res) => {
     })
 });
 
-router.post('/pulls', (req, res) => {
+router.post('/pulls', passport.authenticate('jwt', {session: false}),(req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository + '/pulls' 
     var result = [];
     axios.get(url).then( response => {
@@ -48,7 +51,7 @@ router.post('/pulls', (req, res) => {
     })
 });
 
-router.post('/branches', (req, res) => {
+router.post('/branches', passport.authenticate('jwt', {session: false}), (req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository + '/branches' 
     var result = [];
     var ops = [];
@@ -78,7 +81,7 @@ router.post('/branches', (req, res) => {
     })
 });
 
-router.post('/repoinfo', (req, res) => {
+router.post('/repoinfo', passport.authenticate('jwt', {session: false}), (req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository  
    
     axios.get(url).then(response => { 
@@ -98,7 +101,7 @@ router.post('/repoinfo', (req, res) => {
     })
 });
 
-router.post('/issues', (req, res) => {
+router.post('/issues', passport.authenticate('jwt', {session: false}), (req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository + '/issues'
 
     result = [];
@@ -119,7 +122,7 @@ router.post('/issues', (req, res) => {
     })
 });
 
-router.post('/currrepo', (req, res) => {
+router.post('/currrepo', passport.authenticate('jwt', {session: false}),(req, res) => {
     url = 'https://api.github.com/users/' + req.body.username + '/repos'
 
     axios.get(url).then(response => {
@@ -139,7 +142,7 @@ router.post('/currrepo', (req, res) => {
 });
 
 
-router.post('/info', (req, res) => {
+router.post('/info', passport.authenticate('jwt', {session: false}), (req, res) => {
     url = 'https://api.github.com/users/' + req.body.username
 
     axios.get(url).then(response => { 
@@ -149,7 +152,7 @@ router.post('/info', (req, res) => {
     })
 });
 
-router.post('/repolist', (req, res) => {
+router.post('/repolist', passport.authenticate('jwt', {session: false}), (req, res) => {
     url = 'https://api.github.com/users/' + req.body.username + '/repos'
 
     axios.get(url).then(response => {
