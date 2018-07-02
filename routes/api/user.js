@@ -21,7 +21,8 @@ router.post('/register', (req, res) => {
     
     axios.get('https://api.github.com/users/' + req.body.gitName ).then(resp => {
        
-        User.findOne({ username: req.body.username }).then(user => {
+        User.findOne
+        ({ username: req.body.username }).then(user => {
             if(user){
                 errors.username = 'This username already exists';
                 return res.status(400).json(errors);
@@ -98,15 +99,29 @@ router.post('/login', (req, res) => {
 
 //Check current user
 router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
-    res.json({
+    console.log(req.body)
+    return res.json({
         id: req.user.id,
         username: req.user.username,
-        gitName: req.user.gitName
+        gitName: req.user.gitName,
+        data2: req.body
     });
 });
 
 router.get('/test', (req, res) => {
-    return res.json("hi")
+    config = { method: 'GET',
+    url: 'localhost:5000/api/users/current',
+    headers: {
+      Authorization : req.body.Authorization
+    }
+}
+    axios(config).then(resp => {
+        console.log('gi')
+        return res.json(resp.data)
+    }).catch(err => {
+        console.log(err)
+        return res.json(err)
+    })
 })
 
 
