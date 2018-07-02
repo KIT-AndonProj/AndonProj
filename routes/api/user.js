@@ -4,11 +4,12 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
-
+const axios = require('axios')
 const validateRegisterInput = require('../../validation/register');
 const validateLoginInput = require('../../validation/login');
 
 const User = require('../../models/User');
+
 
 //register new user
 router.post('/register', (req, res) => {
@@ -17,40 +18,46 @@ router.post('/register', (req, res) => {
     if(!isValid){
         return res.status(400).json(errors);
     }
-
-    User.findOne({ username: req.body.username })
-    .then(user => {
-        if(user){
-            errors.username = 'This username already exists';
-            return res.status(400).json(errors);
-        } else {
-            User.findOne({ gitName: req.body.gitName })
-            .then(git => {
-                if(git){
-                    errors.gitName = 'This github username already exists';
-                    return res.status(400).json(errors);
-                } else {
-                    const newUser = new User({
-                        username: req.body.username,
-                        password: req.body.password,
-                        gitName: req.body.gitName,
-                        imgURL: req.body.imgURL
-                    });
-        
-                    bcrypt.genSalt(10, (err, salt) => {
-                        bcrypt.hash(newUser.password, salt, (err,hash) => {
-                            if(err) throw err;
-                            newUser.password = hash;
-                            newUser.save()
-                                .then(user => res.json(user))
-                                .catch(err => console.log(err))
+    
+    axios.get('https://api.github.com/users/' + req.body.gitName ).then(resp => {
+       
+        User.findOne({ username: req.body.username }).then(user => {
+            if(user){
+                errors.username = 'This username already exists';
+                return res.status(400).json(errors);
+            } else {
+                User.findOne({ gitName: req.body.gitName }).then(git => {
+                    if(git){
+                        errors.gitName = 'This github username already exists';
+                        return res.status(400).json(errors);
+                    } else {
+                        const newUser = new User({
+                            username: req.body.username,
+                            password: req.body.password,
+                            gitName: req.body.gitName,
+                            imgURL: req.body.imgURL
+                        });
+            
+                        bcrypt.genSalt(10, (err, salt) => {
+                            bcrypt.hash(newUser.password, salt, (err,hash) => {
+                                if(err) throw err;
+                                newUser.password = hash;
+                                newUser.save()
+                                    .then(user => res.json(user))
+                                    .catch(err => console.log(err))
+                            })
                         })
-                    })
-                }
-            })
+                    }
+                })
+            }} 
+        )}
+        ).catch(erraxios => {
+            errors.gitName = 'Github username not found';
+            return res.json(errors)
         }
-    })
+    );
 });
+
 
 //Login
 router.post('/login', (req, res) => {
@@ -90,8 +97,7 @@ router.post('/login', (req, res) => {
 
 
 //Check current user
-router.get('/current', passport.authenticate('jwt', {session: false}), 
-(req, res) => {
+router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
     res.json({
         id: req.user.id,
         username: req.user.username,

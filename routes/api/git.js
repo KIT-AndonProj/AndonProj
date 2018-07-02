@@ -73,7 +73,7 @@ router.post('/branches', passport.authenticate('jwt', {session: false}), (req, r
             for(n in result){
                 result[n].commited_by = repores[n].data.commit.author.name
                 result[n].date = repores[n].data.commit.author.date
-                }
+            }
             return res.json(result)
         })
     ).catch(err => {
@@ -142,12 +142,14 @@ router.post('/currrepo', passport.authenticate('jwt', {session: false}),(req, re
 });
 
 
-router.post('/info', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.post('/info', (req, res) => {
     url = 'https://api.github.com/users/' + req.body.username
 
     axios.get(url).then(response => { 
+        console.log('jjjjj')
         return res.json(response.data)
     }).catch(err => {
+        console.log('werwr')
         return res.json('Information not found')
     })
 });

@@ -1,7 +1,6 @@
 const isEmpty = require('./is-empty');
 const Validator = require('validator');
 
-
 module.exports = function validateRgisterInput(data){
     let errors = {};
 
@@ -45,7 +44,7 @@ module.exports = function validateRgisterInput(data){
     }
 
     if(!Validator.equals(data.password, data.password2)) {
-        errors.password2 = 'Password must match';
+        errors.password2 = 'Password not match';
     }
 
     return {

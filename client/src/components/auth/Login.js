@@ -30,28 +30,6 @@ class Login extends Component {
         }
         console.log(user);
 
-        axios.post('http://localhost:5000/api/user/login', user)
-        .then(
-            (res) => {
-            console.log(res.data)
-            swal({
-                title: "Success",
-                text: "Login successful",
-                type: "success",
-                confirmButtonText: "OK"
-            })
-            .then((res) => {
-                this.props.history.push("/monitor");
-            })
-        })
-        .catch((res) => {
-            swal({
-                title: "Error",
-                text: "Wrong username or password",
-                type: "error",
-                confirmButtonText: "Try again"
-            });
-        });
     }
 
     render() {
