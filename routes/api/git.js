@@ -81,9 +81,22 @@ router.post('/branches', passport.authenticate('jwt', {session: false}), (req, r
     })
 });
 
+
+// passport.authenticate('jwt', {session: false}),
+router.post('/clonerepo', (req, res) => {
+    fs.remove(__dirname + '/code', (error) => {
+        if (error) { throw error; }
+        console.log('Clear');
+        exec('cd routes/api && git clone https://github.com/'+ req.body.username +'/'+ req.body.repository+'.git code', (err,stdout,stderr) => { 
+            if (err) { return res.json(err) }
+            console.log('Clone Finish')
+            return res.json('Finish')
+        })
+    })
+})
+
 router.post('/repoinfo', passport.authenticate('jwt', {session: false}), (req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository  
-   
     axios.get(url).then(response => { 
         result = {
             username: response.data.owner.login,
@@ -99,6 +112,8 @@ router.post('/repoinfo', passport.authenticate('jwt', {session: false}), (req, r
         console.log(req)
         return res.json('Information not found')
     })
+
+    
 });
 
 router.post('/issues', passport.authenticate('jwt', {session: false}), (req, res) => {
