@@ -16,7 +16,7 @@ router.post('/register', (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body);
   
     if(!isValid){
-        return res.status(400).json(errors);
+        return res.json(errors);
     }
     
     axios.get('https://api.github.com/users/' + req.body.gitName ).then(resp => {
@@ -25,12 +25,12 @@ router.post('/register', (req, res) => {
         ({ username: req.body.username }).then(user => {
             if(user){
                 errors.username = 'This username already exists';
-                return res.status(400).json(errors);
+                return res.json(errors);
             } else {
                 User.findOne({ gitName: req.body.gitName }).then(git => {
                     if(git){
                         errors.gitName = 'This github username already exists';
-                        return res.status(400).json(errors);
+                        return res.json(errors);
                     } else {
                         const newUser = new User({
                             username: req.body.username,
@@ -65,7 +65,7 @@ router.post('/login', (req, res) => {
     const { errors, isValid } = validateLoginInput(req.body);
 
     if(!isValid){
-        return res.status(400).json(errors);
+        return res.json(errors);
     }
 
     const username = req.body.username;
@@ -75,7 +75,7 @@ router.post('/login', (req, res) => {
         .then(user => {
             if(!user) {
                 errors.username = 'Username not found'
-                return res.status(404).json(errors);
+                return res.json(errors);
             }
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
@@ -90,7 +90,7 @@ router.post('/login', (req, res) => {
                         });
                     } else {
                         errors.password = 'Password incorrect'
-                        return res.status(400).json(errors);
+                        return res.json(errors);
                     }
                 });
         });
