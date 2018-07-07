@@ -18,6 +18,10 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    status: {
+        type: Boolean,
+        default: true //false
+    },
     date: {
         type: Date,
         default: Date.now

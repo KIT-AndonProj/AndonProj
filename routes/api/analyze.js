@@ -7,7 +7,7 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 //passport.authenticate('jwt', {session: false}),
 
-router.post('/bugspot', (req, res) => { 
+router.get('/bugspot', (req, res) => { 
     exec('cd routes/api/code && bugspots', (err,stdout,stderr) => { 
         if (err) { 
             console.log(err)
@@ -32,7 +32,7 @@ router.post('/bugspot', (req, res) => {
     })
 });
         
-router.post('/duplicate', (req, res) => { 
+router.get('/duplicate', (req, res) => { 
     fs.remove(__dirname + '/dup.json', (error) => {
         if (error) { throw error; }
         console.log('JsonClear');
@@ -47,7 +47,7 @@ router.post('/duplicate', (req, res) => {
     })
 })
 
-router.post('/complexity', (req, res) => { 
+router.get('/complexity', (req, res) => { 
     var resultArr = []   
     exec('code-complexity routes/api/code -c -s --sort commit -l 30', (err,stdout,stderr) => { 
         if (err) {

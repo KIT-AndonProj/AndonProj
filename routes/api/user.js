@@ -72,30 +72,39 @@ router.post('/login', (req, res) => {
     const password = req.body.password;
 
     User.findOne({ username })
-        .then(user => {
-            if(!user) {
+        .then(user1 => {
+            if(!user1) {
                 errors.username = 'Username not found'
                 return res.json(errors);
-            }
-            bcrypt.compare(password, user.password)
-                .then(isMatch => {
-                    if(isMatch){
-                        const payload = {id: user.id, username: user.username, gitName: user.gitName, imgURL: user.imgURL }
-                        jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600 }, (err, token) => {
-                            res.json({
-                                payload,
-                                success: true,
-                                token: 'Bearer ' + token 
-                            });
-                        });
-                    } else {
-                        errors.password = 'Password incorrect'
+            } else {
+                User.findOne({ username , status: true })
+                .then(user => {
+                    if(!user) {
+                        errors.username = 'The service is unavailable'
                         return res.json(errors);
+                    } else { 
+                        bcrypt.compare(password, user.password)
+                        .then(isMatch => {
+                            if(isMatch){
+                                const payload = {id: user.id, username: user.username, gitName: user.gitName, imgURL: user.imgURL }
+                                jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600 }, (err, token) => {
+                                    res.json({
+                                        payload,
+                                        success: true,
+                                        token: 'Bearer ' + token 
+                                    });
+                                });
+                            } else {
+                                errors.password = 'Password incorrect'
+                                return res.json(errors);
+                            }
+                        })
                     }
-                });
-        });
-});
+                })
+        }
 
+    });
+});
 
 //Check current user
 router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {

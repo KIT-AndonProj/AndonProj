@@ -5,11 +5,11 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
 
-const CurrUser = require('../../models/CurrUser');
+const User = require('../../models/User');
 
 router.post('/welcome', (req, res) => { 
-    CurrUser.update({status: true}, {status: false}).then(
-        CurrUser.findOneAndUpdate({user_id: req.body.user_id}, {status: true}).then(response =>{
+    User.update({status: true}, {status: false}).then(
+        User.findOneAndUpdate({user_id: req.body.user_id}, {status: true}).then(response =>{
             return res.json(response)
         })
     ).catch(err => {return res.json(err)})
