@@ -20,11 +20,9 @@
     "fs-extra": "^6.0.1",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.1.5",
+    "npm-check": "^5.7.1",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "validator": "^10.3.0"
-  },
-  "devDependencies": {
-    "nodemon": "^1.17.5"
   }
 }

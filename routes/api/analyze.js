@@ -5,6 +5,8 @@ const fs = require('fs-extra');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
+const npmCheck = require('npm-check');
+ 
 //passport.authenticate('jwt', {session: false}),
 
 router.get('/bugspot', (req, res) => { 
@@ -48,7 +50,8 @@ router.get('/duplicate', (req, res) => {
 })
 
 router.get('/complexity', (req, res) => { 
-    var resultArr = []   
+    var resultArr = [] 
+      
     exec('code-complexity routes/api/code -c -s --sort commit -l 30', (err,stdout,stderr) => { 
         if (err) {
             console.log(err)
@@ -74,6 +77,15 @@ router.get('/complexity', (req, res) => {
         return res.json(resObj)
     });
         
+})
+
+router.get('/outdated', (req, res) => {
+    var options = {cwd: 'routes/api/code',debug:true}
+    npmCheck(options).then(currentState => {
+        return res.json(currentState.get('packages'))
+    }).catch(err =>{
+        return res.json('A package.json was not found')
+    });
 })
 
 
