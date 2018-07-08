@@ -12,7 +12,7 @@ router.get('/bugspot', passport.authenticate('jwt', {session: false}), (req, res
     exec('cd routes/api/code && bugspots', (err,stdout,stderr) => { 
         if (err) { 
             console.log(err)
-            return res.json('Not found commits matching search criteria') 
+            return res.json({message:'Not found commits matching search criteria', overallHealth: 0 }) 
         }
 
         var arr = stdout.split('\n') 
@@ -44,10 +44,10 @@ router.get('/duplicate', passport.authenticate('jwt', {session: false}), (req, r
         exec('jscpd -p routes/api/code -r json -o routes/api/dup.json', (err,stdout,stderr) => { 
             if (err) {
                 console.log(err)
-                return res.json('The jscpd found too many duplicates over threshold') 
+                return res.json({message:'The jscpd found too many duplicates over threshold', overallHealth: 25}) 
             }
             var obj = require("../api/dup.json");
-            obj.statistics.overallHealth = obj.statistics.percentage * 25
+            obj.statistics.overallHealth = obj.statistics.percentage / 4
             return res.json(obj.statistics)
         });
     })
@@ -74,7 +74,7 @@ router.get('/complexity', passport.authenticate('jwt', {session: false}), (req, 
             if (a.comp > b.comp) { return 1; }
             return 0;
         }
-          
+        
         resObj.sort(compare);
         var result = {'overallHealth': resObj.length / 30 * 25, resObj}
     
@@ -91,7 +91,7 @@ router.get('/outdated', passport.authenticate('jwt', {session: false}), (req, re
         var result = {overallHealth: resObj.length, resObj}
         return res.json(result)
     }).catch(err =>{
-        return res.json('A package.json was not found')
+        return res.json({message:'A package.json was not found', overallHealth: 0})
     });
 })
 
