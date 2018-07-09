@@ -77,6 +77,7 @@ if __name__ == '__main__':
     # Process arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    parser.add_argument('command', type=str ,help='type for command')
     args = parser.parse_args()
 
     # Create NeoPixel object with appropriate configuration.
@@ -89,7 +90,7 @@ if __name__ == '__main__':
         print('Use "-c" argument to clear LEDs on exit')
 
     try:
-                
+        print (args.command)       
         print ('Blink')
         theaterChaseRainbow(strip, 30)
         theaterChase(strip, Color(127,127,127), 120, 60) 
