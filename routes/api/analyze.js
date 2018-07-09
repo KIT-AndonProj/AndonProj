@@ -23,7 +23,7 @@ router.get('/bugspot', passport.authenticate('jwt', {session: false}), (req, res
         var resultObj = { 'numBug': arr[3].slice(6, arr[3].length-35), message, score}
         for(var i = 0 ; i < arr.length-1; i++){
             if (i > idxHotspot + 1 && arr[i] !== ''){
-                score.push({score: arr[i].slice(6,10), file: arr[i].slice(13,arr[i].length)})
+                score.push({score: arr[i].slice(6,10), file: arr[i].slice(13,arr[i].length), percentage: parseFloat(arr[i].slice(6,10)) * 100 })
                 sumScore += parseFloat(arr[i].slice(6,10));
             } else if( i > 6 && i < idxHotspot && arr[i] !== 'Hotspots'  && arr[i] !== ''){
                 message.push(arr[i].slice(7,arr[i].length))
