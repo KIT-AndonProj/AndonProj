@@ -46,8 +46,9 @@ router.get('/duplicate', passport.authenticate('jwt', {session: false}), (req, r
                 console.log(err)
                 return res.json({message:'The jscpd found too many duplicates over threshold', overallHealth: 25}) 
             }
-            var obj = require("../api/dup.json");
+            const obj = fs.readJsonSync(__dirname + '/dup.json');
             obj.statistics.overallHealth = obj.statistics.percentage / 4
+            console.log(obj.statistics)
             return res.json(obj.statistics)
         });
     })

@@ -1,31 +1,41 @@
 const express = require('express');
 const router = express.Router(); 
-const { exec , execSync, spawn }  = require('child_process');
+const { exec , execSync }  = require('child_process');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
 
 const User = require('../../models/User');
 
-router.post('/welcome', (req, res) => { 
+router.post('/:command', (req, res) => { 
+
     // User.update({status: true}, {status: false}).then(
     //     User.findOneAndUpdate({user_id: req.body.user_id}, {status: true}).then(response =>{
     //         return res.json(response)
     //     })
     // ).catch(err => {return res.json(err)})
-            
-    // exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/welcomeBlink.py -c', (err,stdout,stderr) => { 
-    //     console.log('Welcome');
-    //     if (err) { return res.json(stderr) }
-    // });
-    var process = spawn('python',["pythonScript/welcomeBlink.py", "TEST"] );
+    var option = ''
+    if(req.params.command == 'welcome'){
+        option = '-wel' + req.body.value
+    } else if (req.params.command == 'overall') {
+        option = '-ol' + req.body.value
+    } else if (req.params.command == 'bugspot') {
+        option = '-bug ' + req.body.value
+    } else if (req.params.command == 'duplication') {
+        option = '-dup ' + req.body.value
+    } else if (req.params.command == 'complexity') {
+        option = '-comp ' + req.body.value
+    } else if (req.params.command == 'outdated') {
+        if(req.body.value >= 10)
+            option = '-od ' + 10
+    } else if (req.params.command == 'frequency') {
+        option = '-fq ' + req.body.value
+    }
 
-// Takes stdout data from script which executed
-// with arguments and send this data to res object
-    process.stdout.on('data', function(data) {
-    res.send(data.toString());
-} )
-    
+    exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c ' + option, (err,stdout,stderr) => { 
+        console.log('Welcome');
+        if (err) { return res.json(stderr) }
+    });  
 })
 
 
