@@ -18,13 +18,13 @@ router.post('/:command', (req, res) => {
     if(req.params.command == 'welcome'){
         option = '-wel'
     } else if (req.params.command == 'overall') {
-        option = '-ol' + req.body.value
+        option = '-ol ' + Math.round(req.body.value)
     } else if (req.params.command == 'bugspot') {
-        option = '-bug ' + req.body.value
+        option = '-bug ' + Math.round(req.body.value)
     } else if (req.params.command == 'duplication') {
-        option = '-dup ' + req.body.value
+        option = '-dup ' + Math.round(req.body.value)
     } else if (req.params.command == 'complexity') {
-        option = '-comp ' + req.body.value
+        option = '-comp ' + Math.round(req.body.value)
     } else if (req.params.command == 'outdated') {
         if(req.body.value >= 10)
             option = '-od ' + 10
