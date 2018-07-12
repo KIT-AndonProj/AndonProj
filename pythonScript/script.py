@@ -101,18 +101,19 @@ if __name__ == '__main__':
         if args.overall:
             theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 60, 90)    
         elif args.bugspot:
-            colorWipe(strip, Color(args.bugspot*10 , 0, 255-(args.bugspot*10)), 90)
+            colorWipe(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 90)
         elif args.complexity:
-            colorWipe(strip, Color(args.complexity*10 , 0, 255-(args.complexity*10)), 90)
+            colorWipe(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 90)
         elif args.duplication:
-            colorWipe(strip, Color(args.duplication*10 , 0, 255-(args.duplication*10)), 90)
+            colorWipe(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 90)
         elif args.outdated:
-            colorWipe(strip, Color(args.outdated*10 , 0, 255-(args.outdated*10)), 90)
+            colorWipe(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 90)
         elif args.frequency:
             print('Frequency')
         elif args.welcome:
             theaterChaseRainbow(strip, 30)
             theaterChase(strip, Color(127,127,127), 120, 45) 
+        colorWipe(strip, Color(0,0,0), 10)
 
     except KeyboardInterrupt:
         if args.clear:
