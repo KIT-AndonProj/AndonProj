@@ -24,6 +24,13 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 
 # Define functions which animate LEDs in various ways.
+
+def shine(strip, color, wait_ms=50):
+    strip.setPixelColor(0, color)
+    strip.setPixelColor(1, color)
+    strip.show()
+    time.sleep(wait_ms/1000.0)
+
 def colorWipe(strip, color, wait_ms=50):
     """Wipe color across display a pixel at a time."""
     for i in range(strip.numPixels()):
@@ -101,18 +108,19 @@ if __name__ == '__main__':
         if args.overall:
             theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 60, 90)    
         elif args.bugspot:
-            colorWipe(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 90)
+            shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 360)
         elif args.complexity:
-            colorWipe(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 90)
+            shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 360)
         elif args.duplication:
-            colorWipe(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 90)
+            shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 360)
         elif args.outdated:
-            colorWipe(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 90)
+            shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 360)
         elif args.frequency:
             print('Frequency')
         elif args.welcome:
             theaterChaseRainbow(strip, 30)
             theaterChase(strip, Color(127,127,127), 120, 45) 
+        colorWipe(strip, Color(0,0,0), 10)
 
     except KeyboardInterrupt:
         if args.clear:
