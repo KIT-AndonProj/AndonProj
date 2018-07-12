@@ -85,13 +85,13 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
-    parser.add_argument('-wel', '--welcome', help='welcome light')
+    parser.add_argument('-wel', '--welcome', action='store_true', help='welcome light')
     parser.add_argument('-ol', '--overall', type=float ,help='overall health value')
     parser.add_argument('-bug','--bugspot', type=float ,help='bugspot value')
     parser.add_argument('-comp', '--complexity', type=float ,help='complexity value')
     parser.add_argument('-dup', '--duplication',type=float ,help='duplication value')
     parser.add_argument('-od','--outdate', type=int ,help='outdate value')
-    # parser.add_argument('-fq', '--frequency',type=float ,help='frequency of commits value')
+    parser.add_argument('-fq', '--frequency',type=float ,help='frequency of commits value')
 
     args = parser.parse_args()
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)

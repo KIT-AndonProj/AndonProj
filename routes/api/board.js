@@ -33,8 +33,8 @@ router.post('/:command', (req, res) => {
     }
 
     exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c ' + option, (err,stdout,stderr) => { 
-        console.log('Welcome');
         if (err) { return res.json(stderr) }
+        return res.json(req.params.command)
     });  
 })
 
