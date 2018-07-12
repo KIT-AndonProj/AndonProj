@@ -108,13 +108,13 @@ if __name__ == '__main__':
         if args.overall:
             theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 60, 90)    
         elif args.bugspot:
-            shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 360)
+            shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 10000)
         elif args.complexity:
-            shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 360)
+            shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 10000)
         elif args.duplication:
-            shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 360)
+            shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 10000)
         elif args.outdated:
-            shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 360)
+            shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 10000)
         elif args.frequency:
             print('Frequency')
         elif args.welcome:
