@@ -113,7 +113,6 @@ if __name__ == '__main__':
         elif args.welcome:
             theaterChaseRainbow(strip, 30)
             theaterChase(strip, Color(127,127,127), 120, 45) 
-        colorWipe(strip, Color(0,0,0), 10)
 
     except KeyboardInterrupt:
         if args.clear:

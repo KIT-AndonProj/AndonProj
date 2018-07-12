@@ -29,8 +29,11 @@ router.post('/:command', (req, res) => {
     } else if (req.params.command == 'complexity') {
         option = '-comp ' + Math.ceil(req.body.value)
     } else if (req.params.command == 'outdated') {
-        if(req.body.value >= 10)
-            option = '-od ' + 10
+        if(req.body.value >= 12){
+            option = '-od ' + 25
+        } else {
+            req.body.value = req.body.value * 2
+        }
     } else if (req.params.command == 'frequency') {
         option = '-fq ' + req.body.value
     }
