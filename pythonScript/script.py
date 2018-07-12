@@ -90,7 +90,7 @@ if __name__ == '__main__':
     parser.add_argument('-bug','--bugspot', type=int ,help='bugspot value')
     parser.add_argument('-comp', '--complexity', type=int ,help='complexity value')
     parser.add_argument('-dup', '--duplication',type=int ,help='duplication value')
-    parser.add_argument('-od','--outdate', type=int ,help='outdate value')
+    parser.add_argument('-od','--outdated', type=int ,help='outdated value')
     parser.add_argument('-fq', '--frequency',type=int ,help='frequency of commits value')
 
     args = parser.parse_args()
@@ -99,20 +99,20 @@ if __name__ == '__main__':
 # g r b
     try:
         if args.overall:
-            theaterChase(strip, Color(127-args.overall, args.overall + 30, 0), 120, 15)    
+            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 60, 90)    
         elif args.bugspot:
-            colorWipe(strip, Color(args.overall*10 , 0, 255-(args.overall*10)), 120)
+            colorWipe(strip, Color(args.bugspot*10 , 0, 255-(args.bugspot*10)), 90)
         elif args.complexity:
-            colorWipe(strip, Color(args.overall*10 , 0, 255-(args.overall*10)), 120)
+            colorWipe(strip, Color(args.complexity*10 , 0, 255-(args.complexity*10)), 90)
         elif args.duplication:
-            colorWipe(strip, Color(args.overall*10 , 0, 255-(args.overall*10)), 120)
-        elif args.outdate:
-            colorWipe(strip, Color(args.overall*10 , 0, 255-(args.overall*10)), 120)
+            colorWipe(strip, Color(args.duplication*10 , 0, 255-(args.duplication*10)), 90)
+        elif args.outdated:
+            colorWipe(strip, Color(args.outdated*10 , 0, 255-(args.outdated*10)), 90)
         elif args.frequency:
             print('Frequency')
         elif args.welcome:
             theaterChaseRainbow(strip, 30)
-            theaterChase(strip, Color(127,127,127), 120, 60) 
+            theaterChase(strip, Color(127,127,127), 120, 45) 
 
     except KeyboardInterrupt:
         if args.clear:

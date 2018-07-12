@@ -15,16 +15,19 @@ router.post('/:command', (req, res) => {
     //     })
     // ).catch(err => {return res.json(err)})
     var option = ''
+    if(req.body.value < 1){
+        req.body.value = 1;
+    }
     if(req.params.command == 'welcome'){
         option = '-wel'
     } else if (req.params.command == 'overall') {
-        option = '-ol ' + Math.round(req.body.value)
+        option = '-ol ' + Math.ceil(req.body.value)
     } else if (req.params.command == 'bugspot') {
-        option = '-bug ' + Math.round(req.body.value)
+        option = '-bug ' + Math.ceil(req.body.value)
     } else if (req.params.command == 'duplication') {
-        option = '-dup ' + Math.round(req.body.value)
+        option = '-dup ' + Math.ceil(req.body.value)
     } else if (req.params.command == 'complexity') {
-        option = '-comp ' + Math.round(req.body.value)
+        option = '-comp ' + Math.ceil(req.body.value)
     } else if (req.params.command == 'outdated') {
         if(req.body.value >= 10)
             option = '-od ' + 10
