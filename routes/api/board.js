@@ -16,7 +16,7 @@ router.post('/:command', (req, res) => {
     // ).catch(err => {return res.json(err)})
     var option = ''
     if(req.params.command == 'welcome'){
-        option = '-wel' + req.body.value
+        option = '-wel'
     } else if (req.params.command == 'overall') {
         option = '-ol' + req.body.value
     } else if (req.params.command == 'bugspot') {

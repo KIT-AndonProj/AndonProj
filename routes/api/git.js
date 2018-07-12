@@ -7,7 +7,6 @@ const keys = require('../../config/keys');
 const passport = require('passport');
 const fs = require('fs-extra');
 const { exec , execSync }  = require('child_process');
-// const header =  {headers: { Authorization: 'crsherbet' }}
 
 router.post('/commits', passport.authenticate('jwt', {session: false}), (req, res) => {
     url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository + '/commits' 
@@ -84,8 +83,7 @@ router.post('/branches', passport.authenticate('jwt', {session: false}), (req, r
 });
 
 
-// passport.authenticate('jwt', {session: false}),
-router.post('/clonerepo', (req, res) => {
+router.post('/clonerepo', passport.authenticate('jwt', {session: false}), (req, res) => {
     fs.remove(__dirname + '/code', (error) => {
         if (error) { throw error; }
         console.log('Clear');
@@ -159,26 +157,14 @@ router.post('/currrepo', passport.authenticate('jwt', {session: false}),(req, re
 });
 
 
-router.post('/info', (req, res) => {
-    url = 'https://api.github.com/users/' + req.body.username
+// router.post('/repolist', passport.authenticate('jwt', {session: false}), (req, res) => {
+//     url = 'https://api.github.com/users/' + req.body.username + '/repos'
 
-    axios.get(url).then(response => { 
-        console.log('jjjjj')
-        return res.json(response.data)
-    }).catch(err => {
-        console.log('werwr')
-        return res.json('Information not found')
-    })
-});
-
-router.post('/repolist', passport.authenticate('jwt', {session: false}), (req, res) => {
-    url = 'https://api.github.com/users/' + req.body.username + '/repos'
-
-    axios.get(url).then(response => {
-        return res.json(response.data)
-    }).catch(err => {
-        return res.json('Information not found')
-    })
-});
+//     axios.get(url).then(response => {
+//         return res.json(response.data)
+//     }).catch(err => {
+//         return res.json('Information not found')
+//     })
+// });
 
 module.exports = router;
