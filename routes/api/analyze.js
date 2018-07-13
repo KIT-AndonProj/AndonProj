@@ -23,7 +23,7 @@ router.get('/bugspot', passport.authenticate('jwt', {session: false}), (req, res
         var resultObj = { 'numBug': arr[3].slice(6, arr[3].length-35), message, score}
         for(var i = 0 ; i < arr.length-1; i++){
             if (i > idxHotspot + 1 && arr[i] !== ''){
-                score.push({score: arr[i].slice(6,10), file: arr[i].slice(13,arr[i].length), percentage: parseFloat(arr[i].slice(6,10)) * 100 })
+                score.push({score: parseFloat(arr[i].slice(6,10)).toFixed(2), file: arr[i].slice(13,arr[i].length), percentage: (parseFloat(arr[i].slice(6,10)) * 100).toFixed(2)})
                 sumScore += parseFloat(arr[i].slice(6,10));
             } else if( i > 6 && i < idxHotspot && arr[i] !== 'Hotspots'  && arr[i] !== ''){
                 message.push(arr[i].slice(7,arr[i].length))
@@ -31,7 +31,7 @@ router.get('/bugspot', passport.authenticate('jwt', {session: false}), (req, res
                 idxHotspot = i
             }
         }
-        overallHealth = sumScore / resultObj.score.length * 25
+        overallHealth = (sumScore / resultObj.score.length * 25).toFixed(2)
         resultObj.overallHealth = overallHealth
         return res.json(resultObj)
     })
@@ -47,7 +47,7 @@ router.get('/duplicate', passport.authenticate('jwt', {session: false}), (req, r
                 return res.json({message:'The jscpd found too many duplicates over threshold', overallHealth: 25}) 
             }
             const obj = fs.readJsonSync(__dirname + '/dup.json');
-            obj.statistics.overallHealth = obj.statistics.percentage / 4
+            obj.statistics.overallHealth = (obj.statistics.percentage / 4).toFixed(2)
             console.log(obj.statistics)
             return res.json(obj.statistics)
         });
@@ -66,7 +66,7 @@ router.get('/complexity', passport.authenticate('jwt', {session: false}), (req, 
         var resObj = []
         for(var i = 1; i < resultArr.length-1; i+=4){
             if(resultArr[i+2] > 1){
-                resObj.push({file: resultArr[i], comp:resultArr[i+1], numCommit:resultArr[i+2], sloc:resultArr[i+3]})
+                resObj.push({file: resultArr[i], comp: parseFloat(resultArr[i+1]).toFixed(2), numCommit:resultArr[i+2], sloc:resultArr[i+3]})
             }
         }
 
@@ -77,7 +77,7 @@ router.get('/complexity', passport.authenticate('jwt', {session: false}), (req, 
         }
         
         resObj.sort(compare);
-        var result = {'overallHealth': resObj.length / 30 * 25, resObj}
+        var result = {'overallHealth': (resObj.length / 30 * 25).toFixed(2), resObj}
     
         console.log(result)
         return res.json(result)
@@ -89,7 +89,12 @@ router.get('/outdated', passport.authenticate('jwt', {session: false}), (req, re
     var options = {cwd: 'routes/api/code',debug:true}
     npmCheck(options).then(currentState => {
         resObj = currentState.get('packages')
-        var result = {overallHealth: resObj.length, resObj}
+        resultObj = []
+        for(var i = 0; i< resObj.length; i++ ){
+            if(resObj[i].latest !== resObj[i].installed)
+                resultObj.push({moduleName: resObj[i].moduleName, homepage: resObj[i].homepage, latest: resObj[i].latest, installed: resObj[i].installed})
+        }
+        var result = {overallHealth: resObj.length.toFixed(2), resultObj}
         return res.json(result)
     }).catch(err =>{
         return res.json({message:'A package.json was not found', overallHealth: 0})
