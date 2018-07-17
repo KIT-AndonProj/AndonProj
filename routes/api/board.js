@@ -90,7 +90,7 @@ router.post('/:command', (req, res) => {
             numCommit += req.body.value[i].commit
         }
        
-        var avgCommit =  Math.ceil(10000/(numCommit/diffDays*120))
+        var avgCommit =  Math.ceil(380/(numCommit/diffDays))
         option = '-fq ' + avgCommit;
     
     }
