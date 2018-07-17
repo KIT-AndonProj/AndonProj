@@ -116,7 +116,7 @@ if __name__ == '__main__':
         elif args.outdated:
             shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 10000)
         elif args.frequency:
-            theaterChase(strip, Color(45,123,154), 240, args.frequency) 
+            theaterChase(strip, Color(20,130,20), args.frequency, 60) 
         elif args.welcome:
             theaterChaseRainbow(strip, 30)
             theaterChase(strip, Color(127,127,127), 120, 45) 

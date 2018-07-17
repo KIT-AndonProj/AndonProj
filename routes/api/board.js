@@ -36,52 +36,6 @@ router.post('/:command', (req, res) => {
         }
     } else if (req.params.command == 'frequency') {
         var oneDay = 24*60*60*1000; 
-        req.body.value = [
-            {
-                "name": "2018-07-01",
-                "commit": 4
-            },
-            {
-                "name": "2018-07-02",
-                "commit": 4
-            },
-            {
-                "name": "2018-07-03",
-                "commit": 3
-            },
-            {
-                "name": "2018-07-04",
-                "commit": 1
-            },
-            {
-                "name": "2018-07-07",
-                "commit": 3
-            },
-            {
-                "name": "2018-07-08",
-                "commit": 2
-            },
-            {
-                "name": "2018-07-09",
-                "commit": 2
-            },
-            {
-                "name": "2018-07-11",
-                "commit": 1
-            },
-            {
-                "name": "2018-07-12",
-                "commit": 8
-            },
-            {
-                "name": "2018-07-13",
-                "commit": 1
-            },
-            {
-                "name": "2018-07-17",
-                "commit": 1
-            }
-        ]
         var firstDate = new Date(req.body.value[0].name);
         var secondDate = new Date(req.body.value[req.body.value.length-1].name);
         var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
@@ -94,7 +48,7 @@ router.post('/:command', (req, res) => {
         option = '-fq ' + avgCommit;
     
     }
-    console.log(option)
+    
     exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c ' + option, (err,stdout,stderr) => { 
         if (err) { return res.json(stderr) }
         return res.json(req.params.command)
