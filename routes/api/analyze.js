@@ -31,7 +31,11 @@ router.get('/bugspot', passport.authenticate('jwt', {session: false}), (req, res
                 idxHotspot = i
             }
         }
-        overallHealth = (sumScore / resultObj.score.length * 25).toFixed(2)
+        overallHealth = (sumScore / resultObj.score.length * 10).toFixed(2)
+        if(overallHealth > 25){
+            overallHealth = 25;
+        }
+
         resultObj.overallHealth = overallHealth
         return res.json(resultObj)
     })
