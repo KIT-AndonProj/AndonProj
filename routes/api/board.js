@@ -32,10 +32,20 @@ router.post('/:command', (req, res) => {
         if(req.body.value >= 12){
             option = '-od ' + 25
         } else {
-            req.body.value = req.body.value * 2
+            option = '-od ' + (req.body.value * 2)
         }
     } else if (req.params.command == 'frequency') {
-        option = '-fq ' + req.body.value
+        var oneDay = 24*60*60*1000; 
+        var firstDate = new Date(req.body.value[0]);
+        var secondDate = new Date(req.body.value[req.body.value.length-1]);
+        var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+        var numCommit = 0;
+        for(i in req.body.value){
+            numCommit += req.body.value[i].commit
+        }
+        var avgCommit = Math.ceil(numCommit/diffDays)
+        option = '-fq ' + avgCommit;
+
     }
 
     exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c ' + option, (err,stdout,stderr) => { 

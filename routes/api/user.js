@@ -106,32 +106,4 @@ router.post('/login', (req, res) => {
     });
 });
 
-//Check current user
-// router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
-//     console.log(req.body)
-//     return res.json({
-//         id: req.user.id,
-//         username: req.user.username,
-//         gitName: req.user.gitName,
-//         data2: req.body
-//     });
-// });
-
-// router.get('/test', (req, res) => {
-//     config = { method: 'GET',
-//     url: 'localhost:5000/api/users/current',
-//     headers: {
-//       Authorization : req.body.Authorization
-//     }
-// }
-//     axios(config).then(resp => {
-//         console.log('gi')
-//         return res.json(resp.data)
-//     }).catch(err => {
-//         console.log(err)
-//         return res.json(err)
-//     })
-// })
-
-
 module.exports = router;

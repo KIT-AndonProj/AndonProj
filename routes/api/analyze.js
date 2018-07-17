@@ -44,7 +44,7 @@ router.get('/duplicate', passport.authenticate('jwt', {session: false}), (req, r
         exec('jscpd -p routes/api/code -r json -o routes/api/dup.json', (err,stdout,stderr) => { 
             if (err) {
                 console.log(err)
-                return res.json({message:'The jscpd found too many duplicates over threshold', overallHealth: 25}) 
+                return res.json({message:'The jscpd found too many duplicates over threshold', overallHealth: 25.00}) 
             }
             const obj = fs.readJsonSync(__dirname + '/dup.json');
             obj.statistics.overallHealth = (obj.statistics.percentage / 4).toFixed(2)
