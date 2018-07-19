@@ -12,17 +12,6 @@ html, body {
   padding-top: 130px;
   background-image: url("./res/gitBg.png");
   height: 1000px;
-  padding-left: 5%;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.parallax-2 {
-  background-color: antiquewhite;
-  height: 1000px;
-  padding-top: 5%;
   padding-left: 15%;
   background-attachment: fixed;
   background-position: center;
@@ -30,7 +19,18 @@ html, body {
   background-size: cover;
 }
 
-button{
+.parallax-2 {
+  height: 1000px;
+  padding-top: 5%;
+  padding-left: 15%;
+  padding-right: 5%;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.andon-button{
   font-family: 'Nunito';
   background-color:black;
   border-radius: 5px;
@@ -41,13 +41,13 @@ button{
   display: inline-block;
   font-size: 20px;
   margin: 4px 10px;
-  -webkit-transition-duration: 0.4s; /* Safari */
+  -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
   cursor: pointer;
   border: 2px solid #555555;
 }
 
-button:hover {
+.andon-button:hover {
 background-color: #F9DA4A;
 color: black;
 }

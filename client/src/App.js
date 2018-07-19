@@ -5,16 +5,14 @@ import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Monitor from './pages/Monitor';
 
-
 class App extends Component {
   
   render() {
     return (
       <Router>
-        
         <div className="App">
             <Route exact path = "/register" component = { Register }/>
-            <Route exact path = "/login" component = { Login }/>
+            <Route exact path = "/" component = { Login }/>
             <Route exact path = "/monitor" component = {Monitor}/>
       </div>
       </Router>
@@ -22,4 +20,6 @@ class App extends Component {
   }
 }
 
-export default App;
+
+export default (App);
+

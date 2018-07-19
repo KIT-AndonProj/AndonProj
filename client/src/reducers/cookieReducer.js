@@ -1,7 +1,10 @@
-export default function cookieReducer(state = { id:''}, action) {
+
+export default function cookieReducer(state = { username:'',gitName:'',imgURL:'' }, action) {
     if(action.type === 'COOKIE') {
       return {
-          id: action.user_id,
+          username: action.username,
+          gitName: action.gitName,
+          imgURL: action.imgURL,
         }
     }
     return state;

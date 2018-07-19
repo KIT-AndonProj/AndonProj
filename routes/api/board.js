@@ -9,17 +9,14 @@ const User = require('../../models/User');
 
 router.post('/:command', (req, res) => { 
 
-    // User.update({status: true}, {status: false}).then(
-    //     User.findOneAndUpdate({user_id: req.body.user_id}, {status: true}).then(response =>{
-    //         return res.json(response)
-    //     })
-    // ).catch(err => {return res.json(err)})
     var option = ''
+    var monitor = ''
     if(req.body.value < 1){
         req.body.value = 1;
     }
     if(req.params.command == 'welcome'){
         option = '-wel'
+        monitor = '&& python pythonScript/andon-monitor/welcome.py'
     } else if (req.params.command == 'overall') {
         option = '-ol ' + Math.ceil(req.body.value)
     } else if (req.params.command == 'bugspot') {
@@ -49,7 +46,7 @@ router.post('/:command', (req, res) => {
     
     }
     
-    exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c ' + option, (err,stdout,stderr) => { 
+    exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c ' + option + ' ' + monitor, (err,stdout,stderr) => { 
         if (err) { return res.json(stderr) }
         return res.json(req.params.command)
     });  

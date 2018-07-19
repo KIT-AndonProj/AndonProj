@@ -31,7 +31,7 @@ router.get('/bugspot', passport.authenticate('jwt', {session: false}), (req, res
                 idxHotspot = i
             }
         }
-        overallHealth = (sumScore / resultObj.score.length * 10).toFixed(2)
+        overallHealth = Math.ceil(sumScore / resultObj.score.length * 10)
         if(overallHealth > 25){
             overallHealth = 25;
         }
@@ -51,7 +51,7 @@ router.get('/duplicate', passport.authenticate('jwt', {session: false}), (req, r
                 return res.json({message:'The jscpd found too many duplicates over threshold', overallHealth: 25.00}) 
             }
             const obj = fs.readJsonSync(__dirname + '/dup.json');
-            obj.statistics.overallHealth = (obj.statistics.percentage / 4).toFixed(2)
+            obj.statistics.overallHealth = Math.ceil(obj.statistics.percentage / 4)
             console.log(obj.statistics)
             return res.json(obj.statistics)
         });
@@ -60,6 +60,7 @@ router.get('/duplicate', passport.authenticate('jwt', {session: false}), (req, r
 
 router.get('/complexity', passport.authenticate('jwt', {session: false}), (req, res) => { 
     var resultArr = [] 
+    console.log('hi')
       
     exec('code-complexity routes/api/code -c -s --sort commit -l 30', (err,stdout,stderr) => { 
         if (err) {
@@ -72,19 +73,13 @@ router.get('/complexity', passport.authenticate('jwt', {session: false}), (req, 
             if(resultArr[i+2] > 1){
                 resObj.push({file: resultArr[i], comp: parseFloat(resultArr[i+1]).toFixed(2), numCommit:resultArr[i+2], sloc:resultArr[i+3]})
             }
+            console.log(i)
         }
-
-        function compare(a,b) {
-            if (a.comp < b.comp) { return -1; }
-            if (a.comp > b.comp) { return 1; }
-            return 0;
-        }
-        
-        resObj.sort(compare);
-        var result = {'overallHealth': (resObj.length / 30 * 25).toFixed(2), resObj}
+    
+        result = {'overallHealth': Math.ceil(resObj.length / 30 * 25), resObj}
     
         console.log(result)
-        return res.json(result)
+        return res.json(result)   
     });
         
 })
@@ -98,7 +93,7 @@ router.get('/outdated', passport.authenticate('jwt', {session: false}), (req, re
             if(resObj[i].latest !== resObj[i].installed)
                 resultObj.push({moduleName: resObj[i].moduleName, homepage: resObj[i].homepage, latest: resObj[i].latest, installed: resObj[i].installed})
         }
-        var result = {overallHealth: resObj.length.toFixed(2), resultObj}
+        var result = {overallHealth: resultObj.length * 2, resultObj}
         return res.json(result)
     }).catch(err =>{
         return res.json({message:'A package.json was not found', overallHealth: 0})
