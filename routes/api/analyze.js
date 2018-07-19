@@ -60,23 +60,26 @@ router.get('/duplicate', passport.authenticate('jwt', {session: false}), (req, r
 
 router.get('/complexity', passport.authenticate('jwt', {session: false}), (req, res) => { 
     var resultArr = [] 
-    console.log('hi')
       
     exec('code-complexity routes/api/code -c -s --sort commit -l 30', (err,stdout,stderr) => { 
         if (err) {
             console.log(err)
             return res.json(stderr) 
         }
-        resultArr = stdout.split(/\n| /)
+      
+        resultArr = stdout.split(/\n| /);
+        for( i in resultArr){
+            resultArr[i] = resultArr[i].slice(5,resultArr[i].length-5)
+        }
         var resObj = []
+       
         for(var i = 1; i < resultArr.length-1; i+=4){
-            if(resultArr[i+2] > 1){
+            if(parseInt(resultArr[i+2]) > 1){
                 resObj.push({file: resultArr[i], comp: parseFloat(resultArr[i+1]).toFixed(2), numCommit:resultArr[i+2], sloc:resultArr[i+3]})
             }
-            console.log(i)
         }
-    
-        result = {'overallHealth': Math.ceil(resObj.length / 30 * 25), resObj}
+        
+        var result = {'overallHealth': Math.ceil(resObj.length / 30 * 25), resObj}
     
         console.log(result)
         return res.json(result)   

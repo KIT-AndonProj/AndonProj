@@ -6,7 +6,7 @@
   "scripts": {
     "client-install": "npm install --prefix client",
     "server": "node server.js",
-    "client": "npm run client --prefix client",
+    "client": "npm start --prefix client",
     "app": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Warisara",

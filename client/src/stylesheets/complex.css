@@ -1,0 +1,12 @@
+.card-complex {
+    padding-left: 5%;
+    box-shadow: 0 4px 8px 0  rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-right: 5%;
+    background-color: rgb(230, 228, 219);
+    /* border-radius: 5px; */
+  }
+  
+  .card-complex:hover {
+    box-shadow: 0 8px 16px 0  rgba(151, 149, 140, 0.69);
+  }

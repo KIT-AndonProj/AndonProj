@@ -19,7 +19,7 @@
     "sweetalert2": "^7.24.3"
   },
   "scripts": {
-    "client": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

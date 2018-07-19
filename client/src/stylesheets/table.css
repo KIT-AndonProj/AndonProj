@@ -1,0 +1,10 @@
+.ReactTable {
+    /* padding-right: 5%;
+    border: none; */
+    background-color: white;
+    text-align: center;
+}
+
+.rt-td{
+    width: 100px;
+}
