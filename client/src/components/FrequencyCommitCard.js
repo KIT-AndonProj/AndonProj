@@ -9,15 +9,17 @@ class FrequencyCommitCard extends Component {
                 if(this.props.commit_data.length === 0   ){ 
                     const data = this.props.current_commit;
                 return (
-                    <div className="parallax-2" id='frequency'> 
+                    <div className="column-unwatch2">
+                        <div className="frequency-con">
                     <h2 id="header">Frequency of Commit</h2>
-                    <LineChart width={1500} height={700} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                    <Line type="monotone" dataKey="commit" stroke="#8884d8" />
-                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <LineChart width={600} height={400} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <Line type="monotone" dataKey="commit" stroke="#ffffff" />
+                    <CartesianGrid stroke="#000" strokeDasharray="5 5" />
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
                 </LineChart> 
+                </div>
                 </div>
                 );
             }
@@ -45,9 +47,11 @@ class FrequencyCommitCard extends Component {
          
             else {
                 return (
-                    <div className="parallax-2">
+                    <div className="column-unwatch">
+                        <div className="frequency-con">
                         <h2 id="header">Frequncy of commit</h2>
                         <h2>No data shown. Either no commits in your repository or please watch the repository.</h2>
+                    </div>
                     </div>
                 );
             }

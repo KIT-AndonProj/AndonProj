@@ -13,11 +13,12 @@ class WatchCard extends Component {
     render(){
         return(
             <div >
-            <div className="parallax">
-            <div className="row" id="main">
+            <div className="parallax" id="main">
+            <div className="row" >
                 <div className="column">
              <div className="profile-con">
              <img className="img-profile" src={this.props.profile.image_url} alt="User"/>
+             <div className="profile-con2">
              <h1>Repository Information</h1>
                  <p>Username : {this.props.profile.username}</p> 
                  <p>Repository name : {this.props.profile.reponame}</p>
@@ -25,6 +26,7 @@ class WatchCard extends Component {
                 <p>Updated at : {this.props.profile.updated_at}</p>
                 <p>Pushed at : {this.props.profile.pushed_at}</p>
                  <p>Issue : {this.props.profile.num_issue}</p>
+                 </div>
             </div>
             </div>
             <div className="column" >

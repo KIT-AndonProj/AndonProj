@@ -8,7 +8,7 @@ class DuplicateCard extends Component {
     
 
     render(){
-        if ( this.props.duplicate_data.status === 'available'){
+        if ( this.props.status === 'available'){
         const data = [ 
             {name: 'Duplicate', value: this.props.duplicate_data.percentage}, 
             { name: 'Non duplicate', value: 100-this.props.duplicate_data.percentage}];
@@ -19,13 +19,12 @@ class DuplicateCard extends Component {
                 <h2>Duplicate: {this.props.duplicate_data.duplications}</h2>
                 <h2>Files: {this.props.duplicate_data.files}</h2>
                 <h2>Lines: {this.props.duplicate_data.lines}</h2>
-                <div className="c"> <PieChart width={1000} height={1000}>
-                    <Pie data={data} cx={500} cy={500} innerRadius={175} outerRadius={350} fill="#82ca9d" dataKey="data"/>
+                <PieChart  width={1000} height={700}>
+                <Pie data={data} dataKey="value" cx={500} cy={200} innerRadius={100} outerRadius={200} fill="#82ca9d"/>
                     <Tooltip/>
                 </PieChart>
                 </div>      
                
-                </div>
         );
     }
     else {
@@ -33,6 +32,7 @@ class DuplicateCard extends Component {
             <div className="parallax-2">
                 <h2 id="header">Code Duplication</h2>
                 <h2>No data show. Duplication of code not found.</h2>
+                
             </div>
         );
     }

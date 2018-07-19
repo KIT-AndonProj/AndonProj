@@ -60,8 +60,6 @@ class Login extends Component {
                     confirmButtonText: "Try again"
                 });
             });
-           ;
-
     }
 
     getCurrentRepo(gitName){

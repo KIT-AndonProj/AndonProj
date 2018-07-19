@@ -88,19 +88,26 @@ router.get('/complexity', passport.authenticate('jwt', {session: false}), (req, 
 })
 
 router.get('/outdated', passport.authenticate('jwt', {session: false}), (req, res) => {
-    var options = {cwd: 'routes/api/code',debug:true}
-    npmCheck(options).then(currentState => {
-        resObj = currentState.get('packages')
-        resultObj = []
-        for(var i = 0; i< resObj.length; i++ ){
-            if(resObj[i].latest !== resObj[i].installed)
-                resultObj.push({moduleName: resObj[i].moduleName, homepage: resObj[i].homepage, latest: resObj[i].latest, installed: resObj[i].installed})
+    fs.pathExists(__dirname + '/code/package.json', (err, exists) => {
+        if(exists){
+            npmCheck({cwd: __dirname + '/code'}).then(currentState => {
+                resObj = currentState.get('packages')
+                resultObj = []
+                for(var i = 0; i< resObj.length; i++ ){
+                    if(resObj[i].latest !== resObj[i].installed)
+                        resultObj.push({moduleName: resObj[i].moduleName, homepage: resObj[i].homepage, latest: resObj[i].latest, installed: resObj[i].installed})
+                }
+                var result = {overallHealth: resultObj.length * 2, resultObj}
+                return res.json(result)
+            }).catch(err =>{
+                return res.json({message:'A package.json was not found', overallHealth: 0})
+            });
+        } 
+        else {
+            return res.json({message:'A package.json was not found', overallHealth: 0})
         }
-        var result = {overallHealth: resultObj.length * 2, resultObj}
-        return res.json(result)
-    }).catch(err =>{
-        return res.json({message:'A package.json was not found', overallHealth: 0})
-    });
+    })
+    
 })
 
 module.exports = router;
