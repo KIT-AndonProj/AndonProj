@@ -22,20 +22,20 @@ router.post('/register', (req, res) => {
     axios.get('https://api.github.com/users/' + req.body.gitName ).then(resp => {
        
         User.findOne
-        ({ username: req.body.username }).then(user => {
+        ({ username: req.body.username.toLowerCase() }).then(user => {
             if(user){
                 errors.username = 'This username already exists';
                 return res.json(errors);
             } else {
-                User.findOne({ gitName: req.body.gitName }).then(git => {
+                User.findOne({ gitName: req.body.gitName.toLowerCase() }).then(git => {
                     if(git){
                         errors.gitName = 'This github username already exists';
                         return res.json(errors);
                     } else {
                         const newUser = new User({
-                            username: req.body.username,
+                            username: req.body.username.toLowerCase(),
                             password: req.body.password,
-                            gitName: req.body.gitName,
+                            gitName: req.body.gitName.toLowerCase(),
                             imgURL: req.body.imgURL
                         });
             
@@ -68,7 +68,7 @@ router.post('/login', (req, res) => {
         return res.json(errors);
     }
 
-    const username = req.body.username;
+    const username = req.body.username.toLowerCase();
     const password = req.body.password;
 
     User.findOne({ username })

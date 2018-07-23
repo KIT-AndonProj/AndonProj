@@ -42,7 +42,7 @@ router.post('/pulls', passport.authenticate('jwt', {session: false}),(req, res) 
         for( i in response.data){
             result.push(
                 {   title: response.data[i].title, body: response.data[i].body,
-                    owner: response.data[i].user.login, date: Date(response.data[i].updated_at).toString() 
+                    owner: response.data[i].user.login, date: Date(response.data[i].updated_at).toString().replace('T', ' at ').replace('Z', ''), 
                 }
             );
         }
@@ -101,9 +101,9 @@ router.post('/repoinfo', passport.authenticate('jwt', {session: false}), (req, r
         result = {
             username: response.data.owner.login,
             reponame: response.data.name,
-            created_at: response.data.created_at,
-            updated_at: response.data.updated_at,
-            pushed_at: response.data.pushed_at,
+            created_at: response.data.created_at.replace('T', ' at ').replace('Z', ''),
+            updated_at: response.data.updated_at.replace('T', ' at ').replace('Z', ''),
+            pushed_at: response.data.pushed_at.replace('T', ' at ').replace('Z', ''),
             num_issue: response.data.open_issues,
             image_url: response.data.owner.avatar_url
         }
@@ -127,7 +127,7 @@ router.post('/issues', passport.authenticate('jwt', {session: false}), (req, res
         for( i in response.data){
             result.push({title: response.data[i].title,
                 owner: response.data[i].user.login, 
-                date: Date(response.data[i].updated_at).toString(), 
+                date: Date(response.data[i].updated_at).toString().replace('T', ' at ').replace('Z', ''), 
                 body: response.data[i].body  
             })
         }
