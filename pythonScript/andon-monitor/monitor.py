@@ -1,7 +1,8 @@
 import os
 import time
-from demo_opts import get_device
 from luma.core.virtual import terminal
+from luma.core.interface.serial import i2c
+from luma.oled.device import ssd1306
 from PIL import ImageFont
 
 
@@ -98,8 +99,9 @@ def bugspotInfo():
 
 if __name__ == "__main__":
     try:
-        device = get_device()
-        welcome()
+        serial = i2c(port=1, address=0x3C)
+        device = ssd1306(serial)
+        # welcome()
         gitInfo()
         overallHealthInfo()
         duplicateInfo()
