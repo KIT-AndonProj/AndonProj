@@ -4,6 +4,8 @@ from luma.core.virtual import terminal
 from luma.core.interface.serial import i2c
 from luma.oled.device import ssd1306
 from PIL import ImageFont
+import argparse
+
 
 
 def make_font(name, size):
@@ -94,19 +96,43 @@ def bugspotInfo():
         time.sleep(10)
         term.clear()
 
+def frequencyInfo():
+    for fontname, size in [("miscfs_.ttf",12)]:
 
+# Main program logic follows:
+if __name__ == '__main__':
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    parser.add_argument('-wel', '--welcome', action='store_true', help='welcome light')
+    parser.add_argument('-ol', '--overall', type=int ,help='overall health value')
+    parser.add_argument('-bug','--bugspot', type=int ,help='bugspot value')
+    parser.add_argument('-comp', '--complexity', type=int ,help='complexity value')
+    parser.add_argument('-dup', '--duplication',type=int ,help='duplication value')
+    parser.add_argument('-od','--outdated', type=int ,help='outdated value')
+    parser.add_argument('-fq', '--frequency',type=int ,help='frequency of commits value')
 
-if __name__ == "__main__":
+    args = parser.parse_args()
+
+    serial = i2c(port=1, address=0x3C)
+    device = ssd1306(serial)
+
     try:
-        serial = i2c(port=1, address=0x3C)
-        device = ssd1306(serial)
-        # welcome()
-        gitInfo()
-        overallHealthInfo()
-        duplicateInfo()
-        bugspotInfo()
-        outdatedInfo()
+        if args.overall:
+            overallHealthInfo()
+        elif args.bugspot:
+            bugspotInfo()
+        elif args.complexity:
+            complexityInfo()
+        elif args.duplication:
+            duplicateInfo()
+        elif args.outdated:
+            outdatedInfo()
+        elif args.frequency():
+            frequencyInfo()
+        elif args.welcome:
+            welcome()
         
     except KeyboardInterrupt:
-        pass
+        if args.clear:
+            pass
