@@ -106,4 +106,34 @@ router.post('/login', (req, res) => {
     });
 });
 
+router.get('/openCam', (req, res) => {
+    User.findOne({ status: true })
+    .then(user => {
+        if(user){
+            return res.json('The service is unavailable')
+        } else {
+            // open cam
+        }
+    })
+});
+
+router.post('/clearCam', (req, res) => {
+    User.findOne
+    ({ username: 'adminandon' }).then(user => {
+        if(user){
+            bcrypt.compare(req.body.password, user.password)
+            .then(isMatch => {
+                if(isMatch){
+                    User.update({status: true}, {status: false})
+                    .then(response =>{ return res.json(response)})
+                    .catch(err => {return res.json(err)})
+                }
+            })
+        }
+        else {
+            return res.json('Password incorrect');
+        }
+    });
+});
+
 module.exports = router;
