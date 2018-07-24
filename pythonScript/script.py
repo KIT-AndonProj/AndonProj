@@ -1,15 +1,11 @@
 import time
 from neopixel import *
 import argparse
-
 import os
-import time
 from luma.core.virtual import terminal
 from luma.core.interface.serial import i2c
 from luma.oled.device import ssd1306
 from PIL import ImageFont
-import argparse
-
 
 # LED strip configuration:
 LED_COUNT      = 2      # Number of LED pixels.
@@ -20,7 +16,6 @@ LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
-
 
 def make_font(name, size):
     font_path = os.path.abspath(os.path.join(
@@ -48,78 +43,18 @@ def gitInfo():
         term.println("Reponame : Andonproj")
         term.println("Created : 2018/07/23")
         term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
+        # time.sleep(10)
+        # term.clear()
 
-def overallHealthInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Overallhealth : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-
-def duplicateInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Duplicate score : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-
-def complexityInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Complexity score : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-
-def outdatedInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Outdated score : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-
-def bugspotInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Bugspot score : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-def frequencyInfo():
+def displayInfo(name,score):
     for fontname, size in [("miscfs_.ttf",12)]:
         font = make_font(fontname, size) if fontname else None
         term = terminal(device, font)
         term.println("    Andon Monitor")
         term.println("---------------------")
-        term.println("Frequency: ")
+        term.println("%s score: %s" % (name,score))
         term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
+        time.sleep(30)
 
 # Define functions which animate LEDs in various ways.
 
@@ -204,23 +139,23 @@ if __name__ == '__main__':
 
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip.begin()
-# g r b
+
     try:
         if args.overall:
             theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 60, 90) 
-            overallHealthInfo(args.overall)   
+            displayInfo("Overall Health",args.overall)
         elif args.bugspot:
             shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 10000)
-            bugspotInfo(args.bugspot)
+            displayInfo("Bugspot Analyze",args.bugspot)
         elif args.complexity:
             shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 10000)
-            complexityInfo(args.complexity)
+            displayInfo("Complexity",args.complexity)
         elif args.duplication:
             shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 10000)
-            duplicateInfo(args.duplication)
+            displayInfo("Duplication",args.duplication)
         elif args.outdated:
             shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 10000)
-            outdatedInfo(args.outdated)
+            displayInfo("Outdated",args.outdated)
         elif args.frequency:
             theaterChase(strip, Color(20,130,20), args.frequency, 60) 
         elif args.welcome:
