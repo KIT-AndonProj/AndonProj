@@ -1,4 +1,4 @@
-input{
+.input-login{
     background-color: #F9DA4A;
     color:black;
     margin-top: 10px;
@@ -11,7 +11,7 @@ input{
     padding: 12px 85px 12px 5px;
   }
   
-  input[type=submit]{
+  .input-login[type=submit]{
       padding-top: 5%;
         font-family: 'Nunito';
         background-color:black;
@@ -29,7 +29,7 @@ input{
         border: 2px solid #555555;
       }
       
-      input[type=submit]:hover {
+      .input-login[type=submit]:hover {
       background-color: #F9DA4A;
       color: black;
       }
@@ -42,6 +42,22 @@ input{
     margin-left: -15em; 
 }
 
+.camBtn{
+   left: 0px;
+   bottom: 0px;
+}
+
+.img-btn{
+    width: 5%;
+    height: 6%;
+    transition: transform .2s;
+}
+
+.img-btn:hover{
+    transform: scale(1.5);
+}
+
+
 @media (max-width: 575px) { 
     #login-div {
         top: 50%;
@@ -51,10 +67,10 @@ input{
     }
 }
 
-/* label{
-    color: white;
-
-} */
+.login-con{
+    position: static;
+    /* left: 30px; */
+}
 
 a:hover{
     color:#F9DA4A;

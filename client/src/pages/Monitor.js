@@ -71,13 +71,11 @@ class Monitor extends Component {
         else {
             this.props.update_bugspot(res.data,'unavailable');
         }
-        this.updateOverallScore(res);
-       
+        this.updateOverallScore(res);  
     })
     .catch((res) => {
         console.log("catch",res);
     })
-    
     }
 
     updateComplexityFunction(){
@@ -280,9 +278,9 @@ class Monitor extends Component {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes'
           }).then((result) => {
+            axios.post('/api/user/logout',{username: this.props.profileUsername})
             if (result.value ) {
                sessionStorage.removeItem('token');
-               this.setState();   
                 swal({
                     title: 'Logged out',
                     text: 'You have logged out the system',

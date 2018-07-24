@@ -7,6 +7,8 @@ import addCookie from '../../actions/addCookie';
 import { connect } from 'react-redux'; 
 import addCurrentRepo from '../../actions/addCurrentRepo';
 import addStatus from '../../actions/addStatus';
+import camBtn from '../../image-url/aquatna-btn.png';
+import clearBtn from '../../image-url/clear-user.png';
 class Login extends Component {
     constructor() {
         super()
@@ -16,10 +18,13 @@ class Login extends Component {
             redirect_status: true,
             profile: [],
             commit_data: [],
-            git_status: true
+            git_status: true,
+            isLoggedIn: false
         }
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
+        this.clearPreviousLoggedIn = this.clearPreviousLoggedIn.bind(this)
+        this.openCamera = this.openCamera.bind(this)
     }
 
     onChange(e){
@@ -33,18 +38,22 @@ class Login extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-
         axios.post('/api/user/login',{
             username: this.state.username,
             password: this.state.password,
         })
         .then(
             (res) => {
-                this.props.update_status(false);
+                console.log('Success',res.data.success)
+                if(res.data.username !== 'The service is unavailable'){
+                    this.setState({ isLoggedIn: true})
+                    this.props.update_status(false);
                     sessionStorage.setItem('token', res.data.token);
                     this.getCurrentRepo(res.data.payload.username,res.data.payload.gitName);
+                }
             })
-               .then(()=>{
+               .then((res)=>{
+                if(this.state.isLoggedIn){
                 swal({
                     title: "You are logged in",
                     text: "Login successful",
@@ -52,6 +61,16 @@ class Login extends Component {
                     showConfirmButton: false,
                     timer: 3000
                 })
+            }
+                else if(!this.state.isLoggedIn) {
+                    swal({
+                        title: "Cannot log in",
+                        text: "Please logout on previous tab",
+                        type: "error",
+                        confirmButtonText: "Try again"
+                    });
+                }
+            
             }).catch((res) => {
                 swal({
                     title: "Error",
@@ -89,7 +108,6 @@ class Login extends Component {
                 this.props.cookie(username,gitName,res.data.image_url);
             }
             )
-           
         });  
     }
 
@@ -119,6 +137,75 @@ class Login extends Component {
                 })
     }
 
+    openCamera(){
+        axios.get('/api/user/openCam')
+        .then( res =>{
+            console.log('OpenCam:',res);
+            if(res.data==='The service is unavailable'){
+                swal({
+                    title: 'Camera cannot be opened',
+                    text: 'Please logout from previous monitor',
+                    type: 'error',
+                    showConfirmButton: false,
+                    timer: 3000
+
+                })
+            }
+            else {
+                swal({
+                    title: 'Camera connected!',
+                    text: 'Scan your face with Aquatan Lamp before logged in',
+                    type: 'success',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        })
+    }
+
+    clearPreviousLoggedIn(){
+        swal.mixin({
+            input: 'password',
+            confirmButtonText: 'Submit',
+            inputPlaceholder: 'Enter your password',
+          }).queue([
+            {
+              title: 'Clear Previous login!',
+              text: 'Please fill in password to clear previous logged in status '
+            },
+          ]).then((result) => {
+              if( result.value !== "" && result.dismiss !== 'overlay'){
+              axios.post('/api/user/clearDB',{ password: result.value[0]}).then( res => {
+                  console.log('database')
+                  if(res.data !== 'Password incorrect'){
+                    swal({
+                        title: 'All done!',
+                        text: 'Previous logged in status is cleared',
+                        type: 'success',
+                        confirmButtonText: 'Lovely!'
+                    })
+                  }
+                else {
+                    swal({
+                        title: 'Password Incorect!',
+                        text: 'Only admin password is allowed',
+                        type: 'error',
+                        confirmButtonText: 'Try Again'
+                    })
+                }
+              })
+            }
+            else {
+                swal({
+                    title: 'Password Required',
+                    type: 'error',
+                    confirmButtonText: 'Try Again'
+                  })
+            }
+            
+          })
+    }
+
     render() {
 
         const isAlreadyAuthenticated = this.isAuthenticated();
@@ -130,16 +217,18 @@ class Login extends Component {
         else {
             return (
                 <div className="parallax">
-                <div className="typewriter">
-                    <h1 id="header-text">ANDON MONITOR</h1>
-                </div>
-                <div id="login-div">            
-                    <form onSubmit={this.onSubmit}>
-                        <input  type="text" name="username" required   autoComplete="off" placeholder="Username" onChange={this.onChange}/>
-                        <input  type="password" placeholder="Password" required autoComplete="off"  name="password" value={this.state.password} onChange={this.onChange}></input>
-                        <input id="submitBtn" type="submit" value="Login"/>
-                    </form>
-                    <a href="/register">Not a member? </a>
+                    <div className="typewriter">
+                        <h1 id="header-text">ANDON MONITOR</h1>
+                    </div>
+                    <div id="login-div">            
+                        <form onSubmit={this.onSubmit}>
+                            <input className="input-login" type="text" name="username" required   autoComplete="off" placeholder="Username" onChange={this.onChange}/>
+                            <input className="input-login" type="password" placeholder="Password" required autoComplete="off"  name="password" value={this.state.password} onChange={this.onChange}></input>
+                            <input className="input-login" id="submitBtn" type="submit" value="Login"/>
+                        </form>
+                        <a href="/register">Not a member? </a>
+                        <a onClick={this.openCamera} className="camBtn"><img className="img-btn" src={camBtn} alt="btn"/></a>
+                        <a onClick={this.clearPreviousLoggedIn}><img className="img-btn" src={clearBtn} alt="btn"/></a>
                     </div>
                 </div>
             )

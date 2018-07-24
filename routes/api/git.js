@@ -88,11 +88,16 @@ router.post('/clonerepo', passport.authenticate('jwt', {session: false}), (req, 
     fs.remove(__dirname + '/code', (error) => {
         if (error) { throw error }
         console.log('Clear')
-        exec('cd routes/api && git clone https://github.com/' + req.body.username + '/' + req.body.repository + '.git code', (err, stdout, stderr) => {
+        var url = 'https://api.github.com/repos/' + req.body.username + '/' + req.body.repository
+        axios.get(url).then(response => { 
+            exec('cd routes/api && git clone https://github.com/' + req.body.username + '/' + req.body.repository + '.git code', (err, stdout, stderr) => {
             if (err) { return res.json(err) }
             console.log('Clone Finish')
             return res.json('Finish')
         })
+        }).catch(err => {
+            return res.json('Information not found')
+        })  
     })
 })
 

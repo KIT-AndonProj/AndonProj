@@ -26,7 +26,7 @@ class NotificationCard extends Component {
         event.preventDefault();
         if (this.state.select_trigger === 'duplicate'){
         axios({
-            url: 'api/board/:duplication',
+            url: 'api/board/duplication',
             method: 'post',
             headers: {
                 Authorization: sessionStorage.token
@@ -39,7 +39,7 @@ class NotificationCard extends Component {
         }
         else if (this.state.select_trigger === 'bugspot'){
             axios({
-                url: 'api/board/:bugspot',
+                url: 'api/board/bugspot',
                 method: 'post',
                 headers: {
                     Authorization: sessionStorage.token
@@ -65,7 +65,7 @@ class NotificationCard extends Component {
         }
         else if (this.state.select_trigger === 'outdated'){
             axios({
-                url: 'api/board/:outdated',
+                url: 'api/board/outdated',
                 method: 'post',
                 headers: {
                     Authorization: sessionStorage.token
@@ -78,7 +78,7 @@ class NotificationCard extends Component {
         }
         else if( this.state.select_trigger === 'frequency'){
             axios({
-                url: 'api/board/:frequency',
+                url: 'api/board/frequency',
                 method: 'post',
                 headers: {
                     Authorization: sessionStorage.token
@@ -91,7 +91,7 @@ class NotificationCard extends Component {
         }
         else if (this.state.select_trigger ==='overallHealth'){
             axios({
-                url: 'api/board/:overall',
+                url: 'api/board/overall',
                 method: 'post',
                 headers: {
                     Authorization: sessionStorage.token

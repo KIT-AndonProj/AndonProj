@@ -2,6 +2,15 @@ import time
 from neopixel import *
 import argparse
 
+import os
+import time
+from luma.core.virtual import terminal
+from luma.core.interface.serial import i2c
+from luma.oled.device import ssd1306
+from PIL import ImageFont
+import argparse
+
+
 # LED strip configuration:
 LED_COUNT      = 2      # Number of LED pixels.
 LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
@@ -13,6 +22,104 @@ LED_INVERT     = False   # True to invert the signal (when using NPN transistor 
 LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 
+def make_font(name, size):
+    font_path = os.path.abspath(os.path.join(
+        os.path.dirname(__file__), 'fonts', name))
+    return ImageFont.truetype(font_path, size)
+
+def welcome():
+     while True:
+        for fontname, size in [("miscfs_.ttf", 16)]:
+            font = make_font(fontname, size) if fontname else None
+            term = terminal(device, font)
+            term.println("    Welcome")
+            term.println("      To")
+            term.puts("  Andon Monitor")
+            time.sleep(3)
+            term.clear()
+
+def gitInfo():
+    for fontname, size in [("miscfs_.ttf", 12)]:
+        font = make_font(fontname, size) if fontname else None
+        term = terminal(device, font)
+        term.println("    Andon Monitor")
+        term.println("---------------------")
+        term.println("Gitname : littlenune")
+        term.println("Reponame : Andonproj")
+        term.println("Created : 2018/07/23")
+        term.puts("---------------------")
+        time.sleep(10)
+        term.clear()
+
+def overallHealthInfo(score):
+    for fontname, size in [("miscfs_.ttf", 12)]:
+        font = make_font(fontname, size) if fontname else None
+        term = terminal(device, font)
+        term.println("    Andon Monitor")
+        term.println("---------------------")
+        term.println("Overallhealth : %s" % score)
+        term.puts("---------------------")
+        time.sleep(10)
+        term.clear()
+
+
+def duplicateInfo(score):
+    for fontname, size in [("miscfs_.ttf", 12)]:
+        font = make_font(fontname, size) if fontname else None
+        term = terminal(device, font)
+        term.println("    Andon Monitor")
+        term.println("---------------------")
+        term.println("Duplicate score : %s" % score)
+        term.puts("---------------------")
+        time.sleep(10)
+        term.clear()
+
+
+def complexityInfo(score):
+    for fontname, size in [("miscfs_.ttf", 12)]:
+        font = make_font(fontname, size) if fontname else None
+        term = terminal(device, font)
+        term.println("    Andon Monitor")
+        term.println("---------------------")
+        term.println("Complexity score : %s" % score)
+        term.puts("---------------------")
+        time.sleep(10)
+        term.clear()
+
+
+def outdatedInfo(score):
+    for fontname, size in [("miscfs_.ttf", 12)]:
+        font = make_font(fontname, size) if fontname else None
+        term = terminal(device, font)
+        term.println("    Andon Monitor")
+        term.println("---------------------")
+        term.println("Outdated score : %s" % score)
+        term.puts("---------------------")
+        time.sleep(10)
+        term.clear()
+
+
+def bugspotInfo(score):
+    for fontname, size in [("miscfs_.ttf", 12)]:
+        font = make_font(fontname, size) if fontname else None
+        term = terminal(device, font)
+        term.println("    Andon Monitor")
+        term.println("---------------------")
+        term.println("Bugspot score : %s" % score)
+        term.puts("---------------------")
+        time.sleep(10)
+        term.clear()
+
+def frequencyInfo():
+    for fontname, size in [("miscfs_.ttf",12)]:
+        font = make_font(fontname, size) if fontname else None
+        term = terminal(device, font)
+        term.println("    Andon Monitor")
+        term.println("---------------------")
+        term.println("Frequency: ")
+        term.puts("---------------------")
+        time.sleep(10)
+        term.clear()
 
 # Define functions which animate LEDs in various ways.
 
@@ -92,23 +199,32 @@ if __name__ == '__main__':
     parser.add_argument('-fq', '--frequency',type=int ,help='frequency of commits value')
 
     args = parser.parse_args()
+    serial = i2c(port=1, address=0x3C)
+    device = ssd1306(serial)
+
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip.begin()
 # g r b
     try:
         if args.overall:
-            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 60, 90)    
+            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 60, 90) 
+            overallHealthInfo(args.overall)   
         elif args.bugspot:
             shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 10000)
+            bugspotInfo(args.bugspot)
         elif args.complexity:
             shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 10000)
+            complexityInfo(args.complexity)
         elif args.duplication:
             shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 10000)
+            duplicateInfo(args.duplication)
         elif args.outdated:
             shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 10000)
+            outdatedInfo(args.outdated)
         elif args.frequency:
             theaterChase(strip, Color(20,130,20), args.frequency, 60) 
         elif args.welcome:
+            welcome()
             theaterChaseRainbow(strip, 30)
             theaterChase(strip, Color(127,127,127), 120, 45) 
         colorWipe(strip, Color(0,0,0), 10)

@@ -9,7 +9,9 @@ const User = require('../../models/User');
 
 router.post('/:command', passport.authenticate('jwt', {session: false}), (req, res) => {
 
+    var light = 'sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c '
     var option = ''
+    var monitor = ''
     if(req.body.value < 1){
         req.body.value = 1;
     }
@@ -44,7 +46,7 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
     
     }
 
-    exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c ' + option + ' ' + monitor, (err,stdout,stderr) => { 
+    exec(light + option + ' ' + monitor, (err,stdout,stderr) => { 
         if (err) { return res.json(stderr) }
         return res.json(req.params.command)
     });  
