@@ -114,6 +114,16 @@ router.get('/openCam', (req, res) => {
     })
 });
 
+router.post('/updateDB', (req, res) => {
+    const username = req.body.username
+    User.findOneAndUpdate({ username }, {status: true}).then(user => {
+        if(user)
+            return res.json(user)
+        else
+            return res.json('Update database fail')
+    })
+})
+
 router.post('/clearDB', (req, res) => {
     User.findOne({ username: 'adminandon' }).then(user => {
         if(user) {
@@ -123,11 +133,10 @@ router.post('/clearDB', (req, res) => {
                     User.update({ status: true }, { status: false })
                     .then(response => { return res.json(response) })
                     .catch(err => { return res.json(err) })
+                } else {
+                    return res.json('Password incorrect')
                 }
             })
-        }
-        else {
-            return res.json('Password incorrect')
         }
     })
 })
