@@ -34,78 +34,18 @@ def gitInfo():
         term.println("Reponame : Andonproj")
         term.println("Created : 2018/07/23")
         term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
+        # time.sleep(10)
+        # term.clear()
 
-def overallHealthInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Overallhealth : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-
-def duplicateInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Duplicate score : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-
-def complexityInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Complexity score : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-
-def outdatedInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Outdated score : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-
-def bugspotInfo(score):
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Bugspot score : %s" % score)
-        term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
-
-def frequencyInfo():
+def displayInfo(name,score):
     for fontname, size in [("miscfs_.ttf",12)]:
         font = make_font(fontname, size) if fontname else None
         term = terminal(device, font)
         term.println("    Andon Monitor")
         term.println("---------------------")
-        term.println("Frequency: ")
+        term.println("%s score: %s" % (name,score))
         term.puts("---------------------")
-        time.sleep(10)
-        term.clear()
+        time.sleep(30)
 
 # Main program logic follows:
 if __name__ == '__main__':
@@ -127,15 +67,15 @@ if __name__ == '__main__':
 
     try:
         if args.overall:
-            overallHealthInfo(args.overall)
+            displayInfo("Overall Health",args.overall)
         elif args.bugspot:
-            bugspotInfo(args.bugspot)
+            displayInfo("Bugspot Analyze",args.bugspot)
         elif args.complexity:
-            complexityInfo(args.complexity)
+            displayInfo("Complexity",args.complexity)
         elif args.duplication:
-            duplicateInfo(args.duplication)
+            displayInfo("Duplication",args.duplication)
         elif args.outdated:
-            outdatedInfo(args.outdated)
+            displayInfo("Outdated",args.outdated)
         # elif args.frequency:
         #     frequencyInfo(args.frequency)
         elif args.welcome:
