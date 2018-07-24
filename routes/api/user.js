@@ -131,7 +131,7 @@ router.post('/clearDB', (req, res) => {
             .then(isMatch => {
                 if(isMatch) {
                     User.update({ status: true }, { status: false })
-                    .then(response => { return res.json(response) })
+                    .then(response => { return res.json('Database Reset') })
                     .catch(err => { return res.json(err) })
                 } else {
                     return res.json('Password incorrect')
@@ -143,16 +143,13 @@ router.post('/clearDB', (req, res) => {
 
 router.post('/logout', (req, res) => {
     const username = req.body.username.toLowerCase()
-    User.findOne({ username }).then(user => {
-        if(user) {
-            User.findOneAndUpdate({ username }, { status: false })
-                .then(response => { return res.json(response) })
-                .catch(err => { return res.json(err) })
-        }
-        else {
-            return res.json('Already logout')
-        }
-    })
+    User.findOneAndUpdate({ username }, { status: false })
+        .then(user => {
+            if(user){
+                return res.json('Updated') 
+            }
+            return res.json('User not found') })
+        .catch(err => { return res.json(err) })
 })
 
 module.exports = router

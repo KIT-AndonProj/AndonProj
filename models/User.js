@@ -20,7 +20,7 @@ const UserSchema = new Schema({
     },
     status: {
         type: Boolean,
-        default: true //false
+        default: false
     },
     date: {
         type: Date,
