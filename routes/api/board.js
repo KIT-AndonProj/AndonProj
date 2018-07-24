@@ -7,7 +7,7 @@ const passport = require('passport');
 
 const User = require('../../models/User');
 
-router.post('/:command', (req, res) => { 
+router.post('/:command', passport.authenticate('jwt', {session: false}), (req, res) => {
 
     var option = ''
     if(req.body.value < 1){
@@ -43,11 +43,6 @@ router.post('/:command', (req, res) => {
         option = '-fq ' + avgCommit;
     
     }
-
-    exec('cd pythonScript/andon-monitor/ && python welcome.py ',(err,stdout,stderr) => { 
-        if (err) { return res.json(stderr) }
-        return res.json(req.params.command)
-    });  
 
     exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c ' + option + ' ' + monitor, (err,stdout,stderr) => { 
         if (err) { return res.json(stderr) }

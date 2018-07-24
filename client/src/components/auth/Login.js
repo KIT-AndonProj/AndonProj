@@ -15,7 +15,8 @@ class Login extends Component {
             password: '',
             redirect_status: true,
             profile: [],
-            commit_data: []
+            commit_data: [],
+            git_status: true
         }
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -26,7 +27,7 @@ class Login extends Component {
     }
 
     isAuthenticated(){
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         return token && token.length > 10;
     }
 
@@ -39,10 +40,9 @@ class Login extends Component {
         })
         .then(
             (res) => {
-                this.props.cookie(res.data.payload.username,res.data.payload.gitName,res.data.payload.imgURL);
                 this.props.update_status(false);
-                    localStorage.setItem('token', res.data.token);
-                    this.getCurrentRepo(res.data.payload.gitName);
+                    sessionStorage.setItem('token', res.data.token);
+                    this.getCurrentRepo(res.data.payload.username,res.data.payload.gitName);
             })
                .then(()=>{
                 swal({
@@ -62,7 +62,7 @@ class Login extends Component {
             });
     }
 
-    getCurrentRepo(gitName){
+    getCurrentRepo(username,gitName){
         axios({
             url: '/api/git/currrepo',
             method: 'post',
@@ -70,7 +70,7 @@ class Login extends Component {
                 username: gitName,
             },
             headers: {
-                Authorization: localStorage.token
+                Authorization: sessionStorage.token
             }
         }).then(res => {
             axios({
@@ -81,14 +81,14 @@ class Login extends Component {
                     repository: res.data
                 },
                 headers: {
-                    Authorization: localStorage.token
+                    Authorization: sessionStorage.token
                 }
             }).then(res => {
+                console.log("current info",res);
                 this.getCurrentCommit(gitName,res.data.reponame,res.data);
+                this.props.cookie(username,gitName,res.data.image_url);
             }
-            ).then(()=>{
-                
-            })
+            )
            
         });  
     }
@@ -102,7 +102,7 @@ class Login extends Component {
                         repository: repoName
                     },
                     headers: {
-                        Authorization: localStorage.token
+                        Authorization: sessionStorage.token
                     }
                 })
                 .then(res => {

@@ -13,7 +13,7 @@ class FrequencyCommitCard extends Component {
                         <div className="frequency-con">
                     <h2 id="header">Frequency of Commit</h2>
                     <LineChart width={600} height={400} data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                    <Line type="monotone" dataKey="commit" stroke="#ffffff" />
+                    <Line type="monotone" dataKey="commit" stroke="#0042FF" />
                     <CartesianGrid stroke="#000" strokeDasharray="5 5" />
                     <XAxis dataKey="name" />
                     <YAxis />

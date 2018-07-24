@@ -5,7 +5,7 @@ import Register from '../components/auth/Register';
 class AuthenticationPage extends Component {
 
     isAuthenticated(){
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         return token && token.length > 10;
     }
     render(){

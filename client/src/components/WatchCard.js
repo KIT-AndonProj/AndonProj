@@ -16,7 +16,9 @@ class WatchCard extends Component {
             <div className="parallax" id="main">
             <div className="row" >
                 <div className="column">
+
              <div className="profile-con">
+             
              <img className="img-profile" src={this.props.profile.image_url} alt="User"/>
              <div className="profile-con2">
              <h1>Repository Information</h1>

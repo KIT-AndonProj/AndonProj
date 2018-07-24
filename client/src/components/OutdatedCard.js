@@ -47,7 +47,7 @@ class OutdatedCard extends Component {
         return (
             <div className="parallax-2">
              <h2 id="header">Outdated Library</h2>
-             <h2>No data shown. You must select data first</h2>
+             <h2>No information available. Due to no package.json in your repository</h2>
             </div>
         )
     }

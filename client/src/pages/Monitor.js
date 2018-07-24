@@ -34,7 +34,8 @@ class Monitor extends Component {
             commit_data: [],
             current_profile: [],
             watch_status: false,
-            overall_score: 0
+            overall_score: 0,
+            img_url : ''
         }
         this.props.update_bugspot('','Loading...');
         this.props.update_complexity('','Loading...');
@@ -44,7 +45,7 @@ class Monitor extends Component {
     }
 
     isAuthenticated(){
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         return token && token.length > 10;
     }
 
@@ -60,7 +61,7 @@ class Monitor extends Component {
             url: 'api/analyze/bugspot',
             method: 'get',
             headers: {
-                Authorization: localStorage.token
+                Authorization: sessionStorage.token
                 }
         })
         .then((res) => {
@@ -84,7 +85,7 @@ class Monitor extends Component {
             url: 'api/analyze/complexity',
             method: 'get',
             headers: {
-                Authorization: localStorage.token
+                Authorization: sessionStorage.token
             }
         }).then((res)=>{
             if(res.data.resObj.length !== 0){
@@ -115,7 +116,7 @@ class Monitor extends Component {
                         repository: this.state.repo_url
                     },
                     headers: {
-                      Authorization: localStorage.token
+                      Authorization: sessionStorage.token
                   }
                 }).then((res) => {
                     this.updateBugspotFunction();
@@ -135,7 +136,7 @@ class Monitor extends Component {
             url: 'api/analyze/duplicate',
             method: 'get',
             headers: {
-                Authorization: localStorage.token
+                Authorization: sessionStorage.token
             }
         }).then((res) => {
             if(res.data.message === 'The jscpd found too many duplicates over threshold'){
@@ -157,7 +158,7 @@ class Monitor extends Component {
             url: 'api/analyze/outdated',
             method: 'get',
             headers: {
-                Authorization: localStorage.token
+                Authorization: sessionStorage.token
             }
         }).then((res)=> {
             if(res.data.message !== 'A package.json was not found'){
@@ -182,7 +183,7 @@ class Monitor extends Component {
                 repository: this.state.repo_url
             },
             headers: {
-                Authorization: localStorage.token
+                Authorization: sessionStorage.token
             }
         })
         .then(res => {
@@ -211,7 +212,7 @@ class Monitor extends Component {
                         repository: this.state.repo_url
                     },
                     headers: {
-                        Authorization: localStorage.token
+                        Authorization: sessionStorage.token
                     }
                 })
                 .then(res => {
@@ -233,7 +234,6 @@ class Monitor extends Component {
                         })
                         this.cloneRepoFunction();
                         this.props.update_status(true);
-
                     }
                 }).catch(err => {
                     console.log(err.data);
@@ -281,7 +281,7 @@ class Monitor extends Component {
             confirmButtonText: 'Yes'
           }).then((result) => {
             if (result.value ) {
-               localStorage.removeItem('token');
+               sessionStorage.removeItem('token');
                this.setState();   
                 swal({
                     title: 'Logged out',
@@ -299,7 +299,7 @@ class Monitor extends Component {
     
     render(){
         window.onbeforeunload = function() {
-            localStorage.removeItem('token')
+            sessionStorage.removeItem('token')
             return '';
           };
         const isWatched = this.state.watch_status;
@@ -322,8 +322,11 @@ class Monitor extends Component {
                 { !isWatched ? (
                       <div>
                       <div className="sidenav">
+                      <div className="sidebar-con">
+                      <img className="img-profile-user" src={this.props.profile_img} alt="User"/>
                       <h2>Welcome</h2>
                       <h2 className="register-text">{this.props.profileUsername}</h2>
+                      </div>
                       <button id="logoutBtn" className="andon-button" onClick= {(e) => this.onSubmit()}>Logout</button>
                         </div>
                     <UnwatchCard/>
@@ -331,9 +334,13 @@ class Monitor extends Component {
                 ) : (
                     <div>
                     <div className="sidenav">
+                    <div className="sidebar-con">
+
+                    <img className="img-profile-user" src={this.props.profile_img} alt="User"/>
+
                     <h2>Welcome</h2>
-                    {/* <img id="userImg" src={require('${image_path}')}></img> */}
                     <h2 className="register-text">{this.props.profileUsername}</h2>
+                    </div>
                     <a href="#main" className="andon-button">Notification Trigger</a>
                     <a href="#frequency" className="andon-button">Frequency of commit</a>
                     <a href="#duplicate" className="andon-button">Code Duplication</a>

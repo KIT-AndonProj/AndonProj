@@ -29,7 +29,7 @@ class NotificationCard extends Component {
             url: 'api/board/:duplication',
             method: 'post',
             headers: {
-                Authorization: localStorage.token
+                Authorization: sessionStorage.token
                 },
             body: {
                 value:  this.props.duplicate_data.duplicate_data.overallHealth
@@ -42,7 +42,7 @@ class NotificationCard extends Component {
                 url: 'api/board/:bugspot',
                 method: 'post',
                 headers: {
-                    Authorization: localStorage.token
+                    Authorization: sessionStorage.token
                     },
                 body: {
                     value:  this.props.bugspot_data.bugspot_data.overallHealth
@@ -55,7 +55,7 @@ class NotificationCard extends Component {
                 url: 'api/board/:complexity',
                 method: 'post',
                 headers: {
-                    Authorization: localStorage.token
+                    Authorization: sessionStorage.token
                     },
                 body: {
                     value:  this.props.complex_data.complexity_data.overallHealth
@@ -68,7 +68,7 @@ class NotificationCard extends Component {
                 url: 'api/board/:outdated',
                 method: 'post',
                 headers: {
-                    Authorization: localStorage.token
+                    Authorization: sessionStorage.token
                     },
                 body: {
                     value:  this.props.outdated_data.outdated_data.overallHealth
@@ -81,7 +81,7 @@ class NotificationCard extends Component {
                 url: 'api/board/:frequency',
                 method: 'post',
                 headers: {
-                    Authorization: localStorage.token
+                    Authorization: sessionStorage.token
                     },
                 body: {
                     value:  this.props.freqCommit_data.frequency_data
@@ -94,7 +94,7 @@ class NotificationCard extends Component {
                 url: 'api/board/:overall',
                 method: 'post',
                 headers: {
-                    Authorization: localStorage.token
+                    Authorization: sessionStorage.token
                 },
                 body: {
                     value: this.props.overall_data.score
@@ -126,11 +126,11 @@ class NotificationCard extends Component {
             <input type="radio" value="duplicate" checked={this.state.select_trigger==="duplicate"} onChange={this.handleChange}/>
             <span className="checkmark"></span>
             </label>
-            <label className="container">Complexity of Code : {this.props.complex_data.status}
+            <label className="container">Code Complexity : {this.props.complex_data.status}
             <input type="radio" value="complex" checked={this.state.select_trigger==="complex"} onChange={this.handleChange}/>
             <span className="checkmark"></span>
             </label>
-            <label className="container">Bugspot Score : {this.props.bugspot_data.status}
+            <label className="container">Bugspot Analyze : {this.props.bugspot_data.status}
             <input type="radio" value="bugspot" checked={this.state.select_trigger==="bugspot"} onChange={this.handleChange}/>
             <span className="checkmark"></span>
             </label>

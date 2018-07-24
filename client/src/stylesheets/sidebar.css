@@ -7,14 +7,7 @@
     top: 7.8%;
     background-color: #686868;
     overflow-x: hidden;
-    /* padding-top: 20px; */
 }
-
-#userImg{
-    padding-top: 5%;
-    width: 80%;
-    padding-left: 5%;
-  }
 
 #logoutBtn {
     position: fixed;
@@ -26,4 +19,15 @@
 
 #sidenav-text{
     text-align: center;
+}
+.img-profile-user{
+    border: 1px solid #ddd;
+    width: 150px;
+    padding: 5px;
+    height: 150px;
+    border-radius: 50%;
+}
+.sidebar-con{
+    padding-top: 10%;
+    padding-left: 10%;
 }
