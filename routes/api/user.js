@@ -106,12 +106,15 @@ router.get('/openCam', (req, res) => {
         if(user) {
             return res.json('The service is unavailable')
         } else {
-            // python andonrec
+            exec('python andonrec', (err,stdout,stderr) => { 
+                if (err) { return res.json(stderr) }
+                return res.json(stdout)
+            });  
         }
     })
 });
 
-router.post('/clearCam', (req, res) => {
+router.post('/clearDB', (req, res) => {
     User.findOne({ username: 'adminandon' }).then(user => {
         if(user) {
             bcrypt.compare(req.body.password, user.password)
@@ -138,7 +141,7 @@ router.post('/logout', (req, res) => {
                 .catch(err => { return res.json(err) })
         }
         else {
-            return res.json('Password incorrect')
+            return res.json('Already logout')
         }
     })
 })
