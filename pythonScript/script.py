@@ -34,16 +34,16 @@ def welcome():
             time.sleep(3)
             term.clear()
 
-def gitInfo():
-    for fontname, size in [("miscfs_.ttf", 12)]:
-        font = make_font(fontname, size) if fontname else None
-        term = terminal(device, font)
-        term.println("    Andon Monitor")
-        term.println("---------------------")
-        term.println("Gitname : littlenune")
-        term.println("Reponame : Andonproj")
-        term.println("Created : 2018/07/23")
-        term.puts("---------------------")
+# def gitInfo():
+#     for fontname, size in [("miscfs_.ttf", 12)]:
+#         font = make_font(fontname, size) if fontname else None
+#         term = terminal(device, font)
+#         term.println("    Andon Monitor")
+#         term.println("---------------------")
+#         term.println("Gitname : littlenune")
+#         term.println("Reponame : Andonproj")
+#         term.println("Created : 2018/07/23")
+#         term.puts("---------------------")
         # time.sleep(10)
         # term.clear()
 
@@ -53,7 +53,7 @@ def displayInfo(name,score):
         term = terminal(device, font)
         term.println("    Andon Monitor")
         term.println("---------------------")
-        term.println("%s score: %s" % (name,score))
+        term.println("%s : %s" % (name,score))
         term.puts("---------------------")
         time.sleep(30)
 
@@ -143,26 +143,28 @@ if __name__ == '__main__':
 
     try:
         if args.overall:
-            p = mp.Process(target=displayInfo, args=("Overall Health",args.overall))
+            p = mp.Process(target=displayInfo, args=("Overall Health score",args.overall))
             p.start()
             theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 100, 90) 
         elif args.bugspot:
-            p = mp.Process(target=displayInfo, args=("Bugspot Analyze",args.bugspot))
+            p = mp.Process(target=displayInfo, args=("Bugspot Analyze score",args.bugspot))
             p.start()
             shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 20000)
         elif args.complexity:
-            p = mp.Process(target=displayInfo, args=("Complexity",args.complexity))
+            p = mp.Process(target=displayInfo, args=("Complexity score",args.complexity))
             p.start()
             shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 20000)
         elif args.duplication:
-            p = mp.Process(target=displayInfo, args=("Duplication",args.duplication))
+            p = mp.Process(target=displayInfo, args=("Duplication score",args.duplication))
             p.start()
             shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 20000)
         elif args.outdated:
-            p = mp.Process(target=displayInfo, args=("Outdated",args.outdated))
+            p = mp.Process(target=displayInfo, args=("Outdated score",args.outdated))
             p.start() 
             shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 20000)
         elif args.frequency:
+            p = mp.Process(target=displayInfo, args=("Frequency of commits",'22'))
+            p.start()
             theaterChase(strip, Color(20,130,20), args.frequency, 60) 
         elif args.welcome:
             welcome()
