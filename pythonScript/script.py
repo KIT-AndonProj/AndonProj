@@ -6,6 +6,7 @@ from luma.core.virtual import terminal
 from luma.core.interface.serial import i2c
 from luma.oled.device import ssd1306
 from PIL import ImageFont
+import multiprocessing as mp
 
 # LED strip configuration:
 LED_COUNT      = 2      # Number of LED pixels.
@@ -142,20 +143,25 @@ if __name__ == '__main__':
 
     try:
         if args.overall:
+            p = mp.Process(target=displayInfo, args=("Overall Health",args.overall))
+            p.start()
             theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 60, 90) 
-            displayInfo("Overall Health",args.overall)
         elif args.bugspot:
+            p = mp.Process(target=displayInfo, args=("Bugspot Analyze",args.bugspot))
+            p.start()
             shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 10000)
-            displayInfo("Bugspot Analyze",args.bugspot)
         elif args.complexity:
+            p = mp.Process(target=displayInfo, args=("Complexity",args.complexity))
+            p.start()
             shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 10000)
-            displayInfo("Complexity",args.complexity)
         elif args.duplication:
+            p = mp.Process(target=displayInfo, args=("Duplication",args.duplication))
+            p.start()
             shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 10000)
-            displayInfo("Duplication",args.duplication)
         elif args.outdated:
+            p = mp.Process(target=displayInfo, args=("Outdated",args.outdated))
+            p.start() 
             shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 10000)
-            displayInfo("Outdated",args.outdated)
         elif args.frequency:
             theaterChase(strip, Color(20,130,20), args.frequency, 60) 
         elif args.welcome:

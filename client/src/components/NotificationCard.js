@@ -10,6 +10,7 @@ class NotificationCard extends Component {
         super(props);
         this.state = {
             select_trigger: '',
+            bugspot_score: 0
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,53 +26,60 @@ class NotificationCard extends Component {
       handleSubmit(event) {
         event.preventDefault();
         if (this.state.select_trigger === 'duplicate'){
+            console.log('duplicate press');
         axios({
             url: 'api/board/duplication',
             method: 'post',
             headers: {
                 Authorization: sessionStorage.token
                 },
-            body: {
-                value:  this.props.duplicate_data.duplicate_data.overallHealth
+            data: {
+                'value':  this.props.duplicate_data.duplicate_data.overallHealth
                 }    
             })
             console.log('Duplicate',this.props.duplicate_data.duplicate_data.overallHealth);
         }
         else if (this.state.select_trigger === 'bugspot'){
+            console.log('bugspot press')
+            this.setState({bugspot_score : this.props.bugspot_data.bugspot_data.overallHealth})
             axios({
                 url: 'api/board/bugspot',
                 method: 'post',
                 headers: {
                     Authorization: sessionStorage.token
                     },
-                body: {
-                    value:  this.props.bugspot_data.bugspot_data.overallHealth
+                data: {
+                    value:  this.state.bugspot_score
                     }    
                 })
-                console.log('Bugspot',this.props.bugspot_data.bugspot_data.overallHealth);
+                console.log('Bugspot',this.state.bugspot_score);
         }
         else if (this.state.select_trigger === 'complex'){
+
+            console.log('complex pressed')
             axios({
-                url: 'api/board/:complexity',
+                
+                url: 'api/board/complexity',
                 method: 'post',
                 headers: {
                     Authorization: sessionStorage.token
                     },
-                body: {
+                data: {
                     value:  this.props.complex_data.complexity_data.overallHealth
                     }    
                 })
                 console.log('Complexity', this.props.complex_data.complexity_data.overallHealth);
         }
         else if (this.state.select_trigger === 'outdated'){
+            console.log('outdated pressed')
             axios({
                 url: 'api/board/outdated',
                 method: 'post',
                 headers: {
                     Authorization: sessionStorage.token
                     },
-                body: {
-                    value:  this.props.outdated_data.outdated_data.overallHealth
+                data: {
+                    'value':  this.props.outdated_data.outdated_data.overallHealth
                     }    
                 })
                 console.log('Outdated : ', this.props.outdated_data.outdated_data.overallHealth );
@@ -83,21 +91,22 @@ class NotificationCard extends Component {
                 headers: {
                     Authorization: sessionStorage.token
                     },
-                body: {
-                    value:  this.props.freqCommit_data.frequency_data
+                data: {
+                    'value':  this.props.freqCommit_data.frequency_data
                 }    
                 })
                 console.log('Frequency: ',this.props.freqCommit_data.frequency_data);
         }
         else if (this.state.select_trigger ==='overallHealth'){
+            console.log('overall health press')
             axios({
                 url: 'api/board/overall',
                 method: 'post',
                 headers: {
                     Authorization: sessionStorage.token
                 },
-                body: {
-                    value: this.props.overall_data.score
+                data: {
+                    'value': this.props.overall_data.score
                 }
             })
             console.log('Overall ', this.props.overall_data.score)

@@ -82,17 +82,17 @@ class Register extends Component {
                 <div className="parallax">
                     <form className="register-form"onSubmit = {this.onSubmit}>
                     <h1 id="title">Create Account</h1>
-                    <h2 className="label">USERNAME</h2>
-                    <input type="text" minLength="6" autoComplete="off" placeholder="6 characters minimum" name="username" value={this.state.username} required onChange={this.onChange}></input>
-                    <h2 className="label">GITHUB USERNAME  <strong>*ONLY GITHUB USERNAME*</strong></h2>
-                    <input type="text" autoComplete="off" placeholder="Github username" name="gitName" value={this.state.gitName} required onChange={this.onChange}></input>
-                    <h2 className="label">PROFILE PHOTO <strong> ** MUST SEE FACE CLEARLY **</strong></h2>
-                    <input type="file" className="input-" required onChange={(e) => this.setState({imgURL: e.target.value.replace("C:\\fakepath\\", "")})}/>                    
-                    <h2 className="label">PASSWORD</h2>
-                    <input id="passwordForm1" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password" value={this.state.password} required onChange={this.onChange}></input>
-                    <h2 className="label">CONFIRM PASSWORD</h2>
-                    <input id="passwordForm2" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password2" value={this.state.password2} required onChange={this.onChange}></input>
-                    <input type="submit"/>
+                    <h2 id="label">USERNAME</h2>
+                    <input className="input-login" type="text" minLength="6" autoComplete="off" placeholder="6 characters minimum" name="username" value={this.state.username} required onChange={this.onChange}></input>
+                    <h2 id="label">GITHUB USERNAME  <strong>*ONLY GITHUB USERNAME*</strong></h2>
+                    <input className="input-login" type="text" autoComplete="off" placeholder="Github username" name="gitName" value={this.state.gitName} required onChange={this.onChange}></input>
+                    <h2  id="label">PROFILE PHOTO <strong> ** MUST SEE FACE CLEARLY **</strong></h2>
+                    <input className="input-login" type="file" required onChange={(e) => this.setState({imgURL: e.target.value.replace("C:\\fakepath\\", "")})}/>                    
+                    <h2 id="label">PASSWORD</h2>
+                    <input className="input-login" id="passwordForm1" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password" value={this.state.password} required onChange={this.onChange}></input>
+                    <h2 id="label">CONFIRM PASSWORD</h2>
+                    <input className="input-login" id="passwordForm2" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password2" value={this.state.password2} required onChange={this.onChange}></input>
+                    <input className="input-login" type="submit"/>
                 </form>
             </div>
         )

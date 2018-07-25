@@ -227,8 +227,10 @@ class Login extends Component {
                             <input className="input-login" id="submitBtn" type="submit" value="Login"/>
                         </form>
                         <a href="/register">Not a member? </a>
-                        <a onClick={this.openCamera} className="camBtn"><img className="img-btn" src={camBtn} alt="btn"/></a>
-                        <a onClick={this.clearPreviousLoggedIn}><img className="img-btn" src={clearBtn} alt="btn"/></a>
+                       <div className="button-div">
+                        <button className="andon-button" onClick={this.openCamera} >Open Camera</button>
+                        <button className="andon-button" onClick={this.clearPreviousLoggedIn }>Logout Previous</button>
+                       </div>
                     </div>
                 </div>
             )
