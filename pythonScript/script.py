@@ -145,23 +145,23 @@ if __name__ == '__main__':
         if args.overall:
             p = mp.Process(target=displayInfo, args=("Overall Health",args.overall))
             p.start()
-            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 60, 90) 
+            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 100, 90) 
         elif args.bugspot:
             p = mp.Process(target=displayInfo, args=("Bugspot Analyze",args.bugspot))
             p.start()
-            shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 10000)
+            shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 20000)
         elif args.complexity:
             p = mp.Process(target=displayInfo, args=("Complexity",args.complexity))
             p.start()
-            shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 10000)
+            shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 20000)
         elif args.duplication:
             p = mp.Process(target=displayInfo, args=("Duplication",args.duplication))
             p.start()
-            shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 10000)
+            shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 20000)
         elif args.outdated:
             p = mp.Process(target=displayInfo, args=("Outdated",args.outdated))
             p.start() 
-            shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 10000)
+            shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 20000)
         elif args.frequency:
             theaterChase(strip, Color(20,130,20), args.frequency, 60) 
         elif args.welcome:
