@@ -34,26 +34,13 @@ def welcome():
             time.sleep(3)
             term.clear()
 
-# def gitInfo():
-#     for fontname, size in [("miscfs_.ttf", 12)]:
-#         font = make_font(fontname, size) if fontname else None
-#         term = terminal(device, font)
-#         term.println("    Andon Monitor")
-#         term.println("---------------------")
-#         term.println("Gitname : littlenune")
-#         term.println("Reponame : Andonproj")
-#         term.println("Created : 2018/07/23")
-#         term.puts("---------------------")
-        # time.sleep(10)
-        # term.clear()
-
 def displayInfo(name,score):
     for fontname, size in [("miscfs_.ttf",12)]:
         font = make_font(fontname, size) if fontname else None
         term = terminal(device, font)
         term.println("    Andon Monitor")
         term.println("---------------------")
-        term.println("%s : %s" % (name,score))
+        term.println("%s: %s" % (name,score))
         term.puts("---------------------")
         time.sleep(30)
 
@@ -165,7 +152,7 @@ if __name__ == '__main__':
             p.start() 
             shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 20000)
         elif args.frequency:
-            p = mp.Process(target=displayInfo, args=("Frequency of commits",args.total))
+            p = mp.Process(target=displayInfo, args=("Average of commits",args.frequency))
             p.start()
             theaterChase(strip, Color(20,130,20), args.frequency, 60) 
         elif args.welcome:
