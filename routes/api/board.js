@@ -11,7 +11,7 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
 
     var light = 'sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c '
     var option = ''
-    var monitor = ''
+    console.log(req.body.value)
 
     if(req.body.value < 1){
         req.body.value = 1
@@ -38,16 +38,16 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
         var secondDate = new Date(req.body.value[req.body.value.length-1].name)
         var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)))
         var numCommit = 0
-        for(i in req.body.value){
+        for(var i = 0; i < req.body.value.length - 2; i++){
             numCommit += req.body.value[i].commit
         }
-               var avgCommit =  Math.ceil(380/(numCommit/diffDays))
+        var avgCommit =  Math.ceil(380/(numCommit/diffDays))
 
         option = '-fq ' + avgCommit + ' -total ' + req.body.value.total
         console.log(req.body.value.total)
     }
 
-    exec(light + option + ' ' + monitor, (err,stdout,stderr) => { 
+    exec(light + option, (err,stdout,stderr) => { 
         if (err) { return res.json(stderr) }
         return res.json('Finish')
     })
