@@ -62,8 +62,8 @@ class Login extends Component {
             }
                 else if(!this.state.isLoggedIn) {
                     swal({
-                        title: "Cannot log in",
-                        text: "Please logout on previous tab",
+                        title: "The service is unavailable",
+                        text: "Please logout on previous user",
                         type: "error",
                         confirmButtonText: "Try again"
                     });
@@ -140,8 +140,8 @@ class Login extends Component {
             console.log('OpenCam:',res);
             if(res.data==='The service is unavailable'){
                 swal({
-                    title: 'Camera cannot be opened',
-                    text: 'Please logout from previous monitor',
+                    title: 'The service is unavailable',
+                    text: 'Please logout from previous user',
                     type: 'error',
                     showConfirmButton: false,
                     timer: 3000

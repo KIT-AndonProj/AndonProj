@@ -26,8 +26,6 @@ class NotificationCard extends Component {
       }
 
       handleSubmit(event) {
-          console.log(this.props.data);
-        // console.log(this.props.data[0].);
         const command_index = this.state.command.indexOf(this.state.select_trigger);
         let command_selected = this.state.command[command_index]
         let value

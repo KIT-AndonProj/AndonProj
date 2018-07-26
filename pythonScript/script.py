@@ -137,7 +137,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     serial = i2c(port=1, address=0x3C)
     device = ssd1306(serial)
-
+#
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip.begin()
 
