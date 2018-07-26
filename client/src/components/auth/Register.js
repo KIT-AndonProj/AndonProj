@@ -33,7 +33,7 @@ class Register extends Component {
     axios.post('/api/user/register', newUser)
         .then(
             (res) => {
-                                
+                console.log('regis res',res)     
                 if( res.data.username === 'This username already exists'){
                     swal({
                         title: "Username already exists",
@@ -52,6 +52,13 @@ class Register extends Component {
                     swal({
                         title: "Password not match!",
                         text: "Please enter password again",
+                        type: "error"
+                    })
+                }
+                else if( res.data === 'Github API rate limit exceeded' ){
+                    swal({
+                        title: "Can not register",
+                        text: "Github API rate limit exceeded",
                         type: "error"
                     })
                 }
