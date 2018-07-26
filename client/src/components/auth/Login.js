@@ -17,7 +17,7 @@ class Login extends Component {
             profile: [],
             commit_data: [],
             git_status: true,
-            isLoggedIn: false
+            isLoggedIn: ''
         }
         this.onChange = this.onChange.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
@@ -42,25 +42,19 @@ class Login extends Component {
         })
         .then(
             (res) => {
-                console.log('Login status',res.data.success)
                 if(res.data.username !== 'The service is unavailable'){
-                    this.setState({ isLoggedIn: true})
+                    this.setState({ isLoggedIn: 'true'})
                     this.props.update_status(false);
                     sessionStorage.setItem('token', res.data.token);
                     this.getCurrentRepo(res.data.payload.username,res.data.payload.gitName);
                 }
+               
+                else {
+                    this.setState({ isLoggedIn: 'false'})
+                }
             })
                .then((res)=>{
-                if(this.state.isLoggedIn){
-                swal({
-                    title: "You are logged in",
-                    text: "Login successful",
-                    type: "success",
-                    showConfirmButton: false,
-                    timer: 3000
-                })
-            }
-                else if(!this.state.isLoggedIn) {
+                if(this.state.isLoggedIn === 'false'){
                     swal({
                         title: "The service is unavailable",
                         text: "Please logout on previous user",
@@ -68,7 +62,6 @@ class Login extends Component {
                         confirmButtonText: "Try again"
                     });
                 }
-            
             }).catch((res) => {
                 swal({
                     title: "Error",
@@ -90,6 +83,14 @@ class Login extends Component {
                 Authorization: sessionStorage.token
             }
         }).then(res => {
+            if ( res.data !== 'Github API rate limit exceeded'){
+                swal({
+                    title: "You are logged in",
+                    text: "Login successful",
+                    type: "success",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
             axios({
                 url: '/api/git/repoinfo',
                 method: 'post',
@@ -105,6 +106,15 @@ class Login extends Component {
                 this.props.cookie(username,gitName,res.data.image_url);
             }
             )
+        }
+        else {
+            sessionStorage.removeItem('token')
+            swal({
+                title: 'Github API rate limit exceeded',
+                text: 'Please try again',
+                type: 'error'
+            })
+        }
         });  
     }
 
@@ -158,7 +168,7 @@ class Login extends Component {
                 .then((result) => {
                     console.log(result);
                     if (result.value) {
-                        window.open(' http://localhost:5001');
+                        window.open('http://localhost:5001');
                     }
                   })
             }
@@ -204,14 +214,14 @@ class Login extends Component {
                     confirmButtonText: 'Try Again'
                   })
             }
-            
           })
     }
-
     render() {
 
         const isAlreadyAuthenticated = this.isAuthenticated();
+        console.log('change page ',isAlreadyAuthenticated && this.state.redirect_status );
         if( isAlreadyAuthenticated && this.state.redirect_status ){
+            console.log(isAlreadyAuthenticated);
         return (
             <Redirect to={{ pathname: '/monitor'}}  /> 
             )
@@ -247,8 +257,5 @@ function mapDispatchToProps(dispatch){
        update_status: (status) => dispatch(addStatus(status))
     }
 }
-
-
-
 
 export default connect(null,mapDispatchToProps)(Login);

@@ -26,7 +26,6 @@ class NotificationCard extends Component {
       }
 
       handleSubmit(event) {
-          console.log('total',this.props.data[1].data);
         const command_index = this.state.command.indexOf(this.state.select_trigger);
         let command_selected = this.state.command[command_index]
         let value = ''
@@ -40,7 +39,6 @@ class NotificationCard extends Component {
         else{
             this.value = this.props.data[command_index].data.overallHealth;
         }
-        console.log('value:',this.value)
         swal({
             title: 'Notify Aquatan',
             text: 'Notifying...',
@@ -57,8 +55,7 @@ class NotificationCard extends Component {
                         value:  value
                         }    
                 }).then((res) => {
-                    console.log(res.data);
-                    if(res.data === 'Finish'){
+                    if(this.state.command.includes(res.data)){
                         swal.close();
                     }
                 })

@@ -110,7 +110,7 @@ router.get('/openCam', (req, res) => {
         if(user) {
             return res.json('The service is unavailable')
         } else {
-            exec('python ../andonpy/andonpred', (err,stdout,stderr) => { 
+            exec('andonpred', (err,stdout,stderr) => { 
                 if (err) { return res.json(stderr) }
                 return res.json(stdout)
             })
