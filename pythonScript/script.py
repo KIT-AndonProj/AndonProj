@@ -145,7 +145,7 @@ if __name__ == '__main__':
         if args.overall:
             p = mp.Process(target=displayInfo, args=("Overall Health score",args.overall))
             p.start()
-            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 100, 90) 
+            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 100, 90)        
         elif args.bugspot:
             p = mp.Process(target=displayInfo, args=("Bugspot Analyze score",args.bugspot))
             p.start()
@@ -171,6 +171,7 @@ if __name__ == '__main__':
             theaterChaseRainbow(strip, 30)
             theaterChase(strip, Color(127,127,127), 120, 45) 
         colorWipe(strip, Color(0,0,0), 10)
+        p.terminate()
 
     except KeyboardInterrupt:
         if args.clear:
