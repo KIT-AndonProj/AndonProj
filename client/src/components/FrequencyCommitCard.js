@@ -49,7 +49,7 @@ class FrequencyCommitCard extends Component {
                 return (
                     <div className="column-unwatch">
                         <div className="frequency-con">
-                        <h2 id="header">Frequncy of commit</h2>
+                        <h2 id="header">Frequency of commit</h2>
                         <h2>No data shown. Either no commits in your repository or please watch the repository.</h2>
                     </div>
                     </div>
@@ -63,7 +63,7 @@ class FrequencyCommitCard extends Component {
 function mapStateToProps(state){
     return{
     current_commit: state.current_repo.commit_data,
-    commit_data: state.update_frequency.frequency_data
+    commit_data: state.update_frequency.data
     }
 }
 

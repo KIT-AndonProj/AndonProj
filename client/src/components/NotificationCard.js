@@ -10,7 +10,9 @@ class NotificationCard extends Component {
         super(props);
         this.state = {
             select_trigger: '',
-            bugspot_score: 0
+            bugspot_score: 0,
+            command : ['overallHealth','frequency','duplicate','complex','bugspot','outdated']
+
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,96 +26,43 @@ class NotificationCard extends Component {
       }
 
       handleSubmit(event) {
+          console.log(this.props.data);
+        // console.log(this.props.data[0].);
+        const command_index = this.state.command.indexOf(this.state.select_trigger);
+        let command_selected = this.state.command[command_index]
+        let value
         event.preventDefault();
-        if (this.state.select_trigger === 'duplicate'){
-            console.log('duplicate press');
-        axios({
-            url: 'api/board/duplication',
-            method: 'post',
-            headers: {
-                Authorization: sessionStorage.token
-                },
-            data: {
-                'value':  this.props.duplicate_data.duplicate_data.overallHealth
-                }    
-            })
-            console.log('Duplicate',this.props.duplicate_data.duplicate_data.overallHealth);
+        if(command_selected === 'overallHealth'){
+            value = this.props.data[0].score;
         }
-        else if (this.state.select_trigger === 'bugspot'){
-            console.log('bugspot press')
-            this.setState({bugspot_score : this.props.bugspot_data.bugspot_data.overallHealth})
-            axios({
-                url: 'api/board/bugspot',
-                method: 'post',
-                headers: {
-                    Authorization: sessionStorage.token
-                    },
-                data: {
-                    value:  this.state.bugspot_score
-                    }    
-                })
-                console.log('Bugspot',this.state.bugspot_score);
+        else if (command_selected === 'frequency' ){
+            value = this.props.data[1].data;
         }
-        else if (this.state.select_trigger === 'complex'){
-
-            console.log('complex pressed')
-            axios({
-                
-                url: 'api/board/complexity',
-                method: 'post',
-                headers: {
-                    Authorization: sessionStorage.token
-                    },
-                data: {
-                    value:  this.props.complex_data.complexity_data.overallHealth
-                    }    
-                })
-                console.log('Complexity', this.props.complex_data.complexity_data.overallHealth);
-        }
-        else if (this.state.select_trigger === 'outdated'){
-            console.log('outdated pressed')
-            axios({
-                url: 'api/board/outdated',
-                method: 'post',
-                headers: {
-                    Authorization: sessionStorage.token
-                    },
-                data: {
-                    'value':  this.props.outdated_data.outdated_data.overallHealth
-                    }    
-                })
-                console.log('Outdated : ', this.props.outdated_data.outdated_data.overallHealth );
-        }
-        else if( this.state.select_trigger === 'frequency'){
-            axios({
-                url: 'api/board/frequency',
-                method: 'post',
-                headers: {
-                    Authorization: sessionStorage.token
-                    },
-                data: {
-                    'value':  this.props.freqCommit_data.frequency_data
-                }    
-                })
-                console.log('Frequency: ',this.props.freqCommit_data.frequency_data);
-        }
-        else if (this.state.select_trigger ==='overallHealth'){
-            console.log('overall health press')
-            axios({
-                url: 'api/board/overall',
-                method: 'post',
-                headers: {
-                    Authorization: sessionStorage.token
-                },
-                data: {
-                    'value': this.props.overall_data.score
-                }
-            })
-            console.log('Overall ', this.props.overall_data.score)
+        else{
+            value = this.props.data[command_index].data.overallHealth;
         }
         swal({
-            title: 'Notification Changed!',
-            type: 'success'
+            title: 'Notify Aquatan',
+            text: 'Notifying...',
+            allowOutsideClick: false,
+            onOpen: ()=> {
+                swal.showLoading();
+                axios({
+                    url: 'api/board/'+command_selected,
+                    method: 'post',
+                    headers: {
+                        Authorization: sessionStorage.token
+                        },
+                    data: {
+                        value:  value
+                        }    
+                }).then((res) => {
+                    console.log(res);
+                    if(this.state.command.includes(res.data)){
+                        swal.close();
+                    }
+                })
+            }
         })
     }
 
@@ -123,27 +72,27 @@ class NotificationCard extends Component {
     <div className="notification-con">
         <form onSubmit={this.handleSubmit}>
         <h1>Notification Trigger</h1>
-            <label className="container">Overall Health
+           <label className="container">Overall Health
             <input type="radio" value="overallHealth" checked={this.state.select_trigger==="overallHealth"} onChange={this.handleChange}/>
             <span className="checkmark"></span>
             </label>
-            <label className="container">Frequency of Commits : {this.props.freqCommit_data.status}
+            <label className="container">Frequency of Commits : {this.props.data[1].status}
             <input type="radio" value="frequency" checked={this.state.select_trigger==="frequency"} onChange={this.handleChange}/>
             <span className="checkmark"></span>
             </label>
-            <label className="container">Code Duplication : {this.props.duplicate_data.status}
+            <label className="container">Code Duplication : {this.props.data[2].status}
             <input type="radio" value="duplicate" checked={this.state.select_trigger==="duplicate"} onChange={this.handleChange}/>
             <span className="checkmark"></span>
             </label>
-            <label className="container">Code Complexity : {this.props.complex_data.status}
+            <label className="container">Code Complexity : {this.props.data[3].status}
             <input type="radio" value="complex" checked={this.state.select_trigger==="complex"} onChange={this.handleChange}/>
             <span className="checkmark"></span>
             </label>
-            <label className="container">Bugspot Analyze : {this.props.bugspot_data.status}
+            <label className="container">Bugspot Analyze : {this.props.data[4].status}
             <input type="radio" value="bugspot" checked={this.state.select_trigger==="bugspot"} onChange={this.handleChange}/>
             <span className="checkmark"></span>
             </label>
-            <label className="container">Outdated Library : {this.props.outdated_data.status}
+            <label className="container">Outdated Library : {this.props.data[5].status}
             <input type="radio" value="outdated" checked={this.state.select_trigger==="outdated"} onChange={this.handleChange}/>
             <span className="checkmark"></span>
             </label>
@@ -156,12 +105,15 @@ class NotificationCard extends Component {
 
 function mapStateToProps(state){
     return {
-        freqCommit_data : state.update_frequency,
-        duplicate_data: state.update_duplicate,
-        complex_data: state.update_complexity,
-        bugspot_data: state.update_bugspot,
-        outdated_data: state.update_outdated,
-        overall_data: state.update_score
+        data : [
+            state.update_score,
+            state.update_frequency,
+            state.update_duplicate,
+            state.update_complexity,
+            state.update_bugspot,
+            state.update_outdated,
+        ]
+        
     }
 }
 

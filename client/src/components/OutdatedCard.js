@@ -56,7 +56,7 @@ class OutdatedCard extends Component {
 
 function mapStateToProps(state){
     return {
-        outdated_data: state.update_outdated.outdated_data.resultObj,
+        outdated_data: state.update_outdated.data.resultObj,
         status: state.update_outdated.status
     }
 }

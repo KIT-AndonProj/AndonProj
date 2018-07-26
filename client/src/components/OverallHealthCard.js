@@ -37,10 +37,10 @@ class OverallHealthCard extends Component {
 
 function mapStateToProps(state){
     return {
-        duplicate_score: state.update_duplicate.duplicate_data.overallHealth,
-        complexity_score: state.update_complexity.complexity_data.overallHealth,
-        bugspot_score: state.update_bugspot.bugspot_data.overallHealth,
-        outdated_score: state.update_outdated.outdated_data.overallHealth,
+        duplicate_score: state.update_duplicate.data.overallHealth,
+        complexity_score: state.update_complexity.data.overallHealth,
+        bugspot_score: state.update_bugspot.data.overallHealth,
+        outdated_score: state.update_outdated.data.overallHealth,
         watch_status: state.update_status.status,
         score: state.update_score.score
     }

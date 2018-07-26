@@ -1,7 +1,7 @@
-export default function updateOutdated(outdated_data,status){
+export default function updateOutdated(data,status){
     return {
         type: 'UPDATE_OUTDATED',
-        outdated_data: outdated_data,
+        data: data,
         status: status
     }
 }

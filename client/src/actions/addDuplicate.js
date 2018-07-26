@@ -1,7 +1,7 @@
-export default function addDuplicate(duplicate_data,status){
+export default function addDuplicate(data,status){
     return {
         type: 'UPDATE_DUPLICATE',
-        duplicate_data: duplicate_data,
+        data: data,
         status: status
 };
 }

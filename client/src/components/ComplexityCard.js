@@ -14,7 +14,7 @@ class ComplexityCard extends Component {
             <div className="card-complex">
                 <h2 id="header">Complexity of Code</h2>
               <ReactTable
-                data={this.props.complexity_data}
+                data={this.props.data}
                 columns={[
                       {
                         Header: "File",
@@ -57,7 +57,7 @@ class ComplexityCard extends Component {
 
 function mapStateToProps(state){
     return {
-        complexity_data: state.update_complexity.complexity_data.resObj,
+        data: state.update_complexity.data.resObj,
         status : state.update_complexity.status
     }
 }

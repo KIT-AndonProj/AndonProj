@@ -7,8 +7,6 @@ import addCookie from '../../actions/addCookie';
 import { connect } from 'react-redux'; 
 import addCurrentRepo from '../../actions/addCurrentRepo';
 import addStatus from '../../actions/addStatus';
-import camBtn from '../../image-url/aquatna-btn.png';
-import clearBtn from '../../image-url/clear-user.png';
 class Login extends Component {
     constructor() {
         super()
@@ -44,7 +42,7 @@ class Login extends Component {
         })
         .then(
             (res) => {
-                console.log('Success',res.data.success)
+                console.log('Login status',res.data.success)
                 if(res.data.username !== 'The service is unavailable'){
                     this.setState({ isLoggedIn: true})
                     this.props.update_status(false);
@@ -103,7 +101,6 @@ class Login extends Component {
                     Authorization: sessionStorage.token
                 }
             }).then(res => {
-                console.log("current info",res);
                 this.getCurrentCommit(gitName,res.data.reponame,res.data);
                 this.props.cookie(username,gitName,res.data.image_url);
             }

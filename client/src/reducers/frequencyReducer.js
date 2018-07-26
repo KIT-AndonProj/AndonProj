@@ -1,7 +1,7 @@
-export function frequencyReducer( state = { frequency_data: [],status: ''}, action){
+export function frequencyReducer( state = { data: [],status: ''}, action){
     if(action.type === 'UPDATE_FREQUENCY'){
         return {
-            frequency_data: action.frequency_data,
+            data: action.data,
             status: action.status
         }
     }

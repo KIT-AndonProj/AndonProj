@@ -43,7 +43,7 @@ class DuplicateCard extends Component {
 
 function mapStateToProps(state){
     return {
-        duplicate_data: state.update_duplicate.duplicate_data,
+        duplicate_data: state.update_duplicate.data,
         status: state.update_duplicate.status
     }
 }

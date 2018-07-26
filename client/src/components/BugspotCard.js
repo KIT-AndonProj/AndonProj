@@ -73,7 +73,7 @@ class BugspotCard extends Component {
 
     function mapStateToProps(state){
         return {
-            bugspot_data: state.update_bugspot.bugspot_data.score,
+            bugspot_data: state.update_bugspot.data.score,
             status: state.update_bugspot.status
         }
     }

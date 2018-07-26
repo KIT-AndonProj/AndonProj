@@ -1,7 +1,7 @@
-export function complexityReducer( state = { complexity_data: [],status:''},action){
+export function complexityReducer( state = { data: [],status:''},action){
     if(action.type === 'UPDATE_COMPLEXITY'){
         return {
-            complexity_data: action.complexity_data,
+            data: action.data,
             status: action.status
         }
     }

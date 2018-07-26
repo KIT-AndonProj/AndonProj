@@ -40,7 +40,7 @@ class Monitor extends Component {
         this.props.update_bugspot('','Loading...');
         this.props.update_complexity('','Loading...');
         this.props.update_duplicate('','Loading...');
-        this.props.update_frequency('','Loading...');
+        this.props.update_frequency('','Loading...',0);
         this.props.update_outdated('','Loading...');
     }
 
@@ -104,6 +104,7 @@ class Monitor extends Component {
         swal({
             title: 'Cloning Repository',
             text: 'Cloning...',
+            allowOutsideClick: false,
             onOpen: ()=> {
                 swal.showLoading();
                 axios({
@@ -359,11 +360,11 @@ class Monitor extends Component {
 function mapDispatchToProps(dispatch){
     return {
         update_watchrepo: (profile) => dispatch(addWatchRepo(profile)),
-        update_duplicate: (duplicate_data,status) => dispatch(addDuplicate(duplicate_data,status)),
-        update_bugspot: (bugspot_data,status) => dispatch(addBugspot(bugspot_data,status)),
-        update_complexity: (complexity_data,status) => dispatch(addComplexity(complexity_data,status)),
-        update_frequency: (frequency_data,status) => dispatch(addFrequencyCommit(frequency_data,status)),
-        update_outdated: (outdated_data, status) => dispatch(addOutdated(outdated_data,status)),
+        update_duplicate: (data,status) => dispatch(addDuplicate(data,status)),
+        update_bugspot: (data,status) => dispatch(addBugspot(data,status)),
+        update_complexity: (data,status) => dispatch(addComplexity(data,status)),
+        update_frequency: (data,status) => dispatch(addFrequencyCommit(data,status)),
+        update_outdated: (data, status) => dispatch(addOutdated(data,status)),
         update_status: (status) => dispatch(addStatus(status)),
         update_score: (score) => dispatch(addScore(score)),
     }

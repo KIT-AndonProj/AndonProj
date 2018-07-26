@@ -48,7 +48,7 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
 
     exec(light + option + ' ' + monitor, (err,stdout,stderr) => { 
         if (err) { return res.json(stderr) }
-        return res.json(req.params.command)
+        return res.json('Finish')
     });  
 })
 

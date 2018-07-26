@@ -1,7 +1,7 @@
-export default function updateComplexity(complexity_data,status){
+export default function updateComplexity(data,status){
     return {
         type: "UPDATE_COMPLEXITY",
-        complexity_data: complexity_data,
+        data: data,
         status: status
     };
 };

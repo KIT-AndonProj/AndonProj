@@ -1,7 +1,7 @@
-export default function currentBugspotReducer( state = { bugspot_data: [],status:'' },action){
+export default function currentBugspotReducer( state = { data: [],status:'' },action){
     if(action.type === 'UPDATE_BUGSPOT'){
         return {
-            bugspot_data: action.bugspot_data,
+            data: action.data,
             status: action.status
         }
     }
