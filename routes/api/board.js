@@ -12,6 +12,8 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
     var light = 'sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c '
     var option = ''
     var monitor = ''
+
+    console.log(req.body.value);
     if(req.body.value < 1){
         req.body.value = 1;
     }
@@ -21,15 +23,15 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
         option = '-ol ' + Math.ceil(req.body.value)
     } else if (req.params.command == 'bugspot') {
         option = '-bug ' + Math.ceil(req.body.value)
-    } else if (req.params.command == 'duplication') {
+    } else if (req.params.command == 'duplicate') {
         option = '-dup ' + Math.ceil(req.body.value)
-    } else if (req.params.command == 'complexity') {
+    } else if (req.params.command == 'complex') {
         option = '-comp ' + Math.ceil(req.body.value)
     } else if (req.params.command == 'outdated') {
         if(req.body.value >= 12){
             option = '-od ' + 25
         } else {
-            option = '-od ' + (req.body.value * 2)
+            option = '-od ' + (req.body.value)
         }
     } else if (req.params.command == 'frequency') {
         var oneDay = 24*60*60*1000; 
@@ -42,8 +44,8 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
         }
        
         var avgCommit =  Math.ceil(380/(numCommit/diffDays))
-        option = '-fq ' + avgCommit;
-    
+        option = '-fq ' + avgCommit + ' -total ' + req.body.value.total;
+        console.log(req.body.value.total)
     }
 
     exec(light + option + ' ' + monitor, (err,stdout,stderr) => { 
