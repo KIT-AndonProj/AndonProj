@@ -12,7 +12,6 @@ class Register extends Component {
             password: '',
             password2: '',
             gitName: '',
-            imgURL: '',
             errors: {},
         }
         this.onChange = this.onChange.bind(this)
@@ -29,7 +28,6 @@ class Register extends Component {
             password: this.state.password,
             password2: this.state.password2,
             gitName: this.state.gitName,
-            imgURL: this.state.imgURL
         }
 
     axios.post('/api/user/register', newUser)
@@ -86,8 +84,6 @@ class Register extends Component {
                     <input className="input-login" type="text" minLength="6" autoComplete="off" placeholder="6 characters minimum" name="username" value={this.state.username} required onChange={this.onChange}></input>
                     <h2 id="label">GITHUB USERNAME  <strong>*ONLY GITHUB USERNAME*</strong></h2>
                     <input className="input-login" type="text" autoComplete="off" placeholder="Github username" name="gitName" value={this.state.gitName} required onChange={this.onChange}></input>
-                    <h2  id="label">PROFILE PHOTO <strong> ** MUST SEE FACE CLEARLY **</strong></h2>
-                    <input className="input-login" type="file" required onChange={(e) => this.setState({imgURL: e.target.value.replace("C:\\fakepath\\", "")})}/>                    
                     <h2 id="label">PASSWORD</h2>
                     <input className="input-login" id="passwordForm1" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password" value={this.state.password} required onChange={this.onChange}></input>
                     <h2 id="label">CONFIRM PASSWORD</h2>

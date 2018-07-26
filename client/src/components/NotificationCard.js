@@ -55,7 +55,7 @@ class NotificationCard extends Component {
                         value:  value
                         }    
                 }).then((res) => {
-                    if(this.state.command.includes(res.data)){
+                    if(res.data==='Finish'){
                         swal.close();
                     }
                 })

@@ -32,7 +32,6 @@ router.post('/register', (req, res) => {
                             username: req.body.username.toLowerCase(),
                             password: req.body.password,
                             gitName: req.body.gitName.toLowerCase(),
-                            imgURL: req.body.imgURL
                         })
             
                         bcrypt.genSalt(10, (err, salt) => {
@@ -129,7 +128,7 @@ router.post('/updateDB', (req, res) => {
 })
 
 router.post('/clearDB', (req, res) => {
-    User.findOne({ username: 'adminandon' }).then(user => {
+    User.findOne({ username: 'andonadmin' }).then(user => {
         if(user) {
             bcrypt.compare(req.body.password, user.password)
             .then(isMatch => {
