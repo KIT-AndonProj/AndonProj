@@ -26,17 +26,10 @@ class NotificationCard extends Component {
       }
 
       handleSubmit(event) {
-<<<<<<< HEAD
           console.log('total',this.props.data[1].data);
         const command_index = this.state.command.indexOf(this.state.select_trigger);
         let command_selected = this.state.command[command_index]
         let value = ''
-=======
-          console.log(this.props.data[1].data);
-        const command_index = this.state.command.indexOf(this.state.select_trigger);
-        let command_selected = this.state.command[command_index]
-        let value = '';
->>>>>>> 531c829c56a94d6d8000daf37e8ae965ce066f75
         event.preventDefault();
         if(command_selected === 'overallHealth'){
             this.value = this.props.data[0].score;
@@ -47,11 +40,7 @@ class NotificationCard extends Component {
         else{
             this.value = this.props.data[command_index].data.overallHealth;
         }
-<<<<<<< HEAD
         console.log('value:',this.value)
-=======
-        console.log(command_selected + ' : '+value);
->>>>>>> 531c829c56a94d6d8000daf37e8ae965ce066f75
         swal({
             title: 'Notify Aquatan',
             text: 'Notifying...',
