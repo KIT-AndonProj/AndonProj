@@ -25,8 +25,7 @@ router.post('/commits', passport.authenticate('jwt', {session: false}), (req, re
             }
             result.total += 1
         }
-        var commit =50;
-        return res.json(result, commit )
+        return res.json(result )
     }).catch(err => {
         if(err.response.data.message.slice(0,23) === 'API rate limit exceeded')
             return res.json('Github API rate limit exceeded')
