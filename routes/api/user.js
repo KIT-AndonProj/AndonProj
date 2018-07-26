@@ -7,6 +7,7 @@ const axios = require('axios')
 const validateRegisterInput = require('../../validation/register')
 const validateLoginInput = require('../../validation/login')
 const User = require('../../models/User')
+const { exec } = require('child_process')
 
 //register new user
 router.post('/register', (req, res) => {
@@ -48,8 +49,9 @@ router.post('/register', (req, res) => {
             }} 
         )})
         .catch(erraxios => {
-            if(erraxios.response.data.message.slice(0,23) === 'API rate limit exceeded')
-                return ('Github API rate limit exceeded')
+            if(erraxios.response.data.message.slice(0,23) === 'API rate limit exceeded'){
+                return res.json('Github API rate limit exceeded')
+            }
             errors.gitName = 'Github username not found'
             return res.json(errors)
         }
