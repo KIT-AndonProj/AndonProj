@@ -26,19 +26,21 @@ class NotificationCard extends Component {
       }
 
       handleSubmit(event) {
+          console.log('total',this.props.data[1].data);
         const command_index = this.state.command.indexOf(this.state.select_trigger);
         let command_selected = this.state.command[command_index]
-        let value
+        let value = ''
         event.preventDefault();
         if(command_selected === 'overallHealth'){
-            value = this.props.data[0].score;
+            this.value = this.props.data[0].score;
         }
         else if (command_selected === 'frequency' ){
-            value = this.props.data[1].data;
+            this.value = this.props.data[1].data;
         }
         else{
-            value = this.props.data[command_index].data.overallHealth;
+            this.value = this.props.data[command_index].data.overallHealth;
         }
+        console.log('value:',this.value)
         swal({
             title: 'Notify Aquatan',
             text: 'Notifying...',

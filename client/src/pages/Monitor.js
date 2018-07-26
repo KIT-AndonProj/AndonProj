@@ -40,7 +40,7 @@ class Monitor extends Component {
         this.props.update_bugspot('','Loading...');
         this.props.update_complexity('','Loading...');
         this.props.update_duplicate('','Loading...');
-        this.props.update_frequency('','Loading...',0);
+        this.props.update_frequency('',0,'Loading...');
         this.props.update_outdated('','Loading...');
     }
 
@@ -186,6 +186,7 @@ class Monitor extends Component {
             }
         })
         .then(res => {
+            console.log('commit',res.data);
             this.props.update_frequency(res.data,'available')
         })
         
@@ -259,7 +260,7 @@ class Monitor extends Component {
                 this.props.update_bugspot('','Loading...');
                 this.props.update_complexity('','Loading...');
                 this.props.update_duplicate('','Loading...');
-                this.props.update_frequency('','Loading...');
+                this.props.update_frequency('',0,'Loading...');
                 this.props.update_outdated('','Loading...');
                 this.props.update_status(false);
                 this.setState({

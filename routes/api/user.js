@@ -36,8 +36,8 @@ router.post('/register', (req, res) => {
             
                         bcrypt.genSalt(10, (err, salt) => {
                             bcrypt.hash(newUser.password, salt, (err,hash) => {
-                                if(err) throw err;
-                                newUser.password = hash;
+                                if(err) throw err
+                                newUser.password = hash
                                 newUser.save()
                                     .then(user => res.json(user))
                                     .catch(err => console.log(err))
@@ -48,6 +48,8 @@ router.post('/register', (req, res) => {
             }} 
         )})
         .catch(erraxios => {
+            if(erraxios.response.data.message.slice(0,23) === 'API rate limit exceeded')
+                return ('Github API rate limit exceeded')
             errors.gitName = 'Github username not found'
             return res.json(errors)
         }
@@ -106,13 +108,13 @@ router.get('/openCam', (req, res) => {
         if(user) {
             return res.json('The service is unavailable')
         } else {
-            exec('python andonrec', (err,stdout,stderr) => { 
+            exec('python ../andonpy/andonpred', (err,stdout,stderr) => { 
                 if (err) { return res.json(stderr) }
                 return res.json(stdout)
-            });  
+            })
         }
     })
-});
+})
 
 router.post('/updateDB', (req, res) => {
     const username = req.body.username

@@ -25,8 +25,11 @@ router.post('/commits', passport.authenticate('jwt', {session: false}), (req, re
             }
             result.total += 1
         }
-        return res.json(result)
+        var commit =50;
+        return res.json(result, commit )
     }).catch(err => {
+        if(err.response.data.message.slice(0,23) === 'API rate limit exceeded')
+            return ('Github API rate limit exceeded')
         return res.json('Information not found')
     })
 })
@@ -47,6 +50,8 @@ router.post('/pulls', passport.authenticate('jwt', {session: false}), (req, res)
         }
         return res.json(result)
     }).catch(err => {
+        if(err.response.data.message.slice(0,23) === 'API rate limit exceeded')
+            return ('Github API rate limit exceeded')
         return res.json('Information not found')
     })
 })
@@ -81,6 +86,8 @@ router.post('/branches', passport.authenticate('jwt', {session: false}), (req, r
             return res.json(result)
         })
     ).catch(err => {
+        if(err.response.data.message.slice(0,23) === 'API rate limit exceeded')
+            return ('Github API rate limit exceeded')
         return res.json('Information not found')
     })
 })
@@ -98,6 +105,8 @@ router.post('/clonerepo', passport.authenticate('jwt', {session: false}), (req, 
             return res.json('Finish')
         })
         }).catch(err => {
+            if(err.response.data.message.slice(0,23) === 'API rate limit exceeded')
+                return ('Github API rate limit exceeded')
             return res.json('Information not found')
         })  
     })
@@ -117,6 +126,8 @@ router.post('/repoinfo', passport.authenticate('jwt', {session: false}), (req, r
         }
         return res.json(result)
     }).catch(err => {
+        if(err.response.data.message.slice(0,23) === 'API rate limit exceeded')
+            return ('Github API rate limit exceeded')
         return res.json('Information not found')
     })    
 })
@@ -138,6 +149,8 @@ router.post('/issues', passport.authenticate('jwt', {session: false}), (req, res
         }
         return res.json(result)
     }).catch(err => {
+        if(err.response.data.message.slice(0,23) === 'API rate limit exceeded')
+            return ('Github API rate limit exceeded')
         return res.json('Information not found')
     })
 })
@@ -157,6 +170,8 @@ router.post('/currrepo', passport.authenticate('jwt', {session: false}), (req, r
         }
         return res.json(result)
     }).catch(err => {
+        if(err.response.data.message.slice(0,23) === 'API rate limit exceeded')
+            return ('Github API rate limit exceeded')
         return res.json('Information not found')
     })
 })

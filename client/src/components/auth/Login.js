@@ -145,7 +145,6 @@ class Login extends Component {
                     type: 'error',
                     showConfirmButton: false,
                     timer: 3000
-
                 })
             }
             else {
@@ -153,9 +152,15 @@ class Login extends Component {
                     title: 'Camera connected!',
                     text: 'Scan your face with Aquatan Lamp before logged in',
                     type: 'success',
-                    showConfirmButton: false,
-                    timer: 3000
+                    showCancelButton: true,
+                    confirmButtonText: 'Scan your face',
                 })
+                .then((result) => {
+                    console.log(result);
+                    if (result.value) {
+                        window.open(' http://localhost:5001');
+                    }
+                  })
             }
         })
     }
@@ -226,7 +231,7 @@ class Login extends Component {
                         <a href="/register">Not a member? </a>
                        <div className="button-div">
                         <button className="andon-button" onClick={this.openCamera} >Open Camera</button>
-                        <button className="andon-button" onClick={this.clearPreviousLoggedIn }>Logout Previous</button>
+                        <button className="andon-button" onClick={this.clearPreviousLoggedIn }>Clear user status</button>
                        </div>
                     </div>
                 </div>

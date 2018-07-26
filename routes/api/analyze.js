@@ -1,12 +1,11 @@
-const express = require('express');
-const router = express.Router(); 
-const { exec , execSync }  = require('child_process');
-const fs = require('fs-extra');
-const jwt = require('jsonwebtoken');
-const keys = require('../../config/keys');
-const passport = require('passport');
-const npmCheck = require('npm-check');
-const axios = require('axios')
+const express = require('express')
+const router = express.Router() 
+const { exec , execSync }  = require('child_process')
+const fs = require('fs-extra')
+const jwt = require('jsonwebtoken')
+const keys = require('../../config/keys')
+const passport = require('passport')
+const npmCheck = require('npm-check')
 
 router.get('/bugspot', passport.authenticate('jwt', {session: false}), (req, res) => { 
     exec('cd routes/api/code && bugspots', (err,stdout,stderr) => { 
@@ -16,16 +15,16 @@ router.get('/bugspot', passport.authenticate('jwt', {session: false}), (req, res
         }
 
         var arr = stdout.split('\n') 
-        var idxHotspot = arr.length-1;
-        var sumScore = 0;
+        var idxHotspot = arr.length-1
+        var sumScore = 0
         var message = []
         var score = []
         var resultObj = { 'numBug': arr[3].slice(6, arr[3].length-35), message, score}
         for(var i = 0 ; i < arr.length-1; i++){
             if (i > idxHotspot + 1 && arr[i] !== ''){
                 score.push({score: parseFloat(arr[i].slice(6,10)).toFixed(2), file: arr[i].slice(13,arr[i].length), percentage: (parseFloat(arr[i].slice(6,10)) * 50).toFixed(2)})
-                sumScore += parseFloat(arr[i].slice(6,10));
-            } else if( i > 6 && i < idxHotspot && arr[i] !== 'Hotspots'  && arr[i] !== ''){
+                sumScore += parseFloat(arr[i].slice(6,10))
+            } else if( i > 6 && i < idxHotspot && arr[i] !== 'Hotspots'  && arr[i] !== '') {
                 message.push(arr[i].slice(7,arr[i].length))
             } else if (arr[i] == 'Hotspots'){
                 idxHotspot = i
@@ -33,28 +32,28 @@ router.get('/bugspot', passport.authenticate('jwt', {session: false}), (req, res
         }
         overallHealth = Math.ceil(sumScore / resultObj.score.length * 10)
         if(overallHealth > 25){
-            overallHealth = 25;
+            overallHealth = 25
         }
 
         resultObj.overallHealth = overallHealth
         return res.json(resultObj)
     })
-});
+})
         
 router.get('/duplicate', passport.authenticate('jwt', {session: false}), (req, res) => { 
     fs.remove(__dirname + '/dup.json', (error) => {
-        if (error) { throw error; }
-        console.log('JsonClear');
+        if (error) { throw error }
+        console.log('JsonClear')
         exec('jscpd -p routes/api/code -r json -o routes/api/dup.json', (err,stdout,stderr) => { 
             if (err) {
                 console.log(err)
                 return res.json({message:'The jscpd found too many duplicates over threshold', overallHealth: 25.00}) 
             }
-            const obj = fs.readJsonSync(__dirname + '/dup.json');
+            const obj = fs.readJsonSync(__dirname + '/dup.json')
             obj.statistics.overallHealth = Math.ceil(obj.statistics.percentage / 4)
             console.log(obj.statistics)
             return res.json(obj.statistics)
-        });
+        })
     })
 })
 
@@ -67,7 +66,7 @@ router.get('/complexity', passport.authenticate('jwt', {session: false}), (req, 
             return res.json(stderr) 
         }
       
-        resultArr = stdout.split(/\n| /);
+        resultArr = stdout.split(/\n| /)
         for( i in resultArr){
             resultArr[i] = resultArr[i].slice(5,resultArr[i].length-5)
         }
@@ -83,8 +82,7 @@ router.get('/complexity', passport.authenticate('jwt', {session: false}), (req, 
     
         console.log(result)
         return res.json(result)   
-    });
-        
+    })  
 })
 
 router.get('/outdated', passport.authenticate('jwt', {session: false}), (req, res) => {
@@ -101,7 +99,7 @@ router.get('/outdated', passport.authenticate('jwt', {session: false}), (req, re
                 return res.json(result)
             }).catch(err =>{
                 return res.json({message:'A package.json was not found', overallHealth: 0})
-            });
+            })
         } 
         else {
             return res.json({message:'A package.json was not found', overallHealth: 0})
@@ -110,4 +108,4 @@ router.get('/outdated', passport.authenticate('jwt', {session: false}), (req, re
     
 })
 
-module.exports = router;
+module.exports = router
