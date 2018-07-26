@@ -133,6 +133,7 @@ if __name__ == '__main__':
     parser.add_argument('-dup', '--duplication',type=int ,help='duplication value')
     parser.add_argument('-od','--outdated', type=int ,help='outdated value')
     parser.add_argument('-fq', '--frequency',type=int ,help='frequency of commits value')
+    parser.add_argument('-total',type=int,help='total of commit')
 
     args = parser.parse_args()
     serial = i2c(port=1, address=0x3C)
@@ -159,17 +160,19 @@ if __name__ == '__main__':
             p.start()
             shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 20000)
         elif args.outdated:
+            print(args.outdated)
             p = mp.Process(target=displayInfo, args=("Outdated score",args.outdated))
             p.start() 
             shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 20000)
         elif args.frequency:
-            p = mp.Process(target=displayInfo, args=("Frequency of commits",'22'))
+            p = mp.Process(target=displayInfo, args=("Frequency of commits",args.total))
             p.start()
             theaterChase(strip, Color(20,130,20), args.frequency, 60) 
         elif args.welcome:
             welcome()
             theaterChaseRainbow(strip, 30)
             theaterChase(strip, Color(127,127,127), 120, 45) 
+
         colorWipe(strip, Color(0,0,0), 10)
         p.terminate()
 
