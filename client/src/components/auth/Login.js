@@ -37,7 +37,8 @@ class Login extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-       
+        var ip = require('ip');
+        console.log(ip.address());
         swal({
             title: 'Logging in',
             text: 'Verifying...',
@@ -164,7 +165,7 @@ class Login extends Component {
                 swal.showLoading();
                 axios.get('/api/user/openCam')
                 .then((res) => {
-                    // console.log('OpenCam:',res);
+                    console.log('OpenCam:',res);
                     if(res.data==='The service is unavailable'){
                         swal({
                             title: 'The service is unavailable',
@@ -183,9 +184,11 @@ class Login extends Component {
                             confirmButtonText: 'Scan your face',
                         })
                         .then((result) => {
+                            var ip = require('ip');
                             console.log(result);
+                            console.log('open this address'+ip.address())
                             if (result.value) {
-                                window.open('http://localhost:5001');
+                                window.open('http://'+ip.address()+':5001');
                             }
                           })
                     }
