@@ -120,8 +120,13 @@ router.get('/openCam', (req, res) => {
 router.post('/updateDB', (req, res) => {
     const username = req.body.username
     User.findOneAndUpdate({ username }, {status: true}).then(user => {
-        if(user)
+        if(user) {
+            exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c -wel', (err,stdout,stderr) => { 
+                if (err) { return res.json(stderr) }
+               
+            })
             return res.json(user)
+        }
         else
             return res.json('Update database fail')
     })
@@ -133,7 +138,7 @@ router.post('/clearDB', (req, res) => {
             bcrypt.compare(req.body.password, user.password)
             .then(isMatch => {
                 if(isMatch) {
-                    User.update({ status: true }, { status: false })
+                    User.updateMany({ status: true }, { status: false })
                     .then(response => { return res.json('Database Reset') })
                     .catch(err => { return res.json(err) })
                 } else {
