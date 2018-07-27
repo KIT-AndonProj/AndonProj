@@ -4,6 +4,7 @@ import './App.css';
 import Login from './components/auth/Login'
 import Register from './components/auth/Register'
 import Monitor from './pages/Monitor';
+import Camera from './pages/Camera';
 
 class App extends Component {
   
@@ -14,6 +15,7 @@ class App extends Component {
             <Route exact path = "/register" component = { Register }/>
             <Route exact path = "/" component = { Login }/>
             <Route exact path = "/monitor" component = {Monitor}/>
+            <Route exact path = "/camera" component = {Camera}/>
       </div>
       </Router>
     );
