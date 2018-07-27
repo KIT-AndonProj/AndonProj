@@ -28,10 +28,12 @@ class UnwatchCard extends Component {
         );
     }
 }
+
 function mapStateToProps(state){
     return {
         current_profile: state.current_repo.profile,
         current_commit: state.current_repo.commit_data
     }
 }
+
 export default connect(mapStateToProps)(UnwatchCard);

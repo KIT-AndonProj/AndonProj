@@ -12,7 +12,6 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
     var light = 'sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c '
     var option = ''
     console.log(req.body.value)
-
     if(req.body.value < 1){
         req.body.value = 1
     }
@@ -43,8 +42,7 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
         }
         var avgCommit =  Math.ceil(380/(numCommit/diffDays))
 
-        option = '-fq ' + avgCommit + ' -total ' + req.body.value.total
-        console.log(req.body.value.total)
+        option = '-fq ' + avgCommit
     }
 
     exec(light + option, (err,stdout,stderr) => { 

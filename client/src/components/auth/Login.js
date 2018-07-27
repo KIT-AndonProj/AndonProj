@@ -36,40 +36,52 @@ class Login extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-        axios.post('/api/user/login',{
-            username: this.state.username,
-            password: this.state.password,
-        })
-        .then(
-            (res) => {
-                if(res.data.username !== 'The service is unavailable'){
-                    this.setState({ isLoggedIn: 'true'})
-                    this.props.update_status(false);
-                    sessionStorage.setItem('token', res.data.token);
-                    this.getCurrentRepo(res.data.payload.username,res.data.payload.gitName);
-                }
-               
-                else {
-                    this.setState({ isLoggedIn: 'false'})
-                }
-            })
-               .then((res)=>{
-                if(this.state.isLoggedIn === 'false'){
-                    swal({
-                        title: "The service is unavailable",
-                        text: "Please logout on previous user",
-                        type: "error",
-                        confirmButtonText: "Try again"
+
+        var ip = require('ip');
+        console.log(ip.address());
+        swal({
+            title: 'Logging in',
+            text: 'Verifying...',
+            allowOutsideClick: false,
+            onOpen: ()=> {
+                swal.showLoading();
+                axios.post('/api/user/login',{
+                    username: this.state.username,
+                    password: this.state.password,
+                })
+                .then(
+                    (res) => {
+                        if(res.data.username !== 'The service is unavailable'){
+                            this.setState({ isLoggedIn: 'true'})
+                            this.props.update_status(false);
+                            sessionStorage.setItem('token', res.data.token);
+                            this.getCurrentRepo(res.data.payload.username,res.data.payload.gitName);
+                        }
+                       
+                        else {
+                            this.setState({ isLoggedIn: 'false'})
+                        }
+                    })
+                       .then((res)=>{
+                        if(this.state.isLoggedIn === 'false'){
+                            swal({
+                                title: "The service is unavailable",
+                                text: "Please logout on previous user",
+                                type: "error",
+                                confirmButtonText: "Try again"
+                            });
+                        }
+                    }).catch((res) => {
+                        swal({
+                            title: "Error",
+                            text: "Wrong username or password",
+                            type: "error",
+                            confirmButtonText: "Try again"
+                        });
                     });
-                }
-            }).catch((res) => {
-                swal({
-                    title: "Error",
-                    text: "Wrong username or password",
-                    type: "error",
-                    confirmButtonText: "Try again"
-                });
-            });
+            }
+        })
+       
     }
 
     getCurrentRepo(username,gitName){
@@ -145,32 +157,42 @@ class Login extends Component {
     }
 
     openCamera(){
-        axios.get('/api/user/openCam')
-        .then( res =>{
-            console.log('OpenCam:',res);
-            if(res.data==='The service is unavailable'){
-                swal({
-                    title: 'The service is unavailable',
-                    text: 'Please logout from previous user',
-                    type: 'error',
-                    showConfirmButton: false,
-                    timer: 3000
-                })
-            }
-            else {
-                swal({
-                    title: 'Camera connected!',
-                    text: 'Scan your face with Aquatan Lamp before logged in',
-                    type: 'success',
-                    showCancelButton: true,
-                    confirmButtonText: 'Scan your face',
-                })
-                .then((result) => {
-                    console.log(result);
-                    if (result.value) {
-                        window.open('http://localhost:5001');
+        swal({
+            title: 'Connecting Camera',
+            text: 'Connecting...',
+            allowOutsideClick: false,
+            onOpen: ()=> {
+                swal.showLoading();
+                axios.get('/api/user/openCam')
+                .then((res) => {
+                    console.log('OpenCam:',res);
+                    if(res.data==='The service is unavailable'){
+                        swal({
+                            title: 'The service is unavailable',
+                            text: 'Please logout from previous user',
+                            type: 'error',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
                     }
-                  })
+                    else {
+                        swal({
+                            title: 'Camera connected!',
+                            text: 'Scan your face with Aquatan Lamp before logged in',
+                            type: 'success',
+                            showCancelButton: true,
+                            confirmButtonText: 'Scan your face',
+                        })
+                        .then((result) => {
+                            var ip = require('ip');
+                            console.log(result);
+                            console.log('open this address'+ip.address())
+                            if (result.value) {
+                                window.open('http://'+ip.address()+':5001');
+                            }
+                          })
+                    }
+                })
             }
         })
     }
@@ -219,7 +241,6 @@ class Login extends Component {
     render() {
 
         const isAlreadyAuthenticated = this.isAuthenticated();
-        console.log('change page ',isAlreadyAuthenticated && this.state.redirect_status );
         if( isAlreadyAuthenticated && this.state.redirect_status ){
             console.log(isAlreadyAuthenticated);
         return (

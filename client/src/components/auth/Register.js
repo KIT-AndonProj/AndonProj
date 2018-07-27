@@ -21,6 +21,14 @@ class Register extends Component {
         this.setState({[e.target.name]: e.target.value})
     }
 
+    alertDialog(title,text,type){
+        swal({
+            title: title,
+            text: text,
+            type: type
+        })
+    }
+
     onSubmit(e) {
         e.preventDefault();
         const newUser = {
@@ -30,56 +38,34 @@ class Register extends Component {
             gitName: this.state.gitName,
         }
 
-    axios.post('/api/user/register', newUser)
-        .then(
-            (res) => {
-                console.log('regis res',res)     
-                if( res.data.username === 'This username already exists'){
-                    swal({
-                        title: "Username already exists",
-                        text: "Please choose other name",
-                        type: "error"
+        axios.post('/api/user/register', newUser)
+            .then(
+                (res) => {
+                    console.log('regis res',res)     
+                    if( res.data.username === 'This username already exists'){
+                        this.alertDialog("Username already exists","Please choose other name","error");
+                    }
+                    else if( res.data.gitName === 'Github username not found' || res.data.gitName === 'This github username already exists'){
+                        this.alertDialog("Github Username Already registered or Not found!","Please enter valid or non-register github username","error")
+                    }
+                    else if( res.data.password2 === 'Password not match'){
+                        this.alertDialog("Password not match!","Please enter password again","error");
+                    }
+                    else if( res.data === 'Github API rate limit exceeded' ){
+                        this.alertDialog("Can not register","Github API rate limit exceeded","error")
+                    }
+                    
+                    else {
+                        this.alertDialog("User created","Please login","success")
+                        .then(() => {
+                        this.props.history.push("/");
                     })
-                }
-                else if( res.data.gitName === 'Github username not found' || res.data.gitName === 'This github username already exists'){
-                    swal({
-                        title: "Github Username Already registered or Not found!",
-                        text: "Please enter valid or non-register github username",
-                        type: "error"
-                    })
-                }
-                else if( res.data.password2 === 'Password not match'){
-                    swal({
-                        title: "Password not match!",
-                        text: "Please enter password again",
-                        type: "error"
-                    })
-                }
-                else if( res.data === 'Github API rate limit exceeded' ){
-                    swal({
-                        title: "Can not register",
-                        text: "Github API rate limit exceeded",
-                        type: "error"
-                    })
-                }
-                
-                else {
-                swal({
-                    title: "User created",
-                    text: "Please login",
-                    type: "success"
-                }).then((res) => {
-                    this.props.history.push("/");
+                    }
                 })
-            }
+            .catch( (err) => {   
+                console.log('Regis',err);
+                this.alertDialog("Error","Incorrect Information","error")
             })
-        .catch( (err) => {            
-            swal({
-                title: "Error",
-                text: "Incorrect Information",
-                type: "error"
-            })
-        })
     }
         
     render() {
