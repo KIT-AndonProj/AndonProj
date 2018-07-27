@@ -12,7 +12,6 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
     var light = 'sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c '
     var option = ''
     console.log(req.body.value)
-
     if(req.body.value < 1){
         req.body.value = 1
     }
