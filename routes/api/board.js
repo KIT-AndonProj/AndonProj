@@ -42,8 +42,7 @@ router.post('/:command', passport.authenticate('jwt', {session: false}), (req, r
         }
         var avgCommit =  Math.ceil(380/(numCommit/diffDays))
 
-        option = '-fq ' + avgCommit + ' -total ' + req.body.value.total
-        console.log(req.body.value.total)
+        option = '-fq ' + avgCommit
     }
 
     exec(light + option, (err,stdout,stderr) => { 

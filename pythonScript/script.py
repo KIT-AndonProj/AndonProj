@@ -120,7 +120,6 @@ if __name__ == '__main__':
     parser.add_argument('-dup', '--duplication',type=int ,help='duplication value')
     parser.add_argument('-od','--outdated', type=int ,help='outdated value')
     parser.add_argument('-fq', '--frequency',type=int ,help='frequency of commits value')
-    parser.add_argument('-total',type=int,help='total of commit')
 
     args = parser.parse_args()
     serial = i2c(port=1, address=0x3C)
