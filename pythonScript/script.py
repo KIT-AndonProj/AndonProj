@@ -133,42 +133,42 @@ if __name__ == '__main__':
             p = mp.Process(target=displayInfo, args=("Overall Health score",args.overall))
             p.start()
             if args.overall > 80:
-                theaterChase(strip, Color(100 - args.overall, args.overall + 20, 0), 100, 90)    
+                theaterChase(strip, Color(100 - args.overall, args.overall + 20, 0), 100, 110 - args.overall)    
             else:
                 shine(strip, Color(255 - (args.overall * 3), args.overall * 3 , 0), 20000)
         elif not str(args.bugspot) == 'None':
             p = mp.Process(target=displayInfo, args=("Bugspot Analyze score",args.bugspot))
             p.start()
             if args.bugspot > 20:
-                theaterChase(strip, Color(100 - (args.bugspot * 4), (args.bugspot * 4) + 20, 0), 100, 90)   
+                theaterChase(strip, Color(100 - (args.bugspot * 4), (args.bugspot * 4) + 20, 0), 100, 35 - args.bugspot)   
             else:
                 shine(strip, Color(255-(args.bugspot * 10), args.bugspot * 10 , 0), 20000)
         elif not str(args.complexity) == 'None':
             p = mp.Process(target=displayInfo, args=("Complexity score",args.complexity))
             p.start()
             if args.complexity > 20:
-                theaterChase(strip, Color(100 - (args.complexity * 4), (args.complexity * 4) + 20, 0), 100, 90)   
+                theaterChase(strip, Color(100 - (args.complexity * 4), (args.complexity * 4) + 20, 0), 100, 35 - args.complexity)   
             else:
                 shine(strip, Color(255-(args.complexity * 10), args.complexity * 10, 0), 20000)
         elif not str(args.duplication) == 'None':
             p = mp.Process(target=displayInfo, args=("Duplication score",args.duplication))
             p.start()
             if args.duplication > 20:
-                theaterChase(strip, Color(100 - (args.duplication * 4), (args.duplication * 4) + 20, 0), 100, 90)   
+                theaterChase(strip, Color(100 - (args.duplication * 4), (args.duplication * 4) + 20, 0), 100,  35 - args.duplication)   
             else:
                 shine(strip, Color(255-(args.duplication * 10), args.duplication * 10, 0), 20000)
         elif not str(args.outdated) == 'None':
             p = mp.Process(target=displayInfo, args=("Outdated score",args.outdated))
             p.start() 
-            if args.complexity > 20:
-                theaterChase(strip, Color(100 - (args.outdated * 4), (args.outdated * 4) + 20, 0), 100, 90)   
+            if args.outdated > 20:
+                theaterChase(strip, Color(100 - (args.outdated * 4), (args.outdated * 4) + 20, 0), 100, 35 - args.outdated)   
             else:
                 shine(strip, Color(255-(args.outdated * 10), args.outdated * 10 , 0), 20000)
         elif not str(args.frequency) == 'None':
             p = mp.Process(target=displayInfo, args=("Average of commits",args.frequency))
             p.start()
             if args.frequency < 100:
-                theaterChase(strip, Color(127, 0, 0), args.frequency, 60) 
+                theaterChase(strip, Color(0, 127, 0), args.frequency, 60) 
             else:
                 theaterChase(strip, Color(20, 130, 20), args.frequency, 60) 
         elif args.welcome:
