@@ -10,13 +10,13 @@ import multiprocessing as mp
 
 # LED strip configuration:
 LED_COUNT      = 2      # Number of LED pixels.
-LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
+LED_PIN        = 19      # GPIO pin connected to the pixels (18 uses PWM!).
 #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
-LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+LED_CHANNEL    = 1       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 def make_font(name, size):
     font_path = os.path.abspath(os.path.join(
@@ -129,35 +129,54 @@ if __name__ == '__main__':
     strip.begin()
 
     try:
-        if args.overall:
+        if not str(args.overall) == 'None':
             p = mp.Process(target=displayInfo, args=("Overall Health score",args.overall))
             p.start()
-            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 100, 90)        
-        elif args.bugspot:
+            if args.overall > 80:
+                theaterChase(strip, Color(100 - args.overall, args.overall + 20, 0), 175 - args.overall, 150)    
+            else:
+                shine(strip, Color(255 - (args.overall * 3), args.overall * 3 , 0), 20000)
+        elif not str(args.bugspot) == 'None':
             p = mp.Process(target=displayInfo, args=("Bugspot Analyze score",args.bugspot))
             p.start()
-            shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 20000)
-        elif args.complexity:
+            if args.bugspot > 20:
+                theaterChase(strip, Color(100 - (args.bugspot * 4), (args.bugspot * 4) + 20, 0), 100 - args.bugspot, 150)   
+            else:
+                shine(strip, Color(255-(args.bugspot * 10), args.bugspot * 10 , 0), 20000)
+        elif not str(args.complexity) == 'None':
             p = mp.Process(target=displayInfo, args=("Complexity score",args.complexity))
             p.start()
-            shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 20000)
-        elif args.duplication:
+            if args.complexity > 20:
+                theaterChase(strip, Color(100 - (args.complexity * 4), (args.complexity * 4) + 20, 0), 100 - args.complexity, 150)   
+            else:
+                shine(strip, Color(255 - (args.complexity * 10), args.complexity * 10, 0), 20000)
+        elif not str(args.duplication) == 'None':
             p = mp.Process(target=displayInfo, args=("Duplication score",args.duplication))
             p.start()
-            shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 20000)
-        elif args.outdated:
-            print(args.outdated)
+            if args.duplication > 20:
+                theaterChase(strip, Color(100 - (args.duplication * 4), (args.duplication * 4) + 20, 0), 100 - args.duplication, 150)   
+            else:
+                shine(strip, Color(255 - (args.duplication * 10), args.duplication * 10, 0), 20000)
+        elif not str(args.outdated) == 'None':
             p = mp.Process(target=displayInfo, args=("Outdated score",args.outdated))
             p.start() 
-            shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 20000)
-        elif args.frequency:
+            if args.outdated > 20:
+                theaterChase(strip, Color(100 - (args.outdated * 4), (args.outdated * 4) + 20, 0), 100 - args.outdated, 150)   
+            else:
+                shine(strip, Color(255 - (args.outdated * 10), args.outdated * 10 , 0), 20000)
+        elif not str(args.frequency) == 'None':
             p = mp.Process(target=displayInfo, args=("Average of commits",args.frequency))
             p.start()
-            theaterChase(strip, Color(20,130,20), args.frequency, 60) 
+            if args.frequency < 100:
+                theaterChase(strip, Color(20, 127, 0), args.frequency, 60) 
+            elif args.frequency < 200:
+                theaterChase(strip, Color(50, 127, 0), args.frequency, 60) 
+            else:
+                theaterChase(strip, Color(175, 40, 130), args.frequency, 60) 
         elif args.welcome:
-            welcome()
+            p = mp.Process(target=welcome)
+            p.start()
             theaterChaseRainbow(strip, 30)
-            theaterChase(strip, Color(127,127,127), 120, 45) 
 
         colorWipe(strip, Color(0,0,0), 10)
         p.terminate()

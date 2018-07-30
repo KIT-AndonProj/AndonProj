@@ -36,7 +36,7 @@ class Login extends Component {
 
     onSubmit(e) {
         e.preventDefault();
-
+        console.log();
         var ip = require('ip');
         console.log(ip.address());
         swal({
@@ -185,11 +185,9 @@ class Login extends Component {
                             confirmButtonText: 'Scan your face',
                         })
                         .then((result) => {
-                            var ip = require('ip');
-                            console.log(result);
-                            console.log('open this address'+ip.address())
+                            console.log(window.location.hostname);
                             if (result.value) {
-                                window.open('http://'+ip.address()+':5001');
+                                window.open('http://'+window.location.hostname+':5001');
                             }
                           })
                     }

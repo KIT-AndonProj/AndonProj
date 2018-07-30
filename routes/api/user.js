@@ -123,9 +123,8 @@ router.post('/updateDB', (req, res) => {
         if(user) {
             exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c -wel', (err,stdout,stderr) => { 
                 if (err) { return res.json(stderr) }
-               
+                return res.json(user)
             })
-            return res.json(user)
         }
         else
             return res.json('Update database fail')
