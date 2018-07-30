@@ -178,40 +178,28 @@ class Login extends Component {
                         })
                     }
                     else {
+                        console.log(res)
                         swal({
-                            title: 'Camera connected!',
-                            text: 'Scan your face with Aquatan Lamp before logged in',
-                            type: 'success',
+                            title: 'Camera detected!',
+                            // text: 'Hello '+res.data.payload.username + '!',
+                            type: 'info',
                             showCancelButton: true,
-                            confirmButtonText: 'Scan your face',
+                            confirmButtonText: 'Yes, this is me!',
+                            showCancelButton: true,
+                            cancelButtonText: 'No, detect again!',
                             allowOutsideClick: true
                         })
                         .then((result) => {
+                            console.log(result);
                             if ( result.value){
-                                swal({
-                                    title: 'Face detected!',
-                                    imageUrl: require('../../facedetect/img.jpg'),
-                                    imageWidth: 600,
-                                    imageHeight: 500,
-                                    imageAlt: 'Custom image',
-                                    animation: true,
-                                    confirmButtonText: 'Yes, this is me!',
-                                    showCancelButton: true,
-                                    cancelButtonText: 'No, detect again!',
-                                    allowOutsideClick: true
-                                  })
-                                  .then((result) => {
-                                    if (result.value) {
-                                      swal(
-                                        'Connected!',
-                                        'Please login with your username and password',
-                                        'success'
-                                      )
-                                    }
-                                    else if (result.dismiss === swal.DismissReason.cancel){
-                                        this.openCamera();
-                                    }
-                                  })
+                                swal(
+                                    'Connected!',
+                                    'Please login with your username and password',
+                                    'success'
+                                  )
+                                }
+                            else if (result.dismiss === swal.DismissReason.cancel){
+                                this.openCamera();
                             }
                           })
                     }
