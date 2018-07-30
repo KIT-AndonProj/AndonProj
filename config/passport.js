@@ -21,7 +21,7 @@ module.exports = passport => {
                     })
                     .catch(err => console.log(err))
             } else {
-                User.findById(jwt_payload.idz)
+                User.findById(jwt_payload.id)
                     .then(user => {
                         if(user){
                             return done(null, user)

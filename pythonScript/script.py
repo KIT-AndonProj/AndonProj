@@ -1,4 +1,5 @@
 import time
+import math
 from neopixel import *
 import argparse
 import os
@@ -167,12 +168,12 @@ if __name__ == '__main__':
         elif not str(args.frequency) == 'None':
             p = mp.Process(target=displayInfo, args=("Average of commits",args.frequency))
             p.start()
-            if args.frequency < 100:
-                theaterChase(strip, Color(20, 127, 0), args.frequency, 60) 
-            elif args.frequency < 200:
-                theaterChase(strip, Color(50, 127, 0), args.frequency, 60) 
+            if args.frequency > 6:
+                theaterChase(strip, Color(20, 127, 0), math.ceil(380/args.frequency), 60) 
+            elif args.frequency > 4:
+                theaterChase(strip, Color(50, 127, 0), math.ceil(380/args.frequency), 60) 
             else:
-                theaterChase(strip, Color(175, 40, 130), args.frequency, 60) 
+                theaterChase(strip, Color(175, 40, 130), math.ceil(380/args.frequency), 60) 
         elif args.welcome:
             p = mp.Process(target=welcome)
             p.start()
