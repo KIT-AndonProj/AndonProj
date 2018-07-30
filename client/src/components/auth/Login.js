@@ -173,7 +173,8 @@ class Login extends Component {
                             text: 'Please logout from previous user',
                             type: 'error',
                             showConfirmButton: false,
-                            timer: 3000
+                            timer: 3000,
+                            allowOutsideClick: true
                         })
                     }
                     else {
@@ -183,11 +184,34 @@ class Login extends Component {
                             type: 'success',
                             showCancelButton: true,
                             confirmButtonText: 'Scan your face',
+                            allowOutsideClick: true
                         })
                         .then((result) => {
-                            console.log(window.location.hostname);
-                            if (result.value) {
-                                window.open('http://'+window.location.hostname+':5001');
+                            if ( result.value){
+                                swal({
+                                    title: 'Face detected!',
+                                    imageUrl: require('../../facedetect/img.jpg'),
+                                    imageWidth: 600,
+                                    imageHeight: 500,
+                                    imageAlt: 'Custom image',
+                                    animation: true,
+                                    confirmButtonText: 'Yes, this is me!',
+                                    showCancelButton: true,
+                                    cancelButtonText: 'No, detect again!',
+                                    allowOutsideClick: true
+                                  })
+                                  .then((result) => {
+                                    if (result.value) {
+                                      swal(
+                                        'Connected!',
+                                        'Please login with your username and password',
+                                        'success'
+                                      )
+                                    }
+                                    else if (result.dismiss === swal.DismissReason.cancel){
+                                        this.openCamera();
+                                    }
+                                  })
                             }
                           })
                     }
