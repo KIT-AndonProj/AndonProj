@@ -10,13 +10,13 @@ import multiprocessing as mp
 
 # LED strip configuration:
 LED_COUNT      = 2      # Number of LED pixels.
-LED_PIN        = 18      # GPIO pin connected to the pixels (18 uses PWM!).
+LED_PIN        = 19      # GPIO pin connected to the pixels (18 uses PWM!).
 #LED_PIN        = 10      # GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 10      # DMA channel to use for generating signal (try 10)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
-LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
+LED_CHANNEL    = 1       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 def make_font(name, size):
     font_path = os.path.abspath(os.path.join(
@@ -129,35 +129,35 @@ if __name__ == '__main__':
     strip.begin()
 
     try:
-        if args.overall:
+        if not str(args.overall) == 'None':
             p = mp.Process(target=displayInfo, args=("Overall Health score",args.overall))
             p.start()
-            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 100, 90)        
-        elif args.bugspot:
+            theaterChase(strip, Color(100-args.overall, args.overall + 20, 0), 100, 90)
+        elif not str(args.bugspot) == 'None':
             p = mp.Process(target=displayInfo, args=("Bugspot Analyze score",args.bugspot))
             p.start()
             shine(strip, Color(255-(args.bugspot*10), args.bugspot*10 , 0), 20000)
-        elif args.complexity:
+        elif not str(args.complexity) == 'None':
             p = mp.Process(target=displayInfo, args=("Complexity score",args.complexity))
             p.start()
             shine(strip, Color(255-(args.complexity*10), args.complexity*10, 0), 20000)
-        elif args.duplication:
+        elif not str(args.duplication) == 'None':
             p = mp.Process(target=displayInfo, args=("Duplication score",args.duplication))
             p.start()
             shine(strip, Color(255-(args.duplication*10), args.duplication*10, 0), 20000)
-        elif args.outdated:
+        elif not str(args.outdated) == 'None':
             print(args.outdated)
             p = mp.Process(target=displayInfo, args=("Outdated score",args.outdated))
-            p.start() 
+            p.start()
             shine(strip, Color(255-(args.outdated*10), args.outdated*10 , 0), 20000)
-        elif args.frequency:
+        elif not str(args.frequency) == 'None':
             p = mp.Process(target=displayInfo, args=("Average of commits",args.frequency))
             p.start()
-            theaterChase(strip, Color(20,130,20), args.frequency, 60) 
-        elif args.welcome:
+            theaterChase(strip, Color(20,130,20), args.frequency, 60)
+        elif not str(args.welcome) == 'None':
             welcome()
             theaterChaseRainbow(strip, 30)
-            theaterChase(strip, Color(127,127,127), 120, 45) 
+            theaterChase(strip, Color(127,127,127), 120, 45)
 
         colorWipe(strip, Color(0,0,0), 10)
         p.terminate()
