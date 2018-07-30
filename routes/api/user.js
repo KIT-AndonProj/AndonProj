@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const keys = require('../../config/keys')
+const passport = require('passport')
 const axios = require('axios')
 const validateRegisterInput = require('../../validation/register')
 const validateLoginInput = require('../../validation/login')
@@ -12,11 +13,11 @@ const { exec } = require('child_process')
 //register new user
 router.post('/register', (req, res) => {
     const { errors, isValid } = validateRegisterInput(req.body)
-  
+
     if(!isValid) {
         return res.json(errors)
     }
-    
+
     axios.get('https://api.github.com/users/' + req.body.gitName).then(resp => {
         User.findOne({ username: req.body.username.toLowerCase() }).then(user => {
             if(user) {
@@ -33,7 +34,7 @@ router.post('/register', (req, res) => {
                             password: req.body.password,
                             gitName: req.body.gitName.toLowerCase(),
                         })
-            
+
                         bcrypt.genSalt(10, (err, salt) => {
                             bcrypt.hash(newUser.password, salt, (err,hash) => {
                                 if(err) throw err
@@ -45,7 +46,7 @@ router.post('/register', (req, res) => {
                         })
                     }
                 })
-            }} 
+            }}
         )})
         .catch(erraxios => {
             if(erraxios.response.data.message.slice(0,23) === 'API rate limit exceeded'){
@@ -80,7 +81,7 @@ router.post('/login', (req, res) => {
                     if(!user) {
                         errors.username = 'The service is unavailable'
                         return res.json(errors)
-                    } else { 
+                    } else {
                         bcrypt.compare(password, user.password)
                         .then(isMatch => {
                             if(isMatch) {
@@ -89,7 +90,7 @@ router.post('/login', (req, res) => {
                                     res.json({
                                         payload,
                                         success: true,
-                                        token: 'Bearer ' + token 
+                                        token: 'Bearer ' + token
                                     })
                                 })
                             } else {
@@ -109,19 +110,26 @@ router.get('/openCam', (req, res) => {
         if(user) {
             return res.json('The service is unavailable')
         } else {
-            exec('andonpred', (err,stdout,stderr) => { 
-                if (err) { return res.json(stderr) }
-                return res.json(stdout)
+            exec('andonpred run', (err,stdout,stderr) => {
+                if (err) { return res.json('User not found') }
+                var name = stdout.split("[Verify] ").pop().slice(0,-1);
+                const payload = {username: name}
+                jwt.sign(payload, keys.secretOrKey, { expiresIn: 600 }, (err, token) => {
+                    res.json({
+                        payload,
+                        token: 'Bearer ' + token
+                    })
+                })
             })
         }
     })
 })
 
-router.post('/updateDB', (req, res) => {
+router.post('/updateDB', passport.authenticate('jwt', {session: false}), (req, res) => {
     const username = req.body.username
     User.findOneAndUpdate({ username }, {status: true}).then(user => {
         if(user) {
-            exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c -wel', (err,stdout,stderr) => { 
+            exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c -wel', (err,stdout,stderr) => {
                 if (err) { return res.json(stderr) }
                 return res.json(user)
             })
@@ -153,7 +161,7 @@ router.post('/logout', (req, res) => {
     User.findOneAndUpdate({ username }, { status: false })
         .then(user => {
             if(user){
-                return res.json('Updated') 
+                return res.json('Updated')
             }
             return res.json('User not found') })
         .catch(err => { return res.json(err) })
