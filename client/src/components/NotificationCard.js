@@ -23,6 +23,8 @@ class NotificationCard extends Component {
         });
       }
 
+      
+
       handleSubmit(event) {
         const command_index = this.state.command.indexOf(this.state.select_trigger);
         let command_selected = this.state.command[command_index];
@@ -79,7 +81,7 @@ class NotificationCard extends Component {
         <div className="notification-con">
             <form onSubmit={this.handleSubmit}>
             <h1>Notification Trigger</h1>
-            <label className="container">Overall Health
+            <label className="container">Overall Risk of Repository
                 <input type="radio" value="overall" checked={this.state.select_trigger==="overall"} onChange={this.handleChange}/>
                 <span className="checkmark"></span>
                 </label>
@@ -87,11 +89,11 @@ class NotificationCard extends Component {
                 <input type="radio" value="frequency" checked={this.state.select_trigger==="frequency"} onChange={this.handleChange}/>
                 <span className="checkmark"></span>
                 </label>
-                <label className="container">Code Duplication : {this.props.data[2].status}
+                <label className="container">Risk of Code Duplication : {this.props.data[2].status}
                 <input type="radio" value="duplicate" checked={this.state.select_trigger==="duplicate"} onChange={this.handleChange}/>
                 <span className="checkmark"></span>
                 </label>
-                <label className="container">Code Complexity : {this.props.data[3].status}
+                <label className="container">Risk of Code Complexity : {this.props.data[3].status}
                 <input type="radio" value="complex" checked={this.state.select_trigger==="complex"} onChange={this.handleChange}/>
                 <span className="checkmark"></span>
                 </label>

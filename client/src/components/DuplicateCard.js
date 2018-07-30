@@ -14,7 +14,7 @@ class DuplicateCard extends Component {
             { name: 'Non duplicate', value: 100-this.props.duplicate_data.percentage}];
         return(
             <div className="parallax-2">
-                <h2 id="header">Code Duplication</h2>
+                <h2 id="header">Risk of Code Duplication</h2>
                 <h2>Clone: {this.props.duplicate_data.clones}</h2>
                 <h2>Duplicate: {this.props.duplicate_data.duplications}</h2>
                 <h2>Files: {this.props.duplicate_data.files}</h2>
@@ -30,7 +30,7 @@ class DuplicateCard extends Component {
     else {
         return (
             <div className="parallax-2">
-                <h2 id="header">Code Duplication</h2>
+                <h2 id="header">Risk of Code Duplication</h2>
                 <h2>No data show. Duplication of code not found.</h2>
                 
             </div>

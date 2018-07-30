@@ -79,7 +79,6 @@ class Login extends Component {
                     });
             }
         })
-       
     }
 
     getCurrentRepo(username,gitName){
@@ -186,6 +185,10 @@ class Login extends Component {
                             title: 'Camera detected!',
                             text: 'Hello '+usertemp + '!',
                             type: 'info',
+                            imageUrl: 'https://unsplash.it/400/200',
+                            imageWidth: 400,
+                            imageHeight: 200,
+                            imageAlt: 'Custom image',
                             showCancelButton: true,
                             confirmButtonText: 'Yes, this is me!',
                             cancelButtonText: 'No, detect again!',
@@ -277,6 +280,8 @@ class Login extends Component {
         else {
             return (
                 <div className="parallax">
+                                {/* <img src={require('../auth/img.jpg')}></img> */}
+
                     <div className="typewriter">
                         <h1 id="header-text">ANDON MONITOR</h1>
                     </div>

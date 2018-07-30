@@ -9,23 +9,24 @@ class OverallHealthCard extends Component {
         if( this.props.watch_status ){
             return(
                 <div className="health-con">
-                    <h1>Overall Health Score</h1>
+                    <h1>Overall Code Risk score</h1>
+                    <h2>The more score tends to be more risk.</h2>
                     <Progress
                     type="circle"
                     percent={this.props.score}
                     />
-                    <p>Code Duplication score : {this.props.duplicate_score}</p>
-                    <p>Code Complexity score : {this.props.complexity_score}</p>
+                    <p>Risk of Code Duplication : {this.props.duplicate_score}</p>
+                    <p>Risk of Code Complexity : {this.props.complexity_score}</p>
                     <p>Bugspot Analyze score : {this.props.bugspot_score}</p>
                     <p>Outdated Library score : {this.props.outdated_score}</p>
-                    <p>Total Score : {this.props.score}</p>
+                    <p>Overall Code Risk score : {this.props.score}</p>
                 </div>
             )
         }
         else {
             return (
                 <div className="health-con">
-                <h1>Overall Health Score</h1>
+                <h1>Overall Code Risk</h1>
                 <p>No overall health score.</p> 
                 </div>
             )

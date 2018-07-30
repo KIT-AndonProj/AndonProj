@@ -34,7 +34,9 @@ class Monitor extends Component {
             current_profile: [],
             watch_status: false,
             overall_score: 0,
+            count_update: 0
         }
+        this.props.update_score(0);
         this.props.update_bugspot('','Loading...');
         this.props.update_complexity('','Loading...');
         this.props.update_duplicate('','Loading...');
@@ -70,6 +72,7 @@ class Monitor extends Component {
                 this.props.update_bugspot(res.data,'unavailable');
             }
             this.updateOverallScore(res);  
+            this.updateStatus();        
         })
         .catch((res) => {
             console.log("catch",res);
@@ -91,10 +94,11 @@ class Monitor extends Component {
                 this.props.update_complexity(res.data,'unavailable');
             }
             this.updateOverallScore(res);
+            this.updateStatus();        
         })
         .catch(res=>{
             console.log("catch complexity : ",res)
-        })       
+        })  
     }
 
     cloneRepoFunction(){
@@ -119,11 +123,9 @@ class Monitor extends Component {
                     this.updateComplexityFunction();
                     this.updateDuplicateFunction();
                     this.updateOutdatedFunction();
-                    if(res.data === 'Finish'){
-                        swal.close();
-                    }
                   })
             }
+            
         })
     }
 
@@ -142,13 +144,22 @@ class Monitor extends Component {
                 this.props.update_duplicate(res.data,'available')
             }
             this.updateOverallScore(res);
+            this.updateStatus();        
         })
         .catch((res) => {
             console.log("catch duplicate",res)
         })
-        
     }
 
+    updateStatus(){
+        this.setState({ count_update: this.state.count_update+1})
+        console.log(this.state.count_update);
+        if ( this.state.count_update === 5 ){
+            console.log('here')
+            swal.close();
+            this.setState({ count_update: 0});
+        }
+    }
     updateOutdatedFunction(){
         axios({
             url: 'api/analyze/outdated',
@@ -164,10 +175,10 @@ class Monitor extends Component {
                 this.props.update_outdated(res.data,'unavailable')
             }
             this.updateOverallScore(res);
+            this.updateStatus();        
         }).catch((res) => {
             console.log("catch outdate",res)
         })
-    
     }
 
     updateFreqCom(){
@@ -184,9 +195,11 @@ class Monitor extends Component {
         })
         .then(res => {
             console.log('commit',res.data);
+            if( res.data !== 'Github API rate limit exceeded'){
             this.props.update_frequency(res.data,'available')
+            this.updateStatus();        
+            }
         })
-        
     }
 
     watchRepo(e){
@@ -257,6 +270,7 @@ class Monitor extends Component {
                 this.props.update_duplicate('','Loading...');
                 this.props.update_frequency('','Loading...');
                 this.props.update_outdated('','Loading...');
+                this.props.update_score(0);
                 this.props.update_status(false);
                 this.setState({
                     overall_score: 0,

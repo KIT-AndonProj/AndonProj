@@ -57,9 +57,7 @@ class Register extends Component {
                     
                     else {
                         this.alertDialog("User created","Please login","success")
-                        .then(() => {
                         this.props.history.push("/");
-                    })
                     }
                 })
             .catch( (err) => {   

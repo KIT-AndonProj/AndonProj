@@ -11,7 +11,8 @@ class BugspotCard extends Component {
       if(this.props.status === 'available'){
           return (
             <div className="parallax-2" >
-              <h2 id="header">Bugspot Score Analyze</h2>
+              <h2 id="header">Bugspot Analyze</h2>
+              <p>The bug prediction heuristic, the more score tends to be more risk.</p>
               <ReactTable
                 data={this.props.bugspot_data}
                 columns={[
@@ -62,7 +63,7 @@ class BugspotCard extends Component {
         }else {
           return(
             <div className="parallax-2">
-             <h2 id="header">Bugspot Score Analyze</h2>
+             <h2 id="header">Bugspot Analyze</h2>
              <h2>No data shown. Bugspot score calculate the commit with 'fix' message in them.</h2>
             </div>
           );

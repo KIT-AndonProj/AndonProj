@@ -12,7 +12,7 @@ class ComplexityCard extends Component {
           return (
             <div className="parallax-2">
             <div className="card-complex">
-                <h2 id="header">Complexity of Code</h2>
+                <h2 id="header">Risk of Code Complexity</h2>
               <ReactTable
                 data={this.props.data}
                 columns={[
@@ -47,7 +47,7 @@ class ComplexityCard extends Component {
         else {
           return(
             <div className="parallax-2">
-              <h2 id="header">Complexity of Code</h2>
+              <h2 id="header">Risk of Code Complexity</h2>
               <h2>No complexity of your code.</h2>
             </div>
           );

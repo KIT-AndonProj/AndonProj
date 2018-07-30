@@ -9,7 +9,7 @@ class OutdatedCard extends Component {
         if(this.props.status === 'available'){
         return(
             <div className="parallax-2">
-                <h2 id="header">Library Outdated</h2>
+                <h2 id="header">Outdated Library</h2>
                 <ReactTable
                 data={this.props.outdated_data}
                 columns={[
