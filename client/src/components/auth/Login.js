@@ -123,7 +123,7 @@ class Login extends Component {
             sessionStorage.removeItem('token')
             swal({
                 title: 'Github API rate limit exceeded',
-                text: 'Please try again',
+                text: 'Please try again later',
                 type: 'error'
             })
         }
@@ -143,7 +143,8 @@ class Login extends Component {
                     }
                 })
                 .then(res => {
-                    if(res.data === 'Information Not found'){
+                    console.log('freq array',res.data);
+                    if(res.data === 'Information Not found' || res.data === 'Github API rate limit exceeded'){
                         this.setState({ redirect_status: false})
                     }
                     else {
@@ -243,6 +244,7 @@ class Login extends Component {
         const isAlreadyAuthenticated = this.isAuthenticated();
         if( isAlreadyAuthenticated && this.state.redirect_status ){
             console.log(isAlreadyAuthenticated);
+            console.log("Redirect status",this.state.redirect_status);
         return (
             <Redirect to={{ pathname: '/monitor'}}  /> 
             )

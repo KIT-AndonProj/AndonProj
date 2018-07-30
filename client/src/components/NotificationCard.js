@@ -27,39 +27,51 @@ class NotificationCard extends Component {
         const command_index = this.state.command.indexOf(this.state.select_trigger);
         let command_selected = this.state.command[command_index];
         let value = 0;
+        console.log(command_index);
+        console.log('freq',this.props.data[1].data);
         event.preventDefault();
-        if(command_selected === 'overall'){
-            value = this.props.data[0].score;
-        }
-        else if (command_selected === 'frequency' ){
-            value = this.props.data[1].data;
-        }
-        else{
-            value = this.props.data[command_index].data.overallHealth;
-        }
-        console.log(command_selected + ':' + value);
-        swal({
-            title: 'Notify Aquatan',
-            text: 'Notifying...',
-            allowOutsideClick: false,
-            onOpen: ()=> {
-                swal.showLoading();
-                axios({
-                    url: 'api/board/'+command_selected,
-                    method: 'post',
-                    headers: {
-                        Authorization: sessionStorage.token
-                        },
-                    data: {
-                        value:  value
-                        }    
-                }).then((res) => {
-                    if(res.data==='Finish'){
-                        swal.close();
-                    }
-                })
+        console.log(command_selected !== undefined);
+        if (command_selected !== 'undefined'){
+            if(command_selected === 'overall'){
+                value = this.props.data[0].score;
             }
-        })
+            else if (command_selected === 'frequency' ){
+                value = this.props.data[1].data;
+            }
+            else if (command_selected === 'duplicate' || command_selected === 'complex' || command_selected === 'bugspot' || command_selected === 'outdated'){
+                value = this.props.data[command_index].data.overallHealth;
+            }
+            console.log(command_selected + ':' + value);
+            swal({
+                title: 'Notify Aquatan',
+                text: 'Notifying...',
+                allowOutsideClick: false,
+                onOpen: ()=> {
+                    swal.showLoading();
+                    axios({
+                        url: 'api/board/'+command_selected,
+                        method: 'post',
+                        headers: {
+                            Authorization: sessionStorage.token
+                            },
+                        data: {
+                            value:  value
+                            }    
+                    }).then((res) => {
+                        if(res.data==='Finish'){
+                            swal.close();
+                        }
+                    })
+                }
+            })
+        }
+        else {
+            swal({
+                title: 'No trigger selects!',
+                text: 'Please select one trigger',
+                type: 'error'
+            });
+        }
     }
 
     render(){

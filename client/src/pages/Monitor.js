@@ -309,8 +309,8 @@ class Monitor extends Component {
                 <div>
                     <div className="landing">
                         <img src={logo} className="App-logo" alt="logo" />
-                        <input id="search-bar1" className="search-input" type="text" name="search"  autoComplete="off" placeholder="Input username or organization name ..." required disabled={this.state.disabled} onChange={(e) => this.setState({username: e.target.value})}/>
-                        <input id="search-bar2" className="search-input" type="text" name="search"   autoComplete="off" placeholder="Input repository name ..." required disabled={this.state.disabled} onChange={(e) => this.setState({repo_url: e.target.value})}/>
+                        <input id="search-bar1" className="search-input" type="text" name="search" placeholder="Input username or organization name ..." required disabled={this.state.disabled} onChange={(e) => this.setState({username: e.target.value})}/>
+                        <input id="search-bar2" className="search-input" type="text" name="search" placeholder="Input repository name ..." required disabled={this.state.disabled} onChange={(e) => this.setState({repo_url: e.target.value})}/>
                         <button className="button" onClick= {(e) => this.watchRepo(e)} >{this.state.text}</button>  
                     </div>
                     { !isWatched ? (
