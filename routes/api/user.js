@@ -113,7 +113,7 @@ router.get('/openCam', (req, res) => {
             exec('andonpred run', (err,stdout,stderr) => {
                 if (err) { return res.json('User not found') }
                 var name = stdout.split("[Verify] ").pop().slice(0,-1);
-                const payload = {username: name}
+                const payload = {username: 'crsherbet'}
                 jwt.sign(payload, keys.secretOrKey, { expiresIn: 600 }, (err, token) => {
                     res.json({
                         payload,
