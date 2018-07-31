@@ -44,16 +44,6 @@ class Monitor extends Component {
         this.props.update_outdated('','Loading...');
     }
 
-    // componentDidMount() {
-    //     console.log(Date.now());
-    //     this.interval = setInterval(() => 
-    //     this.cloneRepoFunction()
-    //     , 20000);
-    //   }
-    //   componentWillUnmount() {
-    //     clearInterval(this.interval);
-    //   }
-
     isAuthenticated(){
         const token = sessionStorage.getItem('token');
         return token && token.length > 10;
@@ -79,13 +69,13 @@ class Monitor extends Component {
             this.props.update_bugspot(res.data,'Available')
             }
             else {
-                this.props.update_bugspot(res.data,'Unavailable');
+                this.props.update_bugspot(res.data,'No bugspot found');
             }
             this.updateOverallScore(res);  
             this.updateStatus();        
         })
         .catch((res) => {
-            console.log("catch",res);
+            console.log("BUGSPOT ERR : ",res);
         })
     }
 
@@ -97,7 +87,6 @@ class Monitor extends Component {
                 Authorization: sessionStorage.token
             }
         }).then((res)=>{
-            console.log('complex',res);
             if(res.data.resObj.length !== 0){
                 this.props.update_complexity(res.data,'Available');
             }
@@ -108,7 +97,7 @@ class Monitor extends Component {
             this.updateStatus();        
         })
         .catch(res=>{
-            console.log("catch complexity : ",res)
+            console.log("COMPLEXITY ERR : ",res)
         })  
     }
 
@@ -135,7 +124,7 @@ class Monitor extends Component {
                     this.updateDuplicateFunction();
                     this.updateOutdatedFunction();
                   }).catch((err)=>{
-                      console.log('Catch clone', err)
+                      console.log('CLONE ERR', err)
                       swal('Error','Please check your network connection','error').then(()=>{
                         this.setState({text: 'Watch'});
                       })
@@ -153,9 +142,8 @@ class Monitor extends Component {
                 Authorization: sessionStorage.token
             }
         }).then((res) => {
-            console.log(res)
             if(res.data.message === 'The jscpd found too many duplicates over threshold'){
-                this.props.update_duplicate(res.data,'Unavailable');
+                this.props.update_duplicate(res.data,'Too many duplications');
             }
             else{
                 this.props.update_duplicate(res.data,'Available')
@@ -164,15 +152,13 @@ class Monitor extends Component {
             this.updateStatus();        
         })
         .catch((res) => {
-            console.log("catch duplicate",res)
+            console.log("DUPLICATE ERR : ",res)
         })
     }
 
     updateStatus(){
         this.setState({ count_update: this.state.count_update+1})
-        console.log(this.state.count_update);
         if ( this.state.count_update === 5 ){
-            console.log('here')
             swal.close();
             this.setState({ count_update: 0});
         }
@@ -189,12 +175,12 @@ class Monitor extends Component {
             this.props.update_outdated(res.data,'Available')
             }
             else {
-                this.props.update_outdated(res.data,'Unavailable')
+                this.props.update_outdated(res.data,'Not found')
             }
             this.updateOverallScore(res);
             this.updateStatus();        
         }).catch((res) => {
-            console.log("catch outdate",res)
+            console.log("OUTDATED ERR",res)
         })
     }
 
@@ -211,7 +197,6 @@ class Monitor extends Component {
             }
         })
         .then(res => {
-            console.log('commit',res.data);
             if( res.data !== 'Github API rate limit exceeded'){
             this.props.update_frequency(res.data,'Available')
             this.updateStatus();        
@@ -261,7 +246,7 @@ class Monitor extends Component {
                         this.props.update_status(true);
                     }
                 }).catch(err => {
-                    console.log(err.data);
+                    console.log("WATCH REPO ERR : ",err.data);
                 })
             }
             if(this.state.text === 'Unwatch'){
@@ -324,8 +309,6 @@ class Monitor extends Component {
      }
     
     render(){
-        console.log('render');
-        console.log(this.state.text);
         window.onbeforeunload = function() {
             sessionStorage.removeItem('token')
             return '';

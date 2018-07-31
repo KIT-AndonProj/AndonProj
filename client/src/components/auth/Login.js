@@ -271,8 +271,6 @@ class Login extends Component {
 
         const isAlreadyAuthenticated = this.isAuthenticated();
         if( isAlreadyAuthenticated && this.state.redirect_status ){
-            console.log(isAlreadyAuthenticated);
-            console.log("Redirect status",this.state.redirect_status);
         return (
             <Redirect to={{ pathname: '/monitor'}}  /> 
             )
@@ -280,8 +278,6 @@ class Login extends Component {
         else {
             return (
                 <div className="parallax">
-                                {/* <img src={require('../auth/img.jpg')}></img> */}
-
                     <div className="typewriter">
                         <h1 id="header-text">ANDON MONITOR</h1>
                     </div>
