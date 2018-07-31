@@ -162,6 +162,7 @@ class Login extends Component {
                 swal.showLoading();
                 axios.get('/api/user/openCam')
                 .then((res) => {
+                    console.log('camera verify:',res)
                     var usertemp =''
                     if(res.data==='The service is unavailable'){
                         swal({
@@ -175,7 +176,7 @@ class Login extends Component {
                     }
                     else if ( res.data ==='User not found'){
                         swal({
-                            title: 'Not found'
+                            title: 'User Not found'
                         })
                     }
                     else {
@@ -185,10 +186,6 @@ class Login extends Component {
                             title: 'Camera detected!',
                             text: 'Hello '+usertemp + '!',
                             type: 'info',
-                            imageUrl: 'https://unsplash.it/400/200',
-                            imageWidth: 400,
-                            imageHeight: 200,
-                            imageAlt: 'Custom image',
                             showCancelButton: true,
                             confirmButtonText: 'Yes, this is me!',
                             cancelButtonText: 'No, detect again!',
