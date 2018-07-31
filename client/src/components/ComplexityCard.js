@@ -8,7 +8,7 @@ import '../stylesheets/complex.css';
 class ComplexityCard extends Component {
     
     render() {
-        if( this.props.status === 'available'){
+        if( this.props.status === 'Available'){
           return (
             <div className="parallax-2">
             <div className="card-complex">

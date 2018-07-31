@@ -44,6 +44,16 @@ class Monitor extends Component {
         this.props.update_outdated('','Loading...');
     }
 
+    // componentDidMount() {
+    //     console.log(Date.now());
+    //     this.interval = setInterval(() => 
+    //     this.cloneRepoFunction()
+    //     , 20000);
+    //   }
+    //   componentWillUnmount() {
+    //     clearInterval(this.interval);
+    //   }
+
     isAuthenticated(){
         const token = sessionStorage.getItem('token');
         return token && token.length > 10;
@@ -66,10 +76,10 @@ class Monitor extends Component {
         })
         .then((res) => {
             if(res.data.message !== 'Not found commits matching search criteria'){
-            this.props.update_bugspot(res.data,'available')
+            this.props.update_bugspot(res.data,'Available')
             }
             else {
-                this.props.update_bugspot(res.data,'unavailable');
+                this.props.update_bugspot(res.data,'Unavailable');
             }
             this.updateOverallScore(res);  
             this.updateStatus();        
@@ -87,11 +97,12 @@ class Monitor extends Component {
                 Authorization: sessionStorage.token
             }
         }).then((res)=>{
+            console.log('complex',res);
             if(res.data.resObj.length !== 0){
-                this.props.update_complexity(res.data,'available');
+                this.props.update_complexity(res.data,'Available');
             }
             else {
-                this.props.update_complexity(res.data,'unavailable');
+                this.props.update_complexity(res.data,'No complexity Found');
             }
             this.updateOverallScore(res);
             this.updateStatus();        
@@ -123,6 +134,11 @@ class Monitor extends Component {
                     this.updateComplexityFunction();
                     this.updateDuplicateFunction();
                     this.updateOutdatedFunction();
+                  }).catch((err)=>{
+                      console.log('Catch clone', err)
+                      swal('Error','Please check your network connection','error').then(()=>{
+                        this.setState({text: 'Watch'});
+                      })
                   })
             }
             
@@ -137,11 +153,12 @@ class Monitor extends Component {
                 Authorization: sessionStorage.token
             }
         }).then((res) => {
+            console.log(res)
             if(res.data.message === 'The jscpd found too many duplicates over threshold'){
-                this.props.update_duplicate(res.data,'Too many duplication');
+                this.props.update_duplicate(res.data,'Unavailable');
             }
             else{
-                this.props.update_duplicate(res.data,'available')
+                this.props.update_duplicate(res.data,'Available')
             }
             this.updateOverallScore(res);
             this.updateStatus();        
@@ -169,10 +186,10 @@ class Monitor extends Component {
             }
         }).then((res)=> {
             if(res.data.message !== 'A package.json was not found'){
-            this.props.update_outdated(res.data,'available')
+            this.props.update_outdated(res.data,'Available')
             }
             else {
-                this.props.update_outdated(res.data,'unavailable')
+                this.props.update_outdated(res.data,'Unavailable')
             }
             this.updateOverallScore(res);
             this.updateStatus();        
@@ -196,7 +213,7 @@ class Monitor extends Component {
         .then(res => {
             console.log('commit',res.data);
             if( res.data !== 'Github API rate limit exceeded'){
-            this.props.update_frequency(res.data,'available')
+            this.props.update_frequency(res.data,'Available')
             this.updateStatus();        
             }
         })
@@ -307,6 +324,8 @@ class Monitor extends Component {
      }
     
     render(){
+        console.log('render');
+        console.log(this.state.text);
         window.onbeforeunload = function() {
             sessionStorage.removeItem('token')
             return '';

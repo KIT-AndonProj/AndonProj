@@ -9,7 +9,7 @@ class OverallHealthCard extends Component {
         if( this.props.watch_status ){
             return(
                 <div className="health-con">
-                    <h1>Overall Code Risk score</h1>
+                    <h1>Risk of Overall Repository</h1>
                     <h2>The more score tends to be more risk.</h2>
                     <Progress
                     type="circle"
@@ -26,7 +26,7 @@ class OverallHealthCard extends Component {
         else {
             return (
                 <div className="health-con">
-                <h1>Overall Code Risk</h1>
+                <h1>Risk of Overall Repository</h1>
                 <p>No overall health score.</p> 
                 </div>
             )

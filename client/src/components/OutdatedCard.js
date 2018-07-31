@@ -6,7 +6,7 @@ import 'react-table/react-table.css';
 class OutdatedCard extends Component {
     
     render(){
-        if(this.props.status === 'available'){
+        if(this.props.status === 'Available'){
         return(
             <div className="parallax-2">
                 <h2 id="header">Outdated Library</h2>

@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 class BugspotCard extends Component {
 
     render() {
-      if(this.props.status === 'available'){
+      if(this.props.status === 'Available'){
           return (
             <div className="parallax-2" >
               <h2 id="header">Bugspot Analyze</h2>

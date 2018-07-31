@@ -8,7 +8,7 @@ class DuplicateCard extends Component {
     
 
     render(){
-        if ( this.props.status === 'available'){
+        if ( this.props.status === 'Available'){
         const data = [ 
             {name: 'Duplicate', value: this.props.duplicate_data.percentage}, 
             { name: 'Non duplicate', value: 100-this.props.duplicate_data.percentage}];
@@ -31,7 +31,7 @@ class DuplicateCard extends Component {
         return (
             <div className="parallax-2">
                 <h2 id="header">Risk of Code Duplication</h2>
-                <h2>No data show. Duplication of code not found.</h2>
+                <h2>Too many of duplications found!</h2>
                 
             </div>
         );
