@@ -125,7 +125,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     serial = i2c(port=1, address=0x3C)
     device = ssd1306(serial)
-#
+    device.clear()
     strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     strip.begin()
 
@@ -134,46 +134,46 @@ if __name__ == '__main__':
             p = mp.Process(target=displayInfo, args=("Repository Risk Score",args.overall))
             p.start()
             if args.overall > 80:
-                theaterChase(strip, Color(100 - args.overall, args.overall + 20, 0), 175 - args.overall, 150)    
+                theaterChase(strip, Color(100 - args.overall, args.overall + 20, 0), 175 - args.overall, 150)
             else:
                 shine(strip, Color(255 - (args.overall * 3), args.overall * 3 , 0), 20000)
         elif not str(args.bugspot) == 'None':
             p = mp.Process(target=displayInfo, args=("Bugspot Analyze score",args.bugspot))
             p.start()
             if args.bugspot > 20:
-                theaterChase(strip, Color(100 - (args.bugspot * 4), (args.bugspot * 4) + 20, 0), 100 - args.bugspot, 150)   
+                theaterChase(strip, Color(100 - (args.bugspot * 4), (args.bugspot * 4) + 20, 0), 100 - args.bugspot, 150)
             else:
                 shine(strip, Color(255-(args.bugspot * 10), args.bugspot * 10 , 0), 20000)
         elif not str(args.complexity) == 'None':
             p = mp.Process(target=displayInfo, args=("Risk of Complexity",args.complexity))
             p.start()
             if args.complexity > 20:
-                theaterChase(strip, Color(100 - (args.complexity * 4), (args.complexity * 4) + 20, 0), 100 - args.complexity, 150)   
+                theaterChase(strip, Color(100 - (args.complexity * 4), (args.complexity * 4) + 20, 0), 100 - args.complexity, 150)
             else:
                 shine(strip, Color(255 - (args.complexity * 10), args.complexity * 10, 0), 20000)
         elif not str(args.duplication) == 'None':
             p = mp.Process(target=displayInfo, args=("Risk of Duplication",args.duplication))
             p.start()
             if args.duplication > 20:
-                theaterChase(strip, Color(100 - (args.duplication * 4), (args.duplication * 4) + 20, 0), 100 - args.duplication, 150)   
+                theaterChase(strip, Color(100 - (args.duplication * 4), (args.duplication * 4) + 20, 0), 100 - args.duplication, 150)
             else:
                 shine(strip, Color(255 - (args.duplication * 10), args.duplication * 10, 0), 20000)
         elif not str(args.outdated) == 'None':
             p = mp.Process(target=displayInfo, args=("Outdated Library",args.outdated))
-            p.start() 
+            p.start()
             if args.outdated > 20:
-                theaterChase(strip, Color(100 - (args.outdated * 4), (args.outdated * 4) + 20, 0), 100 - args.outdated, 150)   
+                theaterChase(strip, Color(100 - (args.outdated * 4), (args.outdated * 4) + 20, 0), 100 - args.outdated, 150)
             else:
                 shine(strip, Color(255 - (args.outdated * 10), args.outdated * 10 , 0), 20000)
         elif not str(args.frequency) == 'None':
             p = mp.Process(target=displayInfo, args=("Average commits per day",args.frequency))
             p.start()
             if args.frequency > 6:
-                theaterChase(strip, Color(20, 127, 0), math.ceil(380/args.frequency), 60) 
+                theaterChase(strip, Color(20, 127, 0), math.ceil(380/args.frequency), 60)
             elif args.frequency > 4:
-                theaterChase(strip, Color(50, 127, 0), math.ceil(380/args.frequency), 60) 
+                theaterChase(strip, Color(50, 127, 0), math.ceil(380/args.frequency), 60)
             else:
-                theaterChase(strip, Color(175, 40, 130), math.ceil(380/args.frequency), 60) 
+                theaterChase(strip, Color(175, 40, 130), math.ceil(380/args.frequency), 60)
         elif args.welcome:
             p = mp.Process(target=welcome)
             p.start()
