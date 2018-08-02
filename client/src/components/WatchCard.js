@@ -88,9 +88,9 @@ class WatchCard extends Component {
               </div> 
               <div className="info" id="duplicate"> 
                 <h1>Repository Code Duplicate Risk</h1>           
-                {/* <div className="card border-0"> */}
+                <div className="card border-0">
                 <DuplicateCard/>
-                {/* </div> */}
+                </div>
               </div> 
               <div className="info" id="complex"> 
                 <h1>Repository Code Complexity Risk</h1>

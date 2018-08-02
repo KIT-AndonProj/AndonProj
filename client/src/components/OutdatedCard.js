@@ -13,7 +13,7 @@ class OutdatedCard extends Component {
                 } ]
               };
         return(
-            <BootstrapTable data={this.props.outdated_data} 
+            <BootstrapTable data={this.props.outdated_data} dataSort 
             containerStyle={  { margin: 0 }} 
             bodyStyle={{ margin: 0 }}
             headerStyle={ {margin: 0}}
@@ -32,7 +32,7 @@ class OutdatedCard extends Component {
             return (
                 <div>
                     <div className="card bg-light" id="nomargin">
-                        <div className="card-header" id="nomargin">Information Not Available</div>
+                        <div className="card-header" id="nomargin">Outdated Library Not Found</div>
                         <div className="card-body" id="nomargin">
                             <p className="card-text">No information available. Due to no package.json in your repository</p>
                         </div>

@@ -73,7 +73,7 @@ class Monitor extends Component {
             this.updateStatus();        
         })
         .catch((res) => {
-            console.log("BUGSPOT ERR : ",res);
+            this.gitLimit()
         })
     }
 
@@ -95,7 +95,7 @@ class Monitor extends Component {
             this.updateStatus();        
         })
         .catch(res=>{
-            console.log("COMPLEXITY ERR : ",res)
+            this.gitLimit()
         })  
     }
 
@@ -123,7 +123,6 @@ class Monitor extends Component {
                     this.updateDuplicateFunction();
                     this.updateOutdatedFunction();
                   }).catch((err)=>{
-                      console.log('CLONE ERR', err)
                       this.setState({text: 'Watch'})
                       swal({
                           title: 'Error',
@@ -133,7 +132,6 @@ class Monitor extends Component {
                       })
                   })
             }
-            
         })
     }
 
@@ -155,7 +153,7 @@ class Monitor extends Component {
             this.updateStatus();        
         })
         .catch((res) => {
-            console.log("DUPLICATE ERR : ",res)
+            this.gitLimit()
         })
     }
 
@@ -183,7 +181,17 @@ class Monitor extends Component {
             this.updateOverallScore(res);
             this.updateStatus();        
         }).catch((res) => {
-            console.log("OUTDATED ERR",res)
+            this.gitLimit()
+        })
+    }
+
+    gitLimit(){
+        sessionStorage.removeItem('token')
+        swal({
+            title: 'Github API rate limit exceeded',
+            text: 'Please try again later',
+            type: 'error',
+            heightAuto: false
         })
     }
 
@@ -205,13 +213,7 @@ class Monitor extends Component {
             this.updateStatus();        
             }
             else{
-                sessionStorage.removeItem('token')
-                swal({
-                    title: 'Github API rate limit exceeded',
-                    text: 'Please try again later',
-                    type: 'error',
-                    heightAuto: false
-                })
+                this.gitLimit()
             }
         })
     }

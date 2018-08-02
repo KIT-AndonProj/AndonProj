@@ -36,10 +36,10 @@ class DuplicateCard extends Component {
         else {
             return (
                 <div>
-                    <div class="card bg-light" id="nomargin">
-                        <div class="card-header" id="nomargin">Information Not Available</div>
-                        <div class="card-body" id="nomargin">
-                            <p class="card-text">Repository has too many duplications</p>
+                    <div className="card text-white bg-danger" id="nomargin">
+                        <div className="card-header" id="nomargin">Duplications Data Not Shown</div>
+                        <div className="card-body" id="nomargin">
+                            <p className="card-text">Repository has too many duplications</p>
                         </div>
                     </div>
                 </div>
