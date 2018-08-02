@@ -1,0 +1,13 @@
+ul.nav-pills {
+    top: 10%;
+    position: fixed;
+}
+
+#logoutBtn{
+    width: 200px;
+    font-size: 20px;
+    padding: 10px 10px;
+    position: fixed;
+    bottom: 0px;
+    left: 0px; 
+}

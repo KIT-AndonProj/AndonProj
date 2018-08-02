@@ -8,46 +8,67 @@ html, body {
   font-family: 'Nunito', sans-serif !important;
 }
 
-.parallax {
-  padding-top: 130px;
-  background-image: url("./res/gitBg.png");
-  height: 1000px;
-  padding-left: 15%;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+#root{
+  height: 100%;
 }
 
-.parallax-2 {
-  height: 1000px;
-  padding-top: 5%;
-  padding-left: 15%;
-  padding-right: 5%;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+body {
+  margin: 0;
+}
+#container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  width: auto;
+  height: 600px;
+  background-color: #fff;
 }
 
-.andon-button{
-  font-family: 'Nunito';
-  background-color:black;
-  border-radius: 5px;
-  color: white;
-  padding: 10px 15px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-  margin: 4px 10px;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border: 2px solid #555555;
+body {
+  position: relative;
+}
+#input-auth{
+  margin-bottom: 2%; 
+}
+.background {
+  background: #a9c7c5;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
 }
 
-.andon-button:hover {
-background-color: #F9DA4A;
-color: black;
+.div-center {
+  width: 600px;
+  height: 400px;
+  background-color: #fff;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  padding: 1em 4em;
+  border-bottom: 2px solid #ccc;
+  display: table;
 }
+
+div.content {
+  display: table-cell;
+  vertical-align: middle;
+}
+@media screen and (max-width: 600px) {
+  h2{
+    font-size: 12px;
+    }
+    .div-center {
+      width: auto;
+    }
+    #container {
+      height: auto;
+    }
+  }

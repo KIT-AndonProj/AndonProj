@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <div className="app">
             <Route exact path = "/register" component = { Register }/>
             <Route exact path = "/" component = { Login }/>
             <Route exact path = "/monitor" component = {Monitor}/>
@@ -18,7 +18,6 @@ class App extends Component {
     );
   }
 }
-
 
 export default (App);
 

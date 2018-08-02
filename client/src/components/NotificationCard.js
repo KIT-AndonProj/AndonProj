@@ -23,9 +23,7 @@ class NotificationCard extends Component {
         });
       }
 
-      
-
-      handleSubmit(event) {
+    handleSubmit(event) {
         const command_index = this.state.command.indexOf(this.state.select_trigger);
         let command_selected = this.state.command[command_index];
         let value = 0;
@@ -48,6 +46,7 @@ class NotificationCard extends Component {
                 title: 'Notify Aquatan',
                 text: 'Notifying...',
                 allowOutsideClick: false,
+                heightAuto: false,
                 onOpen: ()=> {
                     swal.showLoading();
                     axios({
@@ -71,43 +70,39 @@ class NotificationCard extends Component {
             swal({
                 title: 'No trigger selects!',
                 text: 'Please select one trigger',
-                type: 'error'
+                type: 'error',
+                heightAuto: false
             });
         }
     }
 
     render(){
         return (
-        <div className="notification-con">
-            <form onSubmit={this.handleSubmit}>
-            <h1>Notification Trigger</h1>
-            <label className="container">Overall Risk of Repository
-                <input type="radio" value="overall" checked={this.state.select_trigger==="overall"} onChange={this.handleChange}/>
-                <span className="checkmark"></span>
-                </label>
-                <label className="container">Frequency of Commits : {this.props.data[1].status}
-                <input type="radio" value="frequency" checked={this.state.select_trigger==="frequency"} onChange={this.handleChange}/>
-                <span className="checkmark"></span>
-                </label>
-                <label className="container">Risk of Code Duplication : {this.props.data[2].status}
-                <input type="radio" value="duplicate" checked={this.state.select_trigger==="duplicate"} onChange={this.handleChange}/>
-                <span className="checkmark"></span>
-                </label>
-                <label className="container">Risk of Code Complexity : {this.props.data[3].status}
-                <input type="radio" value="complex" checked={this.state.select_trigger==="complex"} onChange={this.handleChange}/>
-                <span className="checkmark"></span>
-                </label>
-                <label className="container">Bugspot Analyze : {this.props.data[4].status}
-                <input type="radio" value="bugspot" checked={this.state.select_trigger==="bugspot"} onChange={this.handleChange}/>
-                <span className="checkmark"></span>
-                </label>
-                <label className="container">Outdated Library : {this.props.data[5].status}
-                <input type="radio" value="outdated" checked={this.state.select_trigger==="outdated"} onChange={this.handleChange}/>
-                <span className="checkmark"></span>
-                </label>
-                <button type="submit" className="andon-button">Notify to Andon Model</button>
-            </form>
-        </div>
+            <div className="notification-con">
+                <div>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="radio">
+                            <label><input type="radio" value="overall" checked={this.state.select_trigger==="overall"} onChange={this.handleChange}/>Overall Risk of Repository</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" value="frequency" checked={this.state.select_trigger==="frequency"} onChange={this.handleChange}/>Frequency of Commits : {this.props.data[1].status}</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" value="duplicate" checked={this.state.select_trigger==="duplicate"} onChange={this.handleChange}/>Risk of Code Duplication : {this.props.data[2].status}</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" value="complex" checked={this.state.select_trigger==="complex"} onChange={this.handleChange}/>Risk of Code Complexity : {this.props.data[3].status}</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" value="bugspot" checked={this.state.select_trigger==="bugspot"} onChange={this.handleChange}/>Bugspot Analyze : {this.props.data[4].status}</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" value="outdated" checked={this.state.select_trigger==="outdated"} onChange={this.handleChange}/>Outdated Library : {this.props.data[5].status}</label>
+                        </div>
+                        <button  class="btn btn-primary" type="submit">Notify to Andon Model</button>
+                    </form>
+                </div>
+            </div>
         );
     }
 }
@@ -122,9 +117,7 @@ function mapStateToProps(state){
             state.update_bugspot,
             state.update_outdated,
         ]
-        
     }
 }
-
 
 export default connect(mapStateToProps)(NotificationCard);

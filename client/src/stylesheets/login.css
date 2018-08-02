@@ -1,107 +1,29 @@
-.input-login{
-    background-color: #F9DA4A;
-    color:black;
-    margin-top: 10px;
-    margin-left: 0px;
-    width: 50%;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: 'Nunito';
-    padding: 12px 85px 12px 5px;
+.form-control {
+    min-height: 50px;
+    padding-bottom: 2%;
+}
+
+.text-center{
+    height: 100%;
+}
+
+.login-form {
+    width: 500px;
+    margin: 50px auto;
+}
+
+#header{
+    color: black;
+    padding-top: 15%; 
+    font-size: 60px;
   }
-  
-  .input-login[type=submit]{
-      padding-top: 5%;
-        font-family: 'Nunito';
-        background-color:black;
-        border-radius: 5px;
-        color: white;
-        padding: 10px 15px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 20px;
-        margin: 20px 50px;
-        -webkit-transition-duration: 0.4s; /* Safari */
-        transition-duration: 0.4s;
-        cursor: pointer;
-        border: 2px solid #555555;
-      }
-      
-      .input-login[type=submit]:hover {
-      background-color: #F9DA4A;
-      color: black;
-      }
-  
-  #login-div {
-    position:fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: -9em;
-    margin-left: -15em; 
-}
-
-.button-div{
-    padding-left: 5%;;
-}
 
 
-@media (max-width: 575px) { 
-    #login-div {
-        top: 50%;
-        right: 50%;
-        margin-top: -9em;
-        margin-left: -15em; 
+@media screen and (max-width: 600px) {
+    .login-form {
+        width: 80%;
+    }
+    #header{
+        padding-top: 20%; 
     }
 }
-
-.login-con{
-    position: static;
-    /* left: 30px; */
-}
-
-a:hover{
-    color:#F9DA4A;
-    font-style: italic;
-}
-
-a{
-    color: lightgray;
-    margin-left: 25%;
-    font-style: normal;
-}
-
-body {
-    
-    background: #333;
-    padding-top:5em;
-    display: inline-block;
-    justify-content: center;
-  }
-  
-  .typewriter h1 {
-    margin-top:  7.5%;
-    position: fixed;
-    padding-left: 18%;
-    font-size: 60px;
-    color: #fff;
-    overflow: hidden; 
-    border-right: .15em solid transparent; 
-    white-space: nowrap;
-    margin: 10 auto; 
-    letter-spacing: .25em;
-    animation: 
-      typing 3s steps(60,end),
-      blink-caret .5s step-end 10;
-  }
-  
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 700px }
-  }
-  
-  @keyframes blink-caret {
-    from, to { border-color: gray }
-    50% { border-color: transparent }
-  }

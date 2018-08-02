@@ -1,45 +1,43 @@
 import React, { Component } from 'react';
-import '../stylesheets/duplicate.css'
-import { Pie, PieChart, Tooltip } from 'recharts'
+import { Pie, PieChart, Tooltip ,ResponsiveContainer} from 'recharts'
 import { connect } from 'react-redux'
 
-
 class DuplicateCard extends Component {
-    
-
     render(){
         if ( this.props.status === 'Available'){
-        const data = [ 
-            {name: 'Duplicate', value: this.props.duplicate_data.percentage}, 
-            { name: 'Non duplicate', value: 100-this.props.duplicate_data.percentage}];
-        return(
-            <div className="parallax-2">
-                <h2 id="header">Risk of Code Duplication</h2>
-                <h2>Clone: {this.props.duplicate_data.clones}</h2>
-                <h2>Duplicate: {this.props.duplicate_data.duplications}</h2>
-                <h2>Files: {this.props.duplicate_data.files}</h2>
-                <h2>Lines: {this.props.duplicate_data.lines}</h2>
-                <PieChart  width={1000} height={700}>
-                <Pie data={data} dataKey="value" cx={500} cy={200} innerRadius={100} outerRadius={200} fill="#82ca9d"/>
-                    <Tooltip/>
-                </PieChart>
-                </div>      
-               
-        );
-    }
-    else {
-        return (
-            <div className="parallax-2">
-                <h2 id="header">Risk of Code Duplication</h2>
-                <h2>Too many of duplications found!</h2>
-                
-            </div>
-        );
-    }
+            const data = [ 
+                {name: 'Duplicate', value: this.props.duplicate_data.percentage}, 
+                { name: 'Non duplicate', value: 100-this.props.duplicate_data.percentage}];
+            return(
+                <div className="row">
+                    <div className="col-md-4">
+                        <p className="card-text">Clone: {this.props.duplicate_data.clones}</p>
+                        <p className="card-text">Duplicate: {this.props.duplicate_data.duplications}</p>
+                        <p className="card-text">Files: {this.props.duplicate_data.files}</p>
+                        <p className="card-text">Lines: {this.props.duplicate_data.lines}</p>
+                    </div>
+                    <div className="col-md-8">
+                        <div id="container2">
+                            <ResponsiveContainer width="100%" height="60%">
+                                <PieChart>
+                                    <Pie data={data} dataKey="value" innerRadius={100} outerRadius={200} fill="#82ca9d"/>
+                                    <Tooltip/>
+                                </PieChart>
+                            </ResponsiveContainer>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        else {
+            return (
+                <div>
+                    <p>Too many of duplications found!</p>
+                </div>
+            );
+        }
     }
 }
-
-
 
 function mapStateToProps(state){
     return {

@@ -25,7 +25,8 @@ class Register extends Component {
         swal({
             title: title,
             text: text,
-            type: type
+            type: type,
+            heightAuto: false
         })
     }
 
@@ -37,7 +38,13 @@ class Register extends Component {
             password2: this.state.password2,
             gitName: this.state.gitName,
         }
-
+        swal({
+            title: 'Creating your account',
+            text: 'Creating...',
+            allowOutsideClick: false,
+            heightAuto: false,
+            onOpen: ()=> {
+                swal.showLoading();
         axios.post('/api/user/register', newUser)
             .then(
                 (res) => {
@@ -64,24 +71,40 @@ class Register extends Component {
                 console.log('Regis',err);
                 this.alertDialog("Error","Incorrect Information","error")
             })
+        }})
     }
         
     render() {
         return (
-                <div className="parallax">
-                    <form className="register-form"onSubmit = {this.onSubmit}>
-                    <h1 id="title">Create Account</h1>
-                    <h2 id="label">USERNAME</h2>
-                    <input className="input-login" type="text" minLength="6" autoComplete="off" placeholder="6 characters minimum" name="username" value={this.state.username} required onChange={this.onChange}></input>
-                    <h2 id="label">GITHUB USERNAME  <strong>*ONLY GITHUB USERNAME*</strong></h2>
-                    <input className="input-login" type="text" autoComplete="off" placeholder="Github username" name="gitName" value={this.state.gitName} required onChange={this.onChange}></input>
-                    <h2 id="label">PASSWORD</h2>
-                    <input className="input-login" id="passwordForm1" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password" value={this.state.password} required onChange={this.onChange}></input>
-                    <h2 id="label">CONFIRM PASSWORD</h2>
-                    <input className="input-login" id="passwordForm2" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password2" value={this.state.password2} required onChange={this.onChange}></input>
-                    <input className="input-login" type="submit"/>
-                </form>
+            <div class="background">
+                    <div className="container-fluid">
+                        <div class="div-center animated bounceInDown delay-2s">
+                            <div class="content">
+                            <div className="row">
+                            <div className="text-center">
+                            <div className="typewriter">
+                                        <h1 class="animated bounceInDown delay-2s"id="header">SIGN UP</h1>
+                                    </div>
+                                <form className="regis-form" onSubmit = {this.onSubmit}>
+                                <div className="form-group">
+                                <h2 id="label">USERNAME</h2>
+                                <input id="input-auth"className="form-control" type="text" minLength="6" autoComplete="off" placeholder="6 characters minimum" name="username" value={this.state.username} required onChange={this.onChange}></input>
+                                <h2 id="label">GITHUB USERNAME  <strong>*ONLY USERNAME*</strong></h2>
+                                <input id="input-auth" className="form-control"type="text" autoComplete="off" placeholder="Github username" name="gitName" value={this.state.gitName} required onChange={this.onChange}></input>
+                                <h2 id="label">PASSWORD</h2>
+                                <input id="input-auth" className="form-control" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password" value={this.state.password} required onChange={this.onChange}></input>
+                                <h2 id="label">CONFIRM PASSWORD</h2>
+                                <input id="input-auth" className="form-control" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password2" value={this.state.password2} required onChange={this.onChange}></input>
+                                <input className="form-control btn btn-outline-info" type="submit"/>
+                                </div>
+                            </form>
+                        </div>
+                        </div>
+                   </div>
+                </div>
             </div>
+        </div>
+                
         )
     }
 }

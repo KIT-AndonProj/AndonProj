@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import ReactTable from 'react-table';
-import 'react-table/react-table.css';
-import '../stylesheets/table.css'
 import { connect } from 'react-redux';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import '../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 
 
 class BugspotCard extends Component {
@@ -10,66 +9,27 @@ class BugspotCard extends Component {
     render() {
       if(this.props.status === 'Available'){
           return (
-            <div className="parallax-2" >
-              <h2 id="header">Bugspot Analyze</h2>
-              <p>The bug prediction heuristic, the more score tends to be more risk.</p>
-              <ReactTable
-                data={this.props.bugspot_data}
-                columns={[
-                      {
-                        Header: "Score",
-                        accessor: "score"
-                      },
-                      {
-                        Header: "File",
-                        accessor:"file"
-                      },
-                      {
-                        Header: 'Percentage',
-                        accessor: 'percentage',
-                        Cell: row => (
-                          <div className="rt-td"
-                            style={{
-                              width: '100%',
-                              height: '100%',
-                              backgroundColor: '#dadada',
-                              borderRadius: '2px'
-                            }}
-                          >
-                            <div
-                              style={{
-                                width: `${row.value}%`,
-                                height: '100%',
-                                backgroundColor: (row.value) > 66 ? '#ff2e00'
-                                  : row.value > 33 ? '#ffbf00'
-                                  : '#85cc00',
-                                borderRadius: '2px',
-                                transition: 'all .2s ease-out'
-                                }}
-                              />
-                            </div>
-                          )
-                        }       
-                ]}
-                defaultPageSize={10}
-                style={{
-                  height: "600px"
-                }}
-                className="-striped -highlight"
-              />
-              <br />
-            </div>
+          <BootstrapTable 
+          data={this.props.bugspot_data}
+          containerStyle={  { margin: 0 }} 
+          bodyStyle={{ margin: 0 }}
+          headerStyle={ {margin: 0}}
+          tableStyle={ { margin: 0 } }
+          pagination striped hover>
+          <TableHeaderColumn isKey dataField='file'>File Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='score'>Score</TableHeaderColumn>
+          <TableHeaderColumn dataField='percentage'>Percentage</TableHeaderColumn>
+      </BootstrapTable>
           );
         }else {
           return(
-            <div className="parallax-2">
-             <h2 id="header">Bugspot Analyze</h2>
-             <h2>No data shown. Bugspot score calculate the commit with 'fix' message in them.</h2>
+            <div>
+             <p>No data shown. Bugspot score calculate the commit with 'fix' message in them.</p>
             </div>
           );
         }
         }
-       
+
     }
 
     function mapStateToProps(state){
