@@ -74,8 +74,11 @@ class NotificationCard extends Component {
 
     render(){
         return (
-            <div className="notification-con">
-                <div>
+            <div className="card bg-light" id="nomargin">
+                       <h4 className="card-title" id="card-title-text">Notification Trigger</h4>
+
+                        <div className="card-body" id="nomargin">
+                        <div>
                     <form onSubmit={this.handleSubmit}>
                         <div className="radio">
                             <label><input type="radio" value="overall" checked={this.state.select_trigger==="overall"} onChange={this.handleChange}/>Overall Risk of Repository</label>
@@ -98,7 +101,11 @@ class NotificationCard extends Component {
                         <button  className="btn btn-primary" type="submit">Notify to Andon Model</button>
                     </form>
                 </div>
-            </div>
+                        </div>
+                    </div>
+
+
+
         );
     }
 }

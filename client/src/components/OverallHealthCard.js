@@ -8,12 +8,13 @@ class OverallHealthCard extends Component {
     render(){
         if( this.props.watch_status ){
             return(
-                <div>
+                <div className="card bg-light" >
+                    <h4 className="card-title" id="card-title-text">Repository Overall Score</h4>
+                    <div id="padding">
                    <Progress
                     type="circle"
                     percent={this.props.score}
                     />
-                    <div>
                     <p>Risk of Code Duplication : {this.props.duplicate_score}</p>
                     <p>Risk of Code Complexity : {this.props.complexity_score}</p>
                     <p>Bugspot Analyze score : {this.props.bugspot_score}</p>

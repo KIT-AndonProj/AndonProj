@@ -16,4 +16,16 @@ div.col-8 div {
     #overall-card{
         width:200px
     }
+    #frequency-card{
+        /* padding: 5%; */
+        width: 200px;
+        height: relative;
+    }
+}
+
+
+#frequency-card{
+    padding: 5%;
+    width: 700px;
+    height: 600px;
 }

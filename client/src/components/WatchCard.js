@@ -13,7 +13,7 @@ class WatchCard extends Component {
 
     render(){
         return(
-          <div className="container-fluid">
+          <div className="container-fluid" id="nomargin">
               <div className="row">
               <div className="col-sm-2">
                     <nav className="navbar navbar-default" id="myScrollspy">
@@ -53,10 +53,10 @@ class WatchCard extends Component {
                 <h1>Overall Information</h1>
                 <div className="row" id="nomargin">
                 <div className="col-md-6">
-                <div id="overall-card"className="card border-0 animated bounceInLeft delay-5s">
+                <div id="overall-card"className="card bg-light animated bounceInLeft delay-5s">
                 <img className="card-img-top" src={this.props.profile.image_url} alt="img"/>
-                    <div className="card-body">
-                    <h4 className="card-title">Watched Repository Information</h4>
+                    <div className="card-body" id="nomargin">
+                    <h4 className="card-title">Repository Information</h4>
                       <p className="card-text">Username : {this.props.profile.username}</p> 
                       <p className="card-text">Repository name : {this.props.profile.reponame}</p>
                       <p className="card-text">Created at : {this.props.profile.created_at}</p>
@@ -68,14 +68,12 @@ class WatchCard extends Component {
                 </div>
                 <div className="col-md-6">
                 <div id="overall-card"className="card border-0 animated bounceInRight delay-5s">
-                        <div className="card-body">
-                        <h4 className="card-title">Notification Trigger</h4>
+                        <div className="card-body" id="nomargin">
                         <NotificationCard/>
                     </div>
                 </div>
                 <div id="overall-card"className="card border-0 animated bounceInRight delay-5s">
                         <div className="card-body">
-                        <h4 className="card-title">Repository Overall Score</h4>
                         <OverallHealthCard/>
                     </div>
                 </div>

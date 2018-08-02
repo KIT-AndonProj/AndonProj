@@ -66,8 +66,11 @@ class Monitor extends Component {
             if(res.data.message !== 'Not found commits matching search criteria'){
             this.props.update_bugspot(res.data,'Available')
             }
+            else if ( res.data === 'Github API rate limit exceeded'){
+                this.gitLimit()
+            }
             else {
-                this.props.update_bugspot(res.data,'No bugspot found');
+                this.props.update_bugspot(res.data,'Not found');
             }
             this.updateOverallScore(res);  
             this.updateStatus();        
@@ -88,8 +91,11 @@ class Monitor extends Component {
             if(res.data.resObj.length !== 0){
                 this.props.update_complexity(res.data,'Available');
             }
+            else if ( res.data === 'Github API rate limit exceeded'){
+                this.gitLimit()
+            }
             else {
-                this.props.update_complexity(res.data,'No complexity Found');
+                this.props.update_complexity(res.data,'Not found');
             }
             this.updateOverallScore(res);
             this.updateStatus();        
@@ -129,7 +135,12 @@ class Monitor extends Component {
                           text: 'Please check your network connection',
                           type: 'error',
                           heightAuto: false,
-                      })
+                      }) 
+                      this.props.update_bugspot('','Not Available');
+                      this.props.update_complexity('','Not Available');
+                      this.props.update_duplicate('','Not Available');
+                      this.props.update_frequency('','Not Available');
+                      this.props.update_outdated('','Not Available');
                   })
             }
         })
@@ -144,7 +155,10 @@ class Monitor extends Component {
             }
         }).then((res) => {
             if(res.data.message === 'The jscpd found too many duplicates over threshold'){
-                this.props.update_duplicate(res.data,'Too many duplications');
+                this.props.update_duplicate(res.data,'Too many Duplications found');
+            }
+            else if ( res.data === 'Github API rate limit exceeded'){
+                this.gitLimit()
             }
             else{
                 this.props.update_duplicate(res.data,'Available')
@@ -175,6 +189,9 @@ class Monitor extends Component {
             if(res.data.message !== 'A package.json was not found'){
             this.props.update_outdated(res.data,'Available')
             }
+            else if ( res.data === 'Github API rate limit exceeded'){
+                this.gitLimit()
+            }
             else {
                 this.props.update_outdated(res.data,'Not found')
             }
@@ -188,7 +205,7 @@ class Monitor extends Component {
     gitLimit(){
         sessionStorage.removeItem('token')
         swal({
-            title: 'Github API rate limit exceeded',
+            title: 'GitHub API rate limit exceeded',
             text: 'Please try again later',
             type: 'error',
             heightAuto: false
@@ -213,7 +230,7 @@ class Monitor extends Component {
             this.updateStatus();        
             }
             else{
-                this.gitLimit()
+               this.gitLimit()
             }
         })
     }
@@ -263,6 +280,7 @@ class Monitor extends Component {
                     }
                 }).catch(err => {
                     console.log("WATCH REPO ERR : ",err.data);
+                    this.gitLimit();
                 })
             }
             if(this.state.text === 'Unwatch'){

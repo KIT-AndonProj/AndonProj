@@ -10,8 +10,8 @@ class BugspotCard extends Component {
       if(this.props.status === 'Available'){
         const options = {
             sizePerPageList: [ {
-              text: 'All', value: this.props.data
-            } ]
+                text: 'All', value: this.props.bugspot_data.length
+              } ]
           };
           return (
           <BootstrapTable 

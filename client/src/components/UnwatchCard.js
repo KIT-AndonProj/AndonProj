@@ -24,10 +24,10 @@ class UnwatchCard extends Component {
                     <div className="col-sm-10 col-8" id="margin-info">
                         <div id="notification"> 
                             <h1>Overall Information</h1>
-                            <div className="container-fluid">
+                            <div className="container-fluid" id="nomargin">
                                 <div className="row" id="nomargin">
                                     <div className="col-md-6">
-                                        <div id="overall-card"className="card border-0 animated bounceInLeft delay-5s">
+                                        <div id="overall-card"className="card bg-light animated bounceInLeft delay-5s">
                                             <img className="card-img-top" src={this.props.current_profile.image_url} alt="img"/>
                                             <div className="card-body">
                                                 <h4 className="card-title">Current Repository Information</h4>
@@ -41,8 +41,8 @@ class UnwatchCard extends Component {
                                         </div>
                                     </div>
                                     <div className="col-md-6">
-                                        <div id="overall-card"className="card border-0 animated bounceInRight delay-5s">
-                                            <h4 className="card-title">Frequency of Commits</h4>
+                                        <div id="frequency-card"className="card animated bounceInRight delay-5s">
+                                            <h4 className="card-title" id="card-title-text">Frequency of Commits</h4>
                                             <FrequencyCommitCard/>
                                         </div>
                                     </div>

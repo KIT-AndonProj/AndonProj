@@ -52,13 +52,13 @@ class Register extends Component {
                         this.alertDialog("Username already exists","Please choose other name","error");
                     }
                     else if( res.data.gitName === 'Github username not found' || res.data.gitName === 'This github username already exists'){
-                        this.alertDialog("Github Username Already registered or Not found!","Please enter valid or non-register github username","error")
+                        this.alertDialog("GitHub Username Already registered or Not found!","Please enter valid or non-register GitHub username","error")
                     }
                     else if( res.data.password2 === 'Password not match'){
                         this.alertDialog("Password not match!","Please enter password again","error");
                     }
                     else if( res.data === 'Github API rate limit exceeded' ){
-                        this.alertDialog("Can not register","Github API rate limit exceeded","error")
+                        this.alertDialog("Can not register","GitHub API rate limit exceeded","error")
                     }
                     
                     else {

@@ -2,3 +2,9 @@ input[type=radio] {
     width: 20px;
     height: 20px;
 }
+
+#card-title-text{
+    padding-top: 5%;
+    padding-left: 5%;
+
+}

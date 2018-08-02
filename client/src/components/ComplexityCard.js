@@ -9,7 +9,7 @@ class ComplexityCard extends Component {
         if( this.props.status === 'Available'){
             const options = {
                 sizePerPageList: [ {
-                  text: 'All', value: this.props.data
+                  text: 'All', value: this.props.data.length
                 } ]
               };
           return (

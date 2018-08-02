@@ -123,7 +123,7 @@ class Login extends Component {
             else {
                 sessionStorage.removeItem('token')
                 swal({
-                    title: 'Github API rate limit exceeded',
+                    title: 'GitHub API rate limit exceeded',
                     text: 'Please try again later',
                     type: 'error',
                     heightAuto: false

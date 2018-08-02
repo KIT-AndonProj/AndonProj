@@ -23,7 +23,7 @@ class DuplicateCard extends Component {
                         <div id="container3">
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
-                                <Pie isAnimationActive={false} data={data} cx={250} cy={160} outerRadius={160} fill="#8884d8" label/>
+                                <Pie isAnimationActive={false} data={data} dataKey="value" cx={250} cy={160} outerRadius={160} fill="#8884d8" label/>
                                     <Tooltip/>
                                 </PieChart>
                             </ResponsiveContainer>

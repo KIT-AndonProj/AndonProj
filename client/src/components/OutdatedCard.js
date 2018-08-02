@@ -9,9 +9,8 @@ class OutdatedCard extends Component {
         if(this.props.status === 'Available'){
             const options = {
                 sizePerPageList: [ {
-                  text: 'All', value: this.props.data
-                } ]
-              };
+                    text: 'All', value: this.props.outdated_data.length
+                  } ]              };
         return(
             <BootstrapTable data={this.props.outdated_data} dataSort 
             containerStyle={  { margin: 0 }} 
