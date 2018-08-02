@@ -85,8 +85,9 @@ router.post('/login', (req, res) => {
                         bcrypt.compare(password, user.password)
                         .then(isMatch => {
                             if(isMatch) {
-                                const payload = {id: user.id, username: user.username, gitName: user.gitName, imgURL: user.imgURL }
-                                jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+                                const payload = {id: user.id, username: user.username, gitName: user.gitName }
+                                jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600  }, (err, token) => {
+                                    exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python3 pythonScript/script.py -c -wel')
                                     res.json({
                                         payload,
                                         success: true,
@@ -113,7 +114,7 @@ router.get('/openCam', (req, res) => {
             exec('andonpred run', (err,stdout,stderr) => {
                 if (err) { return res.json('User not found') }
                 var name = stdout.split("[Verify] ").pop().slice(0,-1);
-                const payload = {username: 'crsherbet'}
+                const payload = {username: name}
                 jwt.sign(payload, keys.secretOrKey, { expiresIn: 600 }, (err, token) => {
                     res.json({
                         payload,
@@ -128,12 +129,8 @@ router.get('/openCam', (req, res) => {
 router.post('/updateDB', passport.authenticate('jwt', {session: false}), (req, res) => {
     const username = req.body.username
     User.findOneAndUpdate({ username }, {status: true}).then(user => {
-        if(user) {
-            exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python pythonScript/script.py -c -wel', (err,stdout,stderr) => {
-                if (err) { return res.json(stderr) }
-                return res.json(user)
-            })
-        }
+        if(user)
+            return res.json(user)
         else
             return res.json('Update database fail')
     })
