@@ -11,20 +11,24 @@ class DuplicateCard extends Component {
             return(
                 <div className="row">
                     <div className="col-md-4">
+                    <div className="card border-0 ">
                         <p className="card-text">Clone: {this.props.duplicate_data.clones}</p>
                         <p className="card-text">Duplicate: {this.props.duplicate_data.duplications}</p>
                         <p className="card-text">Files: {this.props.duplicate_data.files}</p>
                         <p className="card-text">Lines: {this.props.duplicate_data.lines}</p>
                     </div>
+                    </div>
                     <div className="col-md-8">
-                        <div id="container2">
-                            <ResponsiveContainer width="100%" height="60%">
+                    <div className="card border-0 ">
+                        <div id="container3">
+                            <ResponsiveContainer width="100%" height="100%">
                                 <PieChart>
-                                    <Pie data={data} dataKey="value" innerRadius={100} outerRadius={200} fill="#82ca9d"/>
+                                <Pie isAnimationActive={false} data={data} cx={250} cy={160} outerRadius={160} fill="#8884d8" label/>
                                     <Tooltip/>
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
+                    </div>
                     </div>
                 </div>
             );
@@ -32,7 +36,12 @@ class DuplicateCard extends Component {
         else {
             return (
                 <div>
-                    <p>Too many of duplications found!</p>
+                    <div class="card bg-light" id="nomargin">
+                        <div class="card-header" id="nomargin">Information Not Available</div>
+                        <div class="card-body" id="nomargin">
+                            <p class="card-text">Repository has too many duplications</p>
+                        </div>
+                    </div>
                 </div>
             );
         }

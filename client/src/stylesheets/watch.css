@@ -1,5 +1,5 @@
 .info{
-    padding-top: 5% ;
+    padding-top: 10% ;
     height: relative;
 }
 .graph{
@@ -32,4 +32,8 @@
 
 #watch-div{
     padding-left: 0;
+}
+
+#container3{
+    height: 400px;
 }

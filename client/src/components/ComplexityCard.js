@@ -5,7 +5,13 @@ import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 class ComplexityCard extends Component {
     
     render() {
+       
         if( this.props.status === 'Available'){
+            const options = {
+                sizePerPageList: [ {
+                  text: 'All', value: this.props.data
+                } ]
+              };
           return (
             <BootstrapTable
             data={ this.props.data }
@@ -13,7 +19,10 @@ class ComplexityCard extends Component {
             bodyStyle={{ margin: 0 }}
             headerStyle={ {margin: 0}}
             tableStyle={ { margin: 0 } }
-            pagination striped hover> 
+            options={ options }
+            pagination striped hover
+            expandComponent={false}
+> 
             <TableHeaderColumn dataField='file' isKey>File Name</TableHeaderColumn>
             <TableHeaderColumn dataField='comp'>COMP</TableHeaderColumn>
             <TableHeaderColumn dataField='numCommit'>Number of Commits</TableHeaderColumn>
@@ -24,8 +33,13 @@ class ComplexityCard extends Component {
         else {
           return(
             <div>
-              <p>No complexity of your code.</p>
+            <div className="card text-white bg-info mb-3" id="nomargin">
+                <div className="card-header" id="nomargin">Complexity Not Found</div>
+                <div className="card-body" id="nomargin">
+                    <p className="card-text">Repository has no complexity</p>
+                </div>
             </div>
+        </div>
           );
         }
     }

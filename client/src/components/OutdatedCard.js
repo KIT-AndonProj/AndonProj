@@ -7,12 +7,18 @@ class OutdatedCard extends Component {
     
     render(){
         if(this.props.status === 'Available'){
+            const options = {
+                sizePerPageList: [ {
+                  text: 'All', value: this.props.data
+                } ]
+              };
         return(
             <BootstrapTable data={this.props.outdated_data} 
             containerStyle={  { margin: 0 }} 
             bodyStyle={{ margin: 0 }}
             headerStyle={ {margin: 0}}
             tableStyle={ { margin: 0 } }
+            options={ options }
             pagination striped hover>
                 <TableHeaderColumn isKey dataField='moduleName'>Module Name</TableHeaderColumn>
                 <TableHeaderColumn dataField='homepage'>Home Page</TableHeaderColumn>
@@ -25,7 +31,12 @@ class OutdatedCard extends Component {
         else {
             return (
                 <div>
-                <p>No information available. Due to no package.json in your repository</p>
+                    <div className="card bg-light" id="nomargin">
+                        <div className="card-header" id="nomargin">Information Not Available</div>
+                        <div className="card-body" id="nomargin">
+                            <p className="card-text">No information available. Due to no package.json in your repository</p>
+                        </div>
+                    </div>
                 </div>
             )
         }

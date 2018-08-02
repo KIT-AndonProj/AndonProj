@@ -124,13 +124,12 @@ class Monitor extends Component {
                     this.updateOutdatedFunction();
                   }).catch((err)=>{
                       console.log('CLONE ERR', err)
+                      this.setState({text: 'Watch'})
                       swal({
                           title: 'Error',
                           text: 'Please check your network connection',
                           type: 'error',
-                          heightAuto: false
-                        }).then(()=>{
-                        this.setState({text: 'Watch'});
+                          heightAuto: false,
                       })
                   })
             }
@@ -204,6 +203,15 @@ class Monitor extends Component {
             if( res.data !== 'Github API rate limit exceeded'){
             this.props.update_frequency(res.data,'Available')
             this.updateStatus();        
+            }
+            else{
+                sessionStorage.removeItem('token')
+                swal({
+                    title: 'Github API rate limit exceeded',
+                    text: 'Please try again later',
+                    type: 'error',
+                    heightAuto: false
+                })
             }
         })
     }
@@ -340,9 +348,9 @@ class Monitor extends Component {
                     <div className="collapse navbar-collapse" id="navbarToggler">
                         <input id="search-bar1" className="form-control mr-sm-2" type="search" placeholder="Input Git Username" aria-label="Search" required disabled={this.state.disabled} onChange={(e) => this.setState({username: e.target.value})}/>
                         <input id="search-bar2" className="form-control mr-sm-2" type="search" placeholder="Input Repository" aria-label="Search" required disabled={this.state.disabled} onChange={(e) => this.setState({repo_url: e.target.value})}/>
-                        <button className="btn btn-outline-info my-2 my-sm-0" onClick= {(e) => this.watchRepo(e)} >{this.state.text}</button>
+                        <button className="btn btn-info my-2 my-sm-0" onClick= {(e) => this.watchRepo(e)} >{this.state.text}</button>
                     </div>
-                    <button id="logoutBtn" class="btn btn-outline-warning btn-lg animated bounceInLeft delay-5s" onClick= {(e) => this.onSubmit()}>Logout</button>
+                    <button id="logoutBtn" className="btn btn-warning btn-lg animated bounceInLeft delay-5s" onClick= {(e) => this.onSubmit()}>Logout</button>
                     </nav>
                     { !isWatched ? (
                         <UnwatchCard/>    

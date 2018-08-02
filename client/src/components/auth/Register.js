@@ -48,7 +48,6 @@ class Register extends Component {
         axios.post('/api/user/register', newUser)
             .then(
                 (res) => {
-                    console.log('regis res',res)     
                     if( res.data.username === 'This username already exists'){
                         this.alertDialog("Username already exists","Please choose other name","error");
                     }
@@ -68,7 +67,6 @@ class Register extends Component {
                     }
                 })
             .catch( (err) => {   
-                console.log('Regis',err);
                 this.alertDialog("Error","Incorrect Information","error")
             })
         }})
@@ -76,25 +74,25 @@ class Register extends Component {
         
     render() {
         return (
-            <div class="background">
+            <div className="background">
                     <div className="container-fluid">
-                        <div class="div-center animated bounceInDown delay-2s">
-                            <div class="content">
+                        <div className="div-center animated bounceInDown delay-2s">
+                            <div className="content">
                             <div className="row">
                             <div className="text-center">
                             <div className="typewriter">
-                                        <h1 class="animated bounceInDown delay-2s"id="header">SIGN UP</h1>
+                                        <h1 className="animated bounceInDown delay-2s"id="header">SIGN UP</h1>
                                     </div>
                                 <form className="regis-form" onSubmit = {this.onSubmit}>
                                 <div className="form-group">
                                 <h2 id="label">USERNAME</h2>
-                                <input id="input-auth"className="form-control" type="text" minLength="6" autoComplete="off" placeholder="6 characters minimum" name="username" value={this.state.username} required onChange={this.onChange}></input>
+                                <input className="form-control" type="text" minLength="6" autoComplete="off" placeholder="6 characters minimum" name="username" value={this.state.username} required onChange={this.onChange}></input>
                                 <h2 id="label">GITHUB USERNAME  <strong>*ONLY USERNAME*</strong></h2>
-                                <input id="input-auth" className="form-control"type="text" autoComplete="off" placeholder="Github username" name="gitName" value={this.state.gitName} required onChange={this.onChange}></input>
+                                <input className="form-control"type="text" autoComplete="off" placeholder="Github username" name="gitName" value={this.state.gitName} required onChange={this.onChange}></input>
                                 <h2 id="label">PASSWORD</h2>
-                                <input id="input-auth" className="form-control" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password" value={this.state.password} required onChange={this.onChange}></input>
+                                <input className="form-control" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password" value={this.state.password} required onChange={this.onChange}></input>
                                 <h2 id="label">CONFIRM PASSWORD</h2>
-                                <input id="input-auth" className="form-control" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password2" value={this.state.password2} required onChange={this.onChange}></input>
+                                <input className="form-control" type="password"  minLength="6" autoComplete="off" placeholder="6 characters minimum" name="password2" value={this.state.password2} required onChange={this.onChange}></input>
                                 <input className="form-control btn btn-outline-info" type="submit"/>
                                 </div>
                             </form>

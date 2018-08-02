@@ -167,7 +167,6 @@ class Login extends Component {
                 swal.showLoading();
                 axios.get('/api/user/openCam')
                 .then((res) => {
-                    console.log('camera verify:',res)
                     var usertemp =''
                     if(res.data==='The service is unavailable'){
                         swal({
@@ -286,20 +285,20 @@ class Login extends Component {
         }
         else {
             return (
-                <div class="background">
+                <div className="background">
                     <div className="container-fluid">
-                        <div class="div-center animated bounceInDown delay-2s">
-                            <div class="content">
+                        <div className="div-center animated bounceInDown delay-2s">
+                            <div className="content">
                             <div className="row">
                                 <div className="text-center">
                                     <div className="typewriter">
-                                        <h1 id="header">ANDON MONITOR</h1>
+                                        <h1 className="animated bounceInDown delay-2s" id="header">ANDON MONITOR</h1>
                                     </div>
-                                    <form className="login-form " onSubmit={this.onSubmit}>
-                                        <div className="form-group">
-                                            <input id="input-auth" className="form-control" type="text" name="username" required   autoComplete="off" placeholder="Username" onChange={this.onChange}/>
-                                            <input id="input-auth" className="form-control" type="password" placeholder="Password" required autoComplete="off"  name="password" value={this.state.password} onChange={this.onChange}></input>
-                                            <input id="input-auth" className="form-control btn btn-outline-info" type="submit" value="Login"/>
+                                    <form className="login-form" onSubmit={this.onSubmit}>
+                                        <div className="form-group" >
+                                            <input className="form-control" type="text" name="username" required   autoComplete="off" placeholder="Username" onChange={this.onChange}/>
+                                            <input className="form-control" type="password" placeholder="Password" required autoComplete="off"  name="password" value={this.state.password} onChange={this.onChange}></input>
+                                            <input className="form-control btn btn-outline-info" type="submit" value="Login"/>
                                         </div>
                                     </form>
                                     <a href="/register">Not a member? </a>
