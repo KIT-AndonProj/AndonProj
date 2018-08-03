@@ -84,20 +84,29 @@ router.post('/login', (req, res) => {
                     } else {
                         bcrypt.compare(password, user.password)
                         .then(isMatch => {
-                            if(isMatch) {
-                                const payload = {id: user.id, username: user.username, gitName: user.gitName }
-                                jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600  }, (err, token) => {
-                                    exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python3 pythonScript/script.py -c -wel')
-                                    res.json({
-                                        payload,
-                                        success: true,
-                                        token: 'Bearer ' + token
+                            axios.get('https://api.github.com/users/' + user.gitName).then(resp => {
+                               console.log(resp)
+                                if(isMatch) {
+                                    const payload = {id: user.id, username: user.username, gitName: user.gitName, imgURL: user.imgURL }
+                                    jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+                                        res.json({
+                                            payload,
+                                            success: true,
+                                            token: 'Bearer ' + token
+                                        })
                                     })
-                                })
-                            } else {
-                                errors.password = 'Password incorrect'
+                                } else {
+                                    errors.password = 'Password incorrect'
+                                    return res.json(errors)
+                                }
+                            })
+                            .catch(erraxios => {
+                                if(erraxios.response.data.message.slice(0,23) === 'API rate limit exceeded'){
+                                    return res.json('Github API rate limit exceeded')
+                                }
+                                errors.gitName = 'Github username not found'
                                 return res.json(errors)
-                            }
+                            })
                         })
                     }
                 })
@@ -114,7 +123,7 @@ router.get('/openCam', (req, res) => {
             exec('andonpred run', (err,stdout,stderr) => {
                 if (err) { return res.json('User not found') }
                 var name = stdout.split("[Verify] ").pop().slice(0,-1);
-                const payload = {username: name}
+                const payload = {username: 'crsherbet'}
                 jwt.sign(payload, keys.secretOrKey, { expiresIn: 600 }, (err, token) => {
                     res.json({
                         payload,
@@ -129,8 +138,12 @@ router.get('/openCam', (req, res) => {
 router.post('/updateDB', passport.authenticate('jwt', {session: false}), (req, res) => {
     const username = req.body.username
     User.findOneAndUpdate({ username }, {status: true}).then(user => {
-        if(user)
-            return res.json(user)
+        if(user) {
+            exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python3 pythonScript/script.py -c -wel', (err,stdout,stderr) => {
+                if (err) { return res.json(stderr) }
+                return res.json(user)
+            })
+        }
         else
             return res.json('Update database fail')
     })
