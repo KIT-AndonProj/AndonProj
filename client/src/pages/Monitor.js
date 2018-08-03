@@ -129,7 +129,6 @@ class Monitor extends Component {
                     this.updateDuplicateFunction();
                     this.updateOutdatedFunction();
                   }).catch((err)=>{
-                      this.setState({text: 'Watch'})
                       swal({
                           title: 'Error',
                           text: 'Please check your network connection',
