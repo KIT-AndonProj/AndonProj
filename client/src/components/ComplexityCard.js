@@ -20,13 +20,11 @@ class ComplexityCard extends Component {
             headerStyle={ {margin: 0}}
             tableStyle={ { margin: 0 } }
             options={ options }
-            pagination striped hover
-            expandComponent={false}
-> 
-            <TableHeaderColumn dataField='file' isKey>File Name</TableHeaderColumn>
-            <TableHeaderColumn dataField='comp'>COMP</TableHeaderColumn>
-            <TableHeaderColumn dataField='numCommit'>Number of Commits</TableHeaderColumn>
-            <TableHeaderColumn dataField='sloc'>Source Line of Code</TableHeaderColumn>
+            pagination striped hover> 
+            <TableHeaderColumn dataField='file' isKey={true} dataSort={true}>File Name</TableHeaderColumn>
+            <TableHeaderColumn dataField='comp' dataSort={true}>COMP</TableHeaderColumn>
+            <TableHeaderColumn dataField='numCommit' dataSort={true}>Number of Commits</TableHeaderColumn>
+            <TableHeaderColumn dataField='sloc' dataSort={true}>Source Line of Code</TableHeaderColumn>
           </BootstrapTable>
           );
         }

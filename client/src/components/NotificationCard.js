@@ -75,29 +75,53 @@ class NotificationCard extends Component {
     render(){
         return (
             <div className="card bg-light" id="nomargin">
-                       <h4 className="card-title" id="card-title-text">Notification Trigger</h4>
+                       <h3 className="card-title" id="card-title-text">Notification Trigger</h3>
 
                         <div className="card-body" id="nomargin">
                         <div>
                     <form onSubmit={this.handleSubmit}>
-                        <div className="radio">
-                            <label><input type="radio" value="overall" checked={this.state.select_trigger==="overall"} onChange={this.handleChange}/>Overall Risk of Repository</label>
+                            <label className="input-container">Overall Risk of Repository
+                        <input type="radio" value="overall" checked={this.state.select_trigger==="overall"} onChange={this.handleChange}/>
+                        <span className="checkmark"></span>
+                        </label>
+                        <label className="input-container">Frequency of Commits : {this.props.data[1].status}
+                        <input type="radio" value="frequency" checked={this.state.select_trigger==="frequency"} onChange={this.handleChange}/>
+                        <span className="checkmark"></span>
+                        </label>
+                        <label className="input-container">Risk of Code Duplication : {this.props.data[2].status}
+                        <input type="radio" value="duplicate" checked={this.state.select_trigger==="duplicate"} onChange={this.handleChange}/>
+                        <span className="checkmark"></span>
+                        </label>
+                        <label className="input-container">Risk of Code Complexity : {this.props.data[3].status}
+                        <input type="radio" value="complex" checked={this.state.select_trigger==="complex"} onChange={this.handleChange}/>
+                        <span className="checkmark"></span>
+                        </label>
+                        <label className="input-container">Bugspot Analyze : {this.props.data[4].status}
+                        <input type="radio" value="bugspot" checked={this.state.select_trigger==="bugspot"} onChange={this.handleChange}/>
+                        <span className="checkmark"></span>
+                        </label>
+                        <label className="input-container">Outdated Library : {this.props.data[5].status}
+                        <input type="radio" value="outdated" checked={this.state.select_trigger==="outdated"} onChange={this.handleChange}/>
+                        <span className="checkmark"></span>
+                        </label>
+                        {/* <div className="radio">
+                            <label className="input-container"><input type="radio" value="overall" checked={this.state.select_trigger==="overall"} onChange={this.handleChange}/>Overall Risk of Repository</label>
                         </div>
                         <div className="radio">
-                            <label><input type="radio" value="frequency" checked={this.state.select_trigger==="frequency"} onChange={this.handleChange}/>Frequency of Commits : {this.props.data[1].status}</label>
+                            <label className="input-container"><input type="radio" value="frequency" checked={this.state.select_trigger==="frequency"} onChange={this.handleChange}/>Frequency of Commits : {this.props.data[1].status}</label>
                         </div>
                         <div className="radio">
-                            <label><input type="radio" value="duplicate" checked={this.state.select_trigger==="duplicate"} onChange={this.handleChange}/>Risk of Code Duplication : {this.props.data[2].status}</label>
+                            <label className="input-container"><input type="radio" value="duplicate" checked={this.state.select_trigger==="duplicate"} onChange={this.handleChange}/>Risk of Code Duplication : {this.props.data[2].status}</label>
                         </div>
                         <div className="radio">
-                            <label><input type="radio" value="complex" checked={this.state.select_trigger==="complex"} onChange={this.handleChange}/>Risk of Code Complexity : {this.props.data[3].status}</label>
+                            <label className="input-container"><input type="radio" value="complex" checked={this.state.select_trigger==="complex"} onChange={this.handleChange}/>Risk of Code Complexity : {this.props.data[3].status}</label>
                         </div>
                         <div className="radio">
-                            <label><input type="radio" value="bugspot" checked={this.state.select_trigger==="bugspot"} onChange={this.handleChange}/>Bugspot Analyze : {this.props.data[4].status}</label>
+                            <label className="input-container"><input type="radio" value="bugspot" checked={this.state.select_trigger==="bugspot"} onChange={this.handleChange}/>Bugspot Analyze : {this.props.data[4].status}</label>
                         </div>
                         <div className="radio">
                             <label><input type="radio" value="outdated" checked={this.state.select_trigger==="outdated"} onChange={this.handleChange}/>Outdated Library : {this.props.data[5].status}</label>
-                        </div>
+                        </div> */}
                         <button  className="btn btn-primary" type="submit">Notify to Andon Model</button>
                     </form>
                 </div>

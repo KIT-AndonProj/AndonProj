@@ -10,7 +10,8 @@ class OutdatedCard extends Component {
             const options = {
                 sizePerPageList: [ {
                     text: 'All', value: this.props.outdated_data.length
-                  } ]              };
+                  } ]
+                };
         return(
             <BootstrapTable data={this.props.outdated_data} dataSort 
             containerStyle={  { margin: 0 }} 
@@ -19,11 +20,11 @@ class OutdatedCard extends Component {
             tableStyle={ { margin: 0 } }
             options={ options }
             pagination striped hover>
-                <TableHeaderColumn isKey dataField='moduleName'>Module Name</TableHeaderColumn>
-                <TableHeaderColumn dataField='homepage'>Home Page</TableHeaderColumn>
-                <TableHeaderColumn dataField='latest'>Latest Version</TableHeaderColumn>
-                <TableHeaderColumn dataField='latest'>Latest Version</TableHeaderColumn>
-                <TableHeaderColumn dataField='installed'>Installed Version</TableHeaderColumn>
+                <TableHeaderColumn isKey={true} dataField='moduleName' dataSort={true}>Module Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='homepage' dataSort={true}>Home Page</TableHeaderColumn>
+                <TableHeaderColumn dataField='latest' dataSort={true}>Latest Version</TableHeaderColumn>
+                <TableHeaderColumn dataField='latest' dataSort={true}>Latest Version</TableHeaderColumn>
+                <TableHeaderColumn dataField='installed' dataSort={true}>Installed Version</TableHeaderColumn>
             </BootstrapTable>            
             );
         }

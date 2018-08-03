@@ -12,10 +12,10 @@ class DuplicateCard extends Component {
                 <div className="row">
                     <div className="col-md-4">
                     <div className="card border-0 ">
-                        <p className="card-text">Clone: {this.props.duplicate_data.clones}</p>
-                        <p className="card-text">Duplicate: {this.props.duplicate_data.duplications}</p>
-                        <p className="card-text">Files: {this.props.duplicate_data.files}</p>
-                        <p className="card-text">Lines: {this.props.duplicate_data.lines}</p>
+                        <label className="label-text">Clone: {this.props.duplicate_data.clones}</label>
+                        <label className="label-text">Duplicate: {this.props.duplicate_data.duplications}</label>
+                        <label className="label-text">Files: {this.props.duplicate_data.files}</label>
+                        <label className="label-text">Lines: {this.props.duplicate_data.lines}</label>
                     </div>
                     </div>
                     <div className="col-md-8">

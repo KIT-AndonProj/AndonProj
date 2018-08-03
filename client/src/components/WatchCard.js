@@ -42,6 +42,7 @@ class WatchCard extends Component {
                   <a className="nav-link btn-outline-info animated fadeInLeft delay-5s" href="#outdated">Outdated Library</a>
                 </li>
                 </ul>
+
                         </div>
                     </div>
                     </nav>
@@ -56,7 +57,7 @@ class WatchCard extends Component {
                 <div id="overall-card"className="card bg-light animated bounceInLeft delay-5s">
                 <img className="card-img-top" src={this.props.profile.image_url} alt="img"/>
                     <div className="card-body" id="nomargin">
-                    <h4 className="card-title">Repository Information</h4>
+                    <h3 className="card-title">Repository Information</h3>
                       <p className="card-text">Username : {this.props.profile.username}</p> 
                       <p className="card-text">Repository name : {this.props.profile.reponame}</p>
                       <p className="card-text">Created at : {this.props.profile.created_at}</p>
@@ -85,25 +86,25 @@ class WatchCard extends Component {
                 <FrequencyCommitCard/>
               </div> 
               <div className="info" id="duplicate"> 
-                <h1>Repository Code Duplicate Risk</h1>           
+                <h1>Risk of Repository Code Duplicate</h1>           
                 <div className="card border-0">
                 <DuplicateCard/>
                 </div>
               </div> 
               <div className="info" id="complex"> 
-                <h1>Repository Code Complexity Risk</h1>
+                <h1>Risk of Repository Code Complexity</h1>
                 <div className="card border-0">
                 <ComplexityCard/>
                 </div>
               </div> 
               <div className="info" id="bugspot"> 
-                <h1>Repository Bugspot Analyze</h1>
+                <h1>Risk of Repository Bugspot</h1>
                 <div className="card border-0">
                 <BugspotCard/>
                 </div>
               </div> 
               <div className="info" id="outdated"> 
-                <h1>Repository Outdated Library</h1>
+                <h1>Risk of Repository Outdated Library</h1>
                 <div className="card border-0">
                 <OutdatedCard/>
                 </div>

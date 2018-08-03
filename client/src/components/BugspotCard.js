@@ -22,9 +22,9 @@ class BugspotCard extends Component {
           tableStyle={ { margin: 0 } }
           options={ options }
           pagination striped hover>
-          <TableHeaderColumn isKey dataField='file'>File Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='score'>Score</TableHeaderColumn>
-          <TableHeaderColumn dataField='percentage'>Percentage</TableHeaderColumn>
+          <TableHeaderColumn isKey={true} dataField='file' dataSort={true}>File Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='score' dataSort={true}>Score</TableHeaderColumn>
+          <TableHeaderColumn dataField='percentage' dataSort={true}>Percentage</TableHeaderColumn>
       </BootstrapTable>
           );
         }else {

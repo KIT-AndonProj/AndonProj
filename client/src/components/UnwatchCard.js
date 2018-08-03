@@ -30,7 +30,7 @@ class UnwatchCard extends Component {
                                         <div id="overall-card"className="card bg-light animated bounceInLeft delay-5s">
                                             <img className="card-img-top" src={this.props.current_profile.image_url} alt="img"/>
                                             <div className="card-body">
-                                                <h4 className="card-title">Current Repository Information</h4>
+                                                <h3 className="card-title">Current Repository Information</h3>
                                                 <p className="card-text">Username : {this.props.current_profile.username}</p> 
                                                 <p className="card-text">Repository name : {this.props.current_profile.reponame}</p>
                                                 <p className="card-text">Created at : {this.props.current_profile.created_at}</p>
@@ -42,7 +42,7 @@ class UnwatchCard extends Component {
                                     </div>
                                     <div className="col-md-6">
                                         <div id="frequency-card"className="card animated bounceInRight delay-5s">
-                                            <h4 className="card-title" id="card-title-text">Frequency of Commits</h4>
+                                            <h3 className="card-title" id="card-title-text">Frequency Commits of Current Repository</h3>
                                             <FrequencyCommitCard/>
                                         </div>
                                     </div>
