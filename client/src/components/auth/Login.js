@@ -51,14 +51,30 @@ class Login extends Component {
                 })
                 .then(
                 (res) => {
-                    if(res.data.username !== 'The service is unavailable'){
+                    if(res.data.username !== 'The service is unavailable' && res.data !== 'Github API rate limit exceeded'){
                         this.setState({ isLoggedIn: 'true'})
                         this.props.update_status(false);
                         sessionStorage.setItem('token', res.data.token);
                         this.getCurrentRepo(res.data.payload.username,res.data.payload.gitName);
                     }
+                    else if (res.data === 'Github API rate limit exceeded'){
+                        sessionStorage.removeItem('token')
+                        swal({
+                            title: 'GitHub API rate limit exceeded',
+                            text: 'Please try again later',
+                            type: 'error',
+                            heightAuto: false
+                        })
+                    }
                     else {
-                        this.setState({ isLoggedIn: 'false'})
+                        this.setState({ isLoggedIn: 'false'});
+                        swal({
+                            title: "Error",
+                            text: "Wrong username or password",
+                            type: "error",
+                            confirmButtonText: "Try again",
+                            heightAuto: false
+                        });
                     }
                 })
                 .then((res)=>{
@@ -119,15 +135,6 @@ class Login extends Component {
                     this.props.cookie(username,gitName,res.data.image_url);
                     }
                 )
-            }
-            else {
-                sessionStorage.removeItem('token')
-                swal({
-                    title: 'GitHub API rate limit exceeded',
-                    text: 'Please try again later',
-                    type: 'error',
-                    heightAuto: false
-                })
             }
         });  
     }

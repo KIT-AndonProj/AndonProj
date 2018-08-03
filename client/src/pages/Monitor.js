@@ -34,6 +34,7 @@ class Monitor extends Component {
             overall_score: 0,
             count_update: 0
         }
+        this.onSubmit = this.onSubmit.bind(this);
         this.props.update_score(0);
         this.props.update_bugspot('','Loading...');
         this.props.update_complexity('','Loading...');
@@ -320,7 +321,38 @@ class Monitor extends Component {
         }
     }
 
+
     onSubmit(e) {
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to use the monitor",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            heightAuto: false
+          }).then((result) => {
+            axios.post('/api/user/logout',{username: this.props.profileUsername})
+            if (result.value ) {
+               sessionStorage.removeItem('token');
+                swal({
+                    title: 'Logged out',
+                    text: 'You have logged out the system',
+                    type: 'success',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    heightAuto: false
+                }
+                ).then(
+                    this.props.history.push("/")
+                );   
+            }
+          })
+     }
+
+     logoutFunc(){
+        console.log('her2');
         swal({
             title: 'Are you sure?',
             text: "You won't be able to use the monitor",
@@ -350,9 +382,9 @@ class Monitor extends Component {
      }
     
     render(){
-        window.onbeforeunload = function() {
-            sessionStorage.removeItem('token')
-            return '';
+        window.onbeforeunload = function () {
+            sessionStorage.removeItem('token');
+            return null;
           };
         const isWatched = this.state.watch_status;
         const isAlreadyAuthenticated = this.isAuthenticated();
