@@ -27,7 +27,20 @@ class BugspotCard extends Component {
           <TableHeaderColumn dataField='percentage' dataSort={true}>Percentage</TableHeaderColumn>
       </BootstrapTable>
           );
-        }else {
+        }
+        else if (this.props.status === 'Not Available'){
+            return(
+                <div>
+                <div className="card bg-danger mb-3" id="nomargin">
+                    <div className="card-header" id="nomargin">Bugspot Analyze Not Available</div>
+                    <div className="card-body" id="nomargin">
+                        <p className="card-text">An error occured. Please check your network connection and try again.</p>
+                    </div>
+                </div>
+            </div>
+              );
+        }
+        else {
           return(
             <div>
             <div className="card bg-warning mb-3" id="nomargin">

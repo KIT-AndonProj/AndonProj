@@ -28,6 +28,18 @@ class OutdatedCard extends Component {
             </BootstrapTable>            
             );
         }
+        else if (this.props.status === 'Not Available'){
+            return(
+                <div>
+                <div className="card bg-danger mb-3" id="nomargin">
+                    <div className="card-header" id="nomargin">Outdated Library Not Available</div>
+                    <div className="card-body" id="nomargin">
+                        <p className="card-text">An error occured. Please check your network connection and try again.</p>
+                    </div>
+                </div>
+            </div>
+              );
+        }
         else {
             return (
                 <div>

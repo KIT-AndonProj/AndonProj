@@ -76,7 +76,7 @@ class Monitor extends Component {
             this.updateStatus();        
         })
         .catch((res) => {
-            this.gitLimit()
+            sessionStorage.removeItem('token')
         })
     }
 
@@ -101,7 +101,7 @@ class Monitor extends Component {
             this.updateStatus();        
         })
         .catch(res=>{
-            this.gitLimit()
+            sessionStorage.removeItem('token')
         })  
     }
 
@@ -166,7 +166,7 @@ class Monitor extends Component {
             this.updateStatus();        
         })
         .catch((res) => {
-            this.gitLimit()
+            sessionStorage.removeItem('token')
         })
     }
 
@@ -197,7 +197,7 @@ class Monitor extends Component {
             this.updateOverallScore(res);
             this.updateStatus();        
         }).catch((res) => {
-            this.gitLimit()
+            sessionStorage.removeItem('token')
         })
     }
 
@@ -208,6 +208,9 @@ class Monitor extends Component {
             text: 'Please try again later',
             type: 'error',
             heightAuto: false
+        })
+        this.setState({
+            watch_status: true,
         })
     }
 
@@ -265,6 +268,9 @@ class Monitor extends Component {
                             heightAuto: false
                         });
                     }
+                    else if ( res.data === 'Github API rate limit exceeded'){
+                        this.gitLimit()
+                    }
                     else { 
                         window.scrollTo(0, 0);
                         this.props.update_watchrepo(res.data)
@@ -278,8 +284,7 @@ class Monitor extends Component {
                         this.props.update_status(true);
                     }
                 }).catch(err => {
-                    console.log("WATCH REPO ERR : ",err.data);
-                    this.gitLimit();
+                    console.log("WATCH REPO ERR : ",err);
                 })
             }
             if(this.state.text === 'Unwatch'){
