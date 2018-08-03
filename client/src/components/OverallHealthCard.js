@@ -9,7 +9,7 @@ class OverallHealthCard extends Component {
         if( this.props.watch_status ){
             return(
                 <div className="card bg-light" >
-                    <h3 className="card-title" id="card-title-text">Repository Overall Score</h3>
+                    <h3 className="card-title" id="card-title-text">Repository Overall Risk Score</h3>
                     <div id="padding">
                     <div id="padding">
                    <Progress
