@@ -6,8 +6,8 @@ import createHistory from 'history/createBrowserHistory'
 import { routerMiddleware } from 'react-router-redux'
 import App from './App'
 import cookieReducer from './reducers/cookieReducer'
-
 import './index.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import currentRepoReducer from './reducers/currentRepoReducer';
 import currentBugspotReducer from './reducers/currentBugspotReducer';
 import { duplicateReducer } from './reducers/duplicateReducer';

@@ -1,0 +1,43 @@
+.info{
+    padding-top: 10% ;
+    height: relative;
+}
+.graph{
+    height: 700px;
+
+}
+.card-img-top{
+    height: 50%;
+    width:100px;
+}
+
+#overall-card{
+    width:500px
+}
+
+@media screen and (max-width: 1200px) {
+    #overall-card{
+        width:300px
+    }
+}
+@media screen and (max-width: 600px) {
+    .card{
+        width: 300px;
+        border: none;
+    }
+    #overall-card{
+        width:250px
+    }
+}
+
+#watch-div{
+    padding-left: 0;
+}
+
+#container3{
+    height: 400px;
+}
+
+.label-text{
+    font-size: 20px;
+}

@@ -1,33 +1,7 @@
-.sidenav{
-    height: 100%;
-    width: 200px;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 7.8%;
-    background-color: #686868;
-    overflow-x: hidden;
-}
-
-#logoutBtn {
-    position: fixed;
-    bottom: 0;
-    left: 10px;
-    padding: 10px 50px;
-
-}
-
-#sidenav-text{
-    text-align: center;
-}
 .img-profile-user{
-    border: 1px solid #ddd;
+    border: 1px solid gray;
     width: 150px;
     padding: 5px;
     height: 150px;
     border-radius: 50%;
-}
-.sidebar-con{
-    padding-top: 10%;
-    padding-left: 10%;
-}
+} 

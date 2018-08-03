@@ -3,10 +3,8 @@ import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import { connect } from 'react-redux'
 import swal from 'sweetalert2';
-import '../stylesheets/search.css';
 import '../stylesheets/sidebar.css';
-import '../stylesheets/dataCard.css';
-import logo from '../res/andon.png';
+import '../stylesheets/monitor.css';
 import addDuplicate from '../actions/addDuplicate'
 import addBugspot from '../actions/addBugspot'
 import addComplexity from '../actions/addComplexity'
@@ -68,14 +66,17 @@ class Monitor extends Component {
             if(res.data.message !== 'Not found commits matching search criteria'){
             this.props.update_bugspot(res.data,'Available')
             }
+            else if ( res.data === 'Github API rate limit exceeded'){
+                this.gitLimit()
+            }
             else {
-                this.props.update_bugspot(res.data,'No bugspot found');
+                this.props.update_bugspot(res.data,'Not found');
             }
             this.updateOverallScore(res);  
             this.updateStatus();        
         })
         .catch((res) => {
-            console.log("BUGSPOT ERR : ",res);
+            this.gitLimit()
         })
     }
 
@@ -90,14 +91,17 @@ class Monitor extends Component {
             if(res.data.resObj.length !== 0){
                 this.props.update_complexity(res.data,'Available');
             }
+            else if ( res.data === 'Github API rate limit exceeded'){
+                this.gitLimit()
+            }
             else {
-                this.props.update_complexity(res.data,'No complexity Found');
+                this.props.update_complexity(res.data,'Not found');
             }
             this.updateOverallScore(res);
             this.updateStatus();        
         })
         .catch(res=>{
-            console.log("COMPLEXITY ERR : ",res)
+            this.gitLimit()
         })  
     }
 
@@ -106,6 +110,7 @@ class Monitor extends Component {
             title: 'Cloning Repository',
             text: 'Cloning...',
             allowOutsideClick: false,
+            heightAuto: false,
             onOpen: ()=> {
                 swal.showLoading();
                 axios({
@@ -124,13 +129,19 @@ class Monitor extends Component {
                     this.updateDuplicateFunction();
                     this.updateOutdatedFunction();
                   }).catch((err)=>{
-                      console.log('CLONE ERR', err)
-                      swal('Error','Please check your network connection','error').then(()=>{
-                        this.setState({text: 'Watch'});
-                      })
+                      swal({
+                          title: 'Error',
+                          text: 'Please check your network connection',
+                          type: 'error',
+                          heightAuto: false,
+                      }) 
+                      this.props.update_bugspot('','Not Available');
+                      this.props.update_complexity('','Not Available');
+                      this.props.update_duplicate('','Not Available');
+                      this.props.update_frequency('','Not Available');
+                      this.props.update_outdated('','Not Available');
                   })
             }
-            
         })
     }
 
@@ -143,7 +154,10 @@ class Monitor extends Component {
             }
         }).then((res) => {
             if(res.data.message === 'The jscpd found too many duplicates over threshold'){
-                this.props.update_duplicate(res.data,'Too many duplications');
+                this.props.update_duplicate(res.data,'Too many Duplications found');
+            }
+            else if ( res.data === 'Github API rate limit exceeded'){
+                this.gitLimit()
             }
             else{
                 this.props.update_duplicate(res.data,'Available')
@@ -152,7 +166,7 @@ class Monitor extends Component {
             this.updateStatus();        
         })
         .catch((res) => {
-            console.log("DUPLICATE ERR : ",res)
+            this.gitLimit()
         })
     }
 
@@ -174,13 +188,26 @@ class Monitor extends Component {
             if(res.data.message !== 'A package.json was not found'){
             this.props.update_outdated(res.data,'Available')
             }
+            else if ( res.data === 'Github API rate limit exceeded'){
+                this.gitLimit()
+            }
             else {
                 this.props.update_outdated(res.data,'Not found')
             }
             this.updateOverallScore(res);
             this.updateStatus();        
         }).catch((res) => {
-            console.log("OUTDATED ERR",res)
+            this.gitLimit()
+        })
+    }
+
+    gitLimit(){
+        sessionStorage.removeItem('token')
+        swal({
+            title: 'GitHub API rate limit exceeded',
+            text: 'Please try again later',
+            type: 'error',
+            heightAuto: false
         })
     }
 
@@ -201,6 +228,9 @@ class Monitor extends Component {
             this.props.update_frequency(res.data,'Available')
             this.updateStatus();        
             }
+            else{
+               this.gitLimit()
+            }
         })
     }
 
@@ -209,7 +239,8 @@ class Monitor extends Component {
             swal({
                 title: "Information Required!",
                 text: "Please fill in both informations",
-                type: 'error'
+                type: 'error',
+                heightAuto: false,
             })
         }
         else {
@@ -231,6 +262,7 @@ class Monitor extends Component {
                             title: "Username or Repository name not found",
                             text: "Please enter valid username or organization name and repository name",
                             type: "error",
+                            heightAuto: false
                         });
                     }
                     else { 
@@ -247,6 +279,7 @@ class Monitor extends Component {
                     }
                 }).catch(err => {
                     console.log("WATCH REPO ERR : ",err.data);
+                    this.gitLimit();
                 })
             }
             if(this.state.text === 'Unwatch'){
@@ -262,7 +295,8 @@ class Monitor extends Component {
                 })
                 swal({
                     title: "Git repository has been unwatched",
-                    type: "success"
+                    type: "success",
+                    heightAuto: false
                 })
                 this.setState({
                     watch_status: false,
@@ -289,7 +323,8 @@ class Monitor extends Component {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes'
+            confirmButtonText: 'Yes',
+            heightAuto: false
           }).then((result) => {
             axios.post('/api/user/logout',{username: this.props.profileUsername})
             if (result.value ) {
@@ -299,7 +334,8 @@ class Monitor extends Component {
                     text: 'You have logged out the system',
                     type: 'success',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 1500,
+                    heightAuto: false
                 }
                 ).then(
                     this.props.history.push("/")
@@ -323,42 +359,22 @@ class Monitor extends Component {
         else {
             return (
                 <div>
-                    <div className="landing">
-                        <img src={logo} className="App-logo" alt="logo" />
-                        <input id="search-bar1" className="search-input" type="text" name="search" placeholder="Input username or organization name ..." required disabled={this.state.disabled} onChange={(e) => this.setState({username: e.target.value})}/>
-                        <input id="search-bar2" className="search-input" type="text" name="search" placeholder="Input repository name ..." required disabled={this.state.disabled} onChange={(e) => this.setState({repo_url: e.target.value})}/>
-                        <button className="button" onClick= {(e) => this.watchRepo(e)} >{this.state.text}</button>  
+                    <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light ">
+                    <a className="navbar-brand animated bounceIn delay-5s">ANDON MONITOR</a>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarToggler">
+                        <input id="search-bar1" className="form-control mr-sm-2" type="search" placeholder="Input Git Username" aria-label="Search" required disabled={this.state.disabled} onChange={(e) => this.setState({username: e.target.value})}/>
+                        <input id="search-bar2" className="form-control mr-sm-2" type="search" placeholder="Input Repository" aria-label="Search" required disabled={this.state.disabled} onChange={(e) => this.setState({repo_url: e.target.value})}/>
+                        <button className="btn btn-info my-2 my-sm-0" onClick= {(e) => this.watchRepo(e)} >{this.state.text}</button>
                     </div>
+                    <button id="logoutBtn" className="btn btn-warning btn-lg animated bounceInLeft delay-5s" onClick= {(e) => this.onSubmit()}>Logout</button>
+                    </nav>
                     { !isWatched ? (
-                        <div>
-                            <div className="sidenav">
-                                <div className="sidebar-con">
-                                    <img className="img-profile-user" src={this.props.profile_img} alt="User"/>
-                                    <h2>Welcome</h2>
-                                    <h2 className="register-text">{this.props.profileUsername}</h2>
-                                </div>
-                                <button id="logoutBtn" className="andon-button" onClick= {(e) => this.onSubmit()}>Logout</button>
-                            </div>
-                            <UnwatchCard/>
-                        </div>
+                        <UnwatchCard/>    
                     ) : (
-                        <div>
-                            <div className="sidenav">
-                                <div className="sidebar-con">
-                                    <img className="img-profile-user" src={this.props.profile_img} alt="User"/>
-                                    <h2>Welcome</h2>
-                                    <h2 className="register-text">{this.props.profileUsername}</h2>
-                                </div>
-                                <a href="#main" className="andon-button">Notification Trigger</a>
-                                <a href="#frequency" className="andon-button">Frequency of commit</a>
-                                <a href="#duplicate" className="andon-button">Code Duplication</a>
-                                <a href="#complexity" className="andon-button">Code Complexity</a>
-                                <a href="#bugspot" className="andon-button">Bugspot Analyze</a>
-                                <a href="#outdated" className="andon-button">Outdated Library</a>
-                                <button id="logoutBtn" className="andon-button" onClick= {(e) => this.onSubmit()}>Logout</button>
-                            </div>
-                            <WatchCard/>    
-                        </div>      
+                       <WatchCard/>
                     )}
                 </div>
             );

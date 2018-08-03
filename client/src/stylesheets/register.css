@@ -1,14 +1,33 @@
 #label{
-    color: white;
-   text-align: left;
+    color: black;
+    text-align: left;
+    font-size: 24px;
 }
 strong {
     color: red;
 }
-.register-form {
-    padding-left: 25%;
+
+.form-control{
+    padding: 5px 5px;
+}
+.regis-form {
+    width: 500px;
+    padding-top: 5%;
+    margin: 0 auto;
 }
 
 #title{
-    color: white;
+    color: black;
+    padding-top: 15%; 
+    font-size: 60px;
+  }
+
+@media screen and (max-width: 600px) {
+    .regis-form {
+        width: 80%;
+    }
+    #title{
+        font-size: 40px;
+        padding-top: 20%; 
+    }
 }

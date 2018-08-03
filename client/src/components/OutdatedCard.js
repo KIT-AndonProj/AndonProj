@@ -1,50 +1,42 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import ReactTable from 'react-table';
-import 'react-table/react-table.css';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+
 
 class OutdatedCard extends Component {
     
     render(){
         if(this.props.status === 'Available'){
+            const options = {
+                sizePerPageList: [ {
+                    text: 'All', value: this.props.outdated_data.length
+                  } ]
+                };
         return(
-            <div className="parallax-2">
-                <h2 id="header">Outdated Library</h2>
-                <ReactTable
-                data={this.props.outdated_data}
-                columns={[
-                    {
-                        Header: "Module Name",
-                        accessor: "moduleName"
-                    },
-                    {
-                        Header: "Home Page",
-                    accessor:"homepage"
-                    },
-                    {
-                        Header: "Latest Version",
-                        accessor:"latest"
-                    },
-                    {
-                        Header:"Installed Version",
-                        accessor: "installed"
-                    },
-                ]}
-                    defaultPageSize={10}
-                    style={{
-                    height: "600px"
-                    }}
-                    className="-striped -highlight"
-                />
-                <br />
-                </div>    
+            <BootstrapTable data={this.props.outdated_data} dataSort 
+            containerStyle={  { margin: 0 }} 
+            bodyStyle={{ margin: 0 }}
+            headerStyle={ {margin: 0}}
+            tableStyle={ { margin: 0 } }
+            options={ options }
+            pagination striped hover>
+                <TableHeaderColumn isKey={true} dataField='moduleName' dataSort={true}>Module Name</TableHeaderColumn>
+                <TableHeaderColumn dataField='homepage' dataSort={true}>Home Page</TableHeaderColumn>
+                <TableHeaderColumn dataField='latest' dataSort={true}>Latest Version</TableHeaderColumn>
+                <TableHeaderColumn dataField='latest' dataSort={true}>Latest Version</TableHeaderColumn>
+                <TableHeaderColumn dataField='installed' dataSort={true}>Installed Version</TableHeaderColumn>
+            </BootstrapTable>            
             );
         }
         else {
             return (
-                <div className="parallax-2">
-                <h2 id="header">Outdated Library</h2>
-                <h2>No information available. Due to no package.json in your repository</h2>
+                <div>
+                    <div className="card bg-light" id="nomargin">
+                        <div className="card-header" id="nomargin">Outdated Library Not Found</div>
+                        <div className="card-body" id="nomargin">
+                            <p className="card-text">No information available. Due to no package.json in your repository</p>
+                        </div>
+                    </div>
                 </div>
             )
         }

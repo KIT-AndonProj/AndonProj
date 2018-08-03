@@ -1,0 +1,30 @@
+div.col-8 div {
+        margin-left: 0%;
+        margin-top: 3%;
+}
+.card-img-top{
+    width:50%;
+}
+@media screen and (max-width: 600px) {
+    .card-img-top{
+        width:40%;
+    }
+    .card{
+        width: 300px;
+        border: none;
+    }
+    #overall-card{
+        width:200px
+    }
+    #frequency-card{
+        width: 200px;
+        height: relative;
+    }
+}
+
+
+#frequency-card{
+    padding: 5%;
+    width: 700px;
+    height: 600px;
+}

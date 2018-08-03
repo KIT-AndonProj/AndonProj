@@ -7,6 +7,7 @@ import addCookie from '../../actions/addCookie';
 import { connect } from 'react-redux'; 
 import addCurrentRepo from '../../actions/addCurrentRepo';
 import addStatus from '../../actions/addStatus';
+
 class Login extends Component {
     constructor() {
         super()
@@ -41,6 +42,7 @@ class Login extends Component {
             title: 'Logging in',
             text: 'Verifying...',
             allowOutsideClick: false,
+            heightAuto: false,
             onOpen: ()=> {
                 swal.showLoading();
                 axios.post('/api/user/login',{
@@ -48,35 +50,36 @@ class Login extends Component {
                     password: this.state.password,
                 })
                 .then(
-                    (res) => {
-                        if(res.data.username !== 'The service is unavailable'){
-                            this.setState({ isLoggedIn: 'true'})
-                            this.props.update_status(false);
-                            sessionStorage.setItem('token', res.data.token);
-                            this.getCurrentRepo(res.data.payload.username,res.data.payload.gitName);
-                        }
-                       
-                        else {
-                            this.setState({ isLoggedIn: 'false'})
-                        }
-                    })
-                       .then((res)=>{
-                        if(this.state.isLoggedIn === 'false'){
-                            swal({
-                                title: "The service is unavailable",
-                                text: "Please logout on previous user",
-                                type: "error",
-                                confirmButtonText: "Try again"
-                            });
-                        }
-                    }).catch((res) => {
+                (res) => {
+                    if(res.data.username !== 'The service is unavailable'){
+                        this.setState({ isLoggedIn: 'true'})
+                        this.props.update_status(false);
+                        sessionStorage.setItem('token', res.data.token);
+                        this.getCurrentRepo(res.data.payload.username,res.data.payload.gitName);
+                    }
+                    else {
+                        this.setState({ isLoggedIn: 'false'})
+                    }
+                })
+                .then((res)=>{
+                    if(this.state.isLoggedIn === 'false'){
                         swal({
-                            title: "Error",
-                            text: "Wrong username or password",
+                            title: "The service is unavailable",
+                            text: "Please logout on previous user",
                             type: "error",
-                            confirmButtonText: "Try again"
+                            confirmButtonText: "Try again",
+                            heightAuto: false
                         });
+                    }
+                }).catch((res) => {
+                    swal({
+                        title: "Error",
+                        text: "Wrong username or password",
+                        type: "error",
+                        confirmButtonText: "Try again",
+                        heightAuto: false
                     });
+                });
             }
         })
     }
@@ -98,59 +101,60 @@ class Login extends Component {
                     text: "Login successful",
                     type: "success",
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 3000,
+                    heightAuto: false
                 })
-            axios({
-                url: '/api/git/repoinfo',
-                method: 'post',
-                data: {
-                    username: gitName,
-                    repository: res.data
-                },
-                headers: {
-                    Authorization: sessionStorage.token
-                }
-            }).then(res => {
-                this.getCurrentCommit(gitName,res.data.reponame,res.data);
-                this.props.cookie(username,gitName,res.data.image_url);
+                axios({
+                    url: '/api/git/repoinfo',
+                    method: 'post',
+                    data: {
+                        username: gitName,
+                        repository: res.data
+                    },
+                    headers: {
+                        Authorization: sessionStorage.token
+                    }
+                }).then(res => {
+                    this.getCurrentCommit(gitName,res.data.reponame,res.data);
+                    this.props.cookie(username,gitName,res.data.image_url);
+                    }
+                )
             }
-            )
-        }
-        else {
-            sessionStorage.removeItem('token')
-            swal({
-                title: 'Github API rate limit exceeded',
-                text: 'Please try again later',
-                type: 'error'
-            })
-        }
+            else {
+                sessionStorage.removeItem('token')
+                swal({
+                    title: 'GitHub API rate limit exceeded',
+                    text: 'Please try again later',
+                    type: 'error',
+                    heightAuto: false
+                })
+            }
         });  
     }
 
     getCurrentCommit(gitName,repoName,profile){
         axios({
-                    url: '/api/git/commits',
-                    method: 'post',
-                    data: {
-                        username: gitName,
-                        repository: repoName
-                    },
-                    headers: {
-                        Authorization: sessionStorage.token
-                    }
-                })
-                .then(res => {
-                    if(res.data === 'Information Not found' || res.data === 'Github API rate limit exceeded'){
-                        this.setState({ redirect_status: false})
-                    }
-                    else {
-                    this.setState({
-                        commit_data: res.data
-                    })
-                    if( res.data!== [])
-                        this.props.current_repo(profile,res.data)
+                url: '/api/git/commits',
+                method: 'post',
+                data: {
+                    username: gitName,
+                    repository: repoName
+                },
+                headers: {
+                    Authorization: sessionStorage.token
                 }
-                })
+        }).then(res => {
+            if(res.data === 'Information Not found' || res.data === 'Github API rate limit exceeded'){
+                this.setState({ redirect_status: false})
+            }
+            else {
+                this.setState({
+                commit_data: res.data
+            })
+            if( res.data!== [])
+                this.props.current_repo(profile,res.data)
+            }
+        })
     }
 
     openCamera(){
@@ -158,11 +162,11 @@ class Login extends Component {
             title: 'Connecting Camera',
             text: 'Connecting...',
             allowOutsideClick: false,
+            heightAuto: false,
             onOpen: ()=> {
                 swal.showLoading();
                 axios.get('/api/user/openCam')
                 .then((res) => {
-                    console.log('camera verify:',res)
                     var usertemp =''
                     if(res.data==='The service is unavailable'){
                         swal({
@@ -171,12 +175,14 @@ class Login extends Component {
                             type: 'error',
                             showConfirmButton: false,
                             timer: 3000,
-                            allowOutsideClick: true
+                            allowOutsideClick: true,
+                            heightAuto: false,
                         })
                     }
                     else if ( res.data ==='User not found'){
                         swal({
-                            title: 'User Not found'
+                            title: 'User Not found',
+                            heightAuto: false,
                         })
                     }
                     else {
@@ -189,11 +195,10 @@ class Login extends Component {
                             showCancelButton: true,
                             confirmButtonText: 'Yes, this is me!',
                             cancelButtonText: 'No, detect again!',
-                            allowOutsideClick: true
+                            allowOutsideClick: true,
+                            heightAuto: false,
                         }
-                    )
-                        
-                        .then((result) => {
+                        ).then((result) => {
                             if ( result.value){
                                 axios({
                                     url: '/api/user/updateDB',
@@ -205,19 +210,21 @@ class Login extends Component {
                                         Authorization: sessionStorage.camToken
                                     }
                                 }).then(()=>{
-                                swal(
-                                    'Connected!',
-                                    'Please login with your username and password',
-                                    'success'
-                                  )
-                                  sessionStorage.removeItem('camToken')
+                                swal({
+                                    title: 'Connected!',
+                                    text: 'Please login with your username and password',
+                                    type: 'success',
+                                    heightAuto: false,
+                                }
+                                    )
+                                    sessionStorage.removeItem('camToken')
                                 })
                             }
                             else if (result.dismiss === swal.DismissReason.cancel){
                                 sessionStorage.removeItem('camToken')
                                 this.openCamera();
                             }
-                          })
+                        })
                     }
                 })
             }
@@ -229,6 +236,7 @@ class Login extends Component {
             input: 'password',
             confirmButtonText: 'Submit',
             inputPlaceholder: 'Enter your password',
+            heightAuto: false,
           }).queue([
             {
               title: 'Clear Previous login!',
@@ -236,36 +244,39 @@ class Login extends Component {
             },
           ]).then((result) => {
               if( result.value !== "" && result.dismiss !== 'overlay'){
-              axios.post('/api/user/clearDB',{ password: result.value[0]}).then( res => {
-                  if(res.data !== 'Password incorrect'){
-                    swal({
-                        title: 'All done!',
-                        text: 'Previous logged in status is cleared',
-                        type: 'success',
-                        confirmButtonText: 'Lovely!'
-                    })
-                  }
-                else {
-                    swal({
-                        title: 'Password Incorect!',
-                        text: 'Only admin password is allowed',
-                        type: 'error',
-                        confirmButtonText: 'Try Again'
-                    })
-                }
-              })
+                axios.post('/api/user/clearDB',{ password: result.value[0]}).then( res => {
+                    if(res.data !== 'Password incorrect'){
+                        swal({
+                            title: 'All done!',
+                            text: 'Previous logged in status is cleared',
+                            type: 'success',
+                            confirmButtonText: 'Lovely!',
+                            heightAuto: false,
+                        })
+                    }
+                    else {
+                        swal({
+                            title: 'Password Incorect!',
+                            text: 'Only admin password is allowed',
+                            type: 'error',
+                            confirmButtonText: 'Try Again',
+                            heightAuto: false,
+                        })
+                    }
+                })
             }
             else {
                 swal({
                     title: 'Password Required',
                     type: 'error',
-                    confirmButtonText: 'Try Again'
-                  })
+                    confirmButtonText: 'Try Again',
+                    heightAuto: false,
+                })
             }
-          })
+        })
     }
-    render() {
 
+    render() {
         const isAlreadyAuthenticated = this.isAuthenticated();
         if( isAlreadyAuthenticated && this.state.redirect_status ){
         return (
@@ -274,23 +285,33 @@ class Login extends Component {
         }
         else {
             return (
-                <div className="parallax">
-                    <div className="typewriter">
-                        <h1 id="header-text">ANDON MONITOR</h1>
-                    </div>
-                    <div id="login-div">            
-                        <form onSubmit={this.onSubmit}>
-                            <input className="input-login" type="text" name="username" required   autoComplete="off" placeholder="Username" onChange={this.onChange}/>
-                            <input className="input-login" type="password" placeholder="Password" required autoComplete="off"  name="password" value={this.state.password} onChange={this.onChange}></input>
-                            <input className="input-login" id="submitBtn" type="submit" value="Login"/>
-                        </form>
-                        <a href="/register">Not a member? </a>
-                       <div className="button-div">
-                        <button className="andon-button" onClick={this.openCamera} >Open Camera</button>
-                        <button className="andon-button" onClick={this.clearPreviousLoggedIn }>Clear user status</button>
-                       </div>
-                    </div>
+                <div className="background">
+                    <div className="container-fluid">
+                        <div className="div-center animated bounceInDown delay-2s">
+                            <div className="content">
+                            <div className="row">
+                                <div className="text-center">
+                                    <div className="typewriter">
+                                        <h1 className="animated bounceInDown delay-2s" id="header">ANDON MONITOR</h1>
+                                    </div>
+                                    <form className="login-form" onSubmit={this.onSubmit}>
+                                        <div className="form-group" >
+                                            <input className="form-control" type="text" name="username" required   autoComplete="off" placeholder="Username" onChange={this.onChange}/>
+                                            <input className="form-control" type="password" placeholder="Password" required autoComplete="off"  name="password" value={this.state.password} onChange={this.onChange}></input>
+                                            <input className="form-control btn btn-outline-info" type="submit" value="Login"/>
+                                        </div>
+                                    </form>
+                                    <a href="/register">Not a member? </a>
+                                <div className="button-div">
+                                    <button id="button-div"className="btn btn-outline-primary animated flash " onClick={this.openCamera} >Open Camera</button>
+                                    <button id="button-div"className="btn btn-outline-danger animated flash " onClick={this.clearPreviousLoggedIn }>Clear user status</button>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
                 </div>
+            </div>
+        </div>            
             )
         }
     }

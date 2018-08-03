@@ -1,55 +1,43 @@
 import React, {Component} from 'react'
-import ReactTable from 'react-table';
-import 'react-table/react-table.css';
-import '../stylesheets/table.css'
 import { connect } from 'react-redux';
-import '../stylesheets/complex.css';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 
 class ComplexityCard extends Component {
     
     render() {
+       
         if( this.props.status === 'Available'){
+            const options = {
+                sizePerPageList: [ {
+                  text: 'All', value: this.props.data.length
+                } ]
+              };
           return (
-            <div className="parallax-2">
-            <div className="card-complex">
-                <h2 id="header">Risk of Code Complexity</h2>
-              <ReactTable
-                data={this.props.data}
-                columns={[
-                      {
-                        Header: "File",
-                        accessor: "file"
-                      },
-                      {
-                        Header: "COMP",
-                      accessor:"comp"
-                      },
-                      {
-                          Header: "Number of commit",
-                          accessor:"numCommit"
-                      },
-                      {
-                          Header:"Source Line of Code",
-                          accessor: "sloc"
-                      } 
-                ]}
-                defaultPageSize={10}
-                style={{
-                  height: "600px"
-                }}
-                className="-striped -highlight"
-              />
-              <br />
-              </div>
-            </div>
+            <BootstrapTable
+            data={ this.props.data }
+            containerStyle={  { margin: 0 }} 
+            bodyStyle={{ margin: 0 }}
+            headerStyle={ {margin: 0}}
+            tableStyle={ { margin: 0 } }
+            options={ options }
+            pagination striped hover> 
+            <TableHeaderColumn dataField='file' isKey={true} dataSort={true}>File Name</TableHeaderColumn>
+            <TableHeaderColumn dataField='comp' dataSort={true}>COMP</TableHeaderColumn>
+            <TableHeaderColumn dataField='numCommit' dataSort={true}>Number of Commits</TableHeaderColumn>
+            <TableHeaderColumn dataField='sloc' dataSort={true}>Source Line of Code</TableHeaderColumn>
+          </BootstrapTable>
           );
         }
         else {
           return(
-            <div className="parallax-2">
-              <h2 id="header">Risk of Code Complexity</h2>
-              <h2>No complexity of your code.</h2>
+            <div>
+            <div className="card text-white bg-info mb-3" id="nomargin">
+                <div className="card-header" id="nomargin">Complexity Not Found</div>
+                <div className="card-body" id="nomargin">
+                    <p className="card-text">Repository has no complexity</p>
+                </div>
             </div>
+        </div>
           );
         }
     }
