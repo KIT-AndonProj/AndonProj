@@ -69,7 +69,7 @@ class NotificationCard extends Component {
         }
         else {
             swal({
-                title: 'No trigger selects!',
+                title: 'No trigger select!',
                 text: 'Please select one trigger',
                 type: 'error',
                 heightAuto: false
