@@ -28,7 +28,6 @@ class NotificationCard extends Component {
         let command_selected = this.state.command[command_index];
         let value = 0;
         event.preventDefault();
-        console.log('command',command_selected);
         if (command_selected !== undefined){
             if(command_selected === 'overall'){
                 value = this.props.data[0].score;
