@@ -7,6 +7,7 @@ class OverallHealthCard extends Component {
 
     render(){
         if( this.props.watch_status ){
+            if (this.props.status.indexOf('Not Available') === -1){
             return(
                 <div className="card bg-light" >
                     <h3 className="card-title" id="card-title-text">Repository Overall Risk Score</h3>
@@ -25,7 +26,30 @@ class OverallHealthCard extends Component {
                     </div>
                 </div>
             )
+            }
+        
+            else {
+                return(
+                    <div className="card bg-light" >
+                        <h3 className="card-title" id="card-title-text">Repository Overall Risk Score</h3>
+                        <div id="padding">
+                        <div id="padding">
+                       <Progress
+                        type="circle"
+                        percent={this.props.score}
+                        />
+                        </div>
+                        <p>Risk of Code Duplication : Not Available</p>
+                        <p>Risk of Code Complexity : Not Available</p>
+                        <p>Bugspot Analyze score : Not Available</p>
+                        <p>Outdated Library score : Not Available</p>
+                        <p>Overall Code Risk score : {this.props.score}</p>
+                        </div>
+                    </div>
+                )
         }
+    }
+        
         else {
             return (
                 <div>
@@ -34,10 +58,19 @@ class OverallHealthCard extends Component {
             )
         }
     }
+    
+    
 }
 
 function mapStateToProps(state){
     return {
+        status : [
+            state.update_score.status,
+            state.update_duplicate.status,
+            state.update_complexity.status,
+            state.update_bugspot.status,
+            state.update_outdated.status,
+        ],
         duplicate_score: state.update_duplicate.data.overallHealth,
         complexity_score: state.update_complexity.data.overallHealth,
         bugspot_score: state.update_bugspot.data.overallHealth,

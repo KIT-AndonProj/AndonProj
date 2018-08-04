@@ -36,7 +36,12 @@ class NotificationCard extends Component {
                 value = this.props.data[1].data;
             }
             else if (command_selected === 'duplicate' || command_selected === 'complex' || command_selected === 'bugspot' || command_selected === 'outdated'){
-                value = this.props.data[command_index].data.overallHealth;
+                if(this.props.data[command_index].status === 'Not Available'){
+                    value = 0;
+                }
+                else {
+                    value = this.props.data[command_index].data.overallHealth;
+                }
             }
             swal({
                 title: 'Notify Aquatan',
@@ -125,7 +130,7 @@ function mapStateToProps(state){
             state.update_complexity,
             state.update_bugspot,
             state.update_outdated,
-        ]
+        ],
     }
 }
 
