@@ -138,7 +138,6 @@ class Monitor extends Component {
                       this.props.update_bugspot('','Not Available');
                       this.props.update_complexity('','Not Available');
                       this.props.update_duplicate('','Not Available');
-                      this.props.update_frequency('','Not Available');
                       this.props.update_outdated('','Not Available');
                   })
             }
