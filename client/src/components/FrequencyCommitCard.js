@@ -27,7 +27,7 @@ class FrequencyCommitCard extends Component {
                 if( this.props.commit_data === 'Information not found'){
                     return(
                         <div>
-                        <div className="card bg-danger mb-3" id="nomargin">
+                        <div className="card text-white bg-danger mb-3" id="nomargin">
                             <div className="card-header" id="nomargin">Frequency Commits of Repository Not Found</div>
                             <div className="card-body" id="nomargin">
                                 <p className="card-text">There is no recently commits in your repository.</p>
