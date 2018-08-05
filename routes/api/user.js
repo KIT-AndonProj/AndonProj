@@ -82,13 +82,13 @@ router.post('/login', (req, res) => {
                         errors.username = 'The service is unavailable'
                         return res.json(errors)
                     } else {
-                        bcrypt.compare(password, user.password)
-                        .then(isMatch => {
-                            axios.get('https://api.github.com/users/' + user.gitName).then(resp => {
-                               console.log(resp)
-                                if(isMatch) {
+                        axios.get('https://api.github.com/users/' + user.gitName).then(resp => {
+                            bcrypt.compare(password, user.password)
+                            .then(isMatch => {
+                               if(isMatch) {
                                     const payload = {id: user.id, username: user.username, gitName: user.gitName, imgURL: user.imgURL }
                                     jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+                                        exec('sudo PYTHONPATH=".:build/lib.linux-armv7l-2.7" python3 pythonScript/script.py -c -wel')
                                         res.json({
                                             payload,
                                             success: true,
@@ -100,13 +100,13 @@ router.post('/login', (req, res) => {
                                     return res.json(errors)
                                 }
                             })
-                            .catch(erraxios => {
-                                if(erraxios.response.data.message.slice(0,23) === 'API rate limit exceeded'){
-                                    return res.json('Github API rate limit exceeded')
-                                }
-                                errors.gitName = 'Github username not found'
-                                return res.json(errors)
-                            })
+                        })
+                        .catch(erraxios => {
+                            if(erraxios.response.data.message.slice(0,23) === 'API rate limit exceeded'){
+                                return res.json('Github API rate limit exceeded')
+                            }
+                            errors.gitName = 'Github username not found'
+                            return res.json(errors)
                         })
                     }
                 })
